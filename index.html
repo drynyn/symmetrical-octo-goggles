@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maskwitch Spirit Generator</title>
+    <title>Random Spirit Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,90 +52,83 @@
         // Generate a random spirit name
         function generateSpiritName() {
             const componentGroups = {
-                A1: ["Howling", "Shrieking", "Gasping", "Whistling", "Grinding", "Bellowing"],
-                A2: ["Gnawing", "Winnowing", "Cracking", "Broken", "Forgiving", "Knowing"],
-                A3: ["Eyeless", "Mouthless", "Faceless", "Breathless", "Boneless", "Mindless"],
-                A4: ["Creeping", "Crawling", "Hidden", "Galloping", "Walking", "Running"],
-                A5: ["Fierce", "Angry", "Unforgiving", "Relentless", "Unstoppable", "Furious"],
-                A6: ["Many-mouthed", "Many-eyed", "Many-handed", "Many-minded", "Many-limbed", "Many-figured"],
-                B1: ["Gale-whipped", "Billow-cracked", "Cloud-cloaked", "Rain-shod", "Fog-eyed", "Mist-shaped"],
-                B2: ["Copper-ringed", "Tusk-crowned", "Thorn-wrapped", "Thistle-winged", "Snake-clad", "Tangle-haired"],
-                B3: ["Poison", "Toxic", "Fly-blown", "Broken", "Rancid", "Rotten"],
-                B4: ["Bifurcated", "Bloated", "Spindle-limbed", "Wire-toothed", "Claw-handed", "Bent-backed"],
-                B5: ["Flint", "Copper", "Tar", "Pitch", "Amber", "Shell"],
-                B6: ["Lightning", "Thunder", "Ice", "Snow", "Rain", "Fog"],
-                C1: ["Teeth", "Bone", "Rib", "Sinew", "Skin", "Hair"],
-                C2: ["Blood", "Snot", "Semen", "Piss", "Shit", "Pus"],
-                C3: ["Spark", "Flame", "Smoke", "Fume", "Ember", "Charcoal"],
-                C4: ["Twig", "Branch", "Leaf", "Bark", "Bough", "Root"],
-                C5: ["Moss", "Reed", "Lichen", "Bloom", "Flower", "Vine"],
-                C6: ["Fen", "Bog", "Marsh", "Lake", "River", "Stream"],
-                D1: ["Moor", "Heath", "Wasteland", "Tundra", "Valley", "Ravine"],
-                D2: ["Hill", "Mountain", "Crag", "Down", "Tor", "Plateau"],
-                D3: ["Stone", "Rock", "Boulder", "Pebble", "Slate", "Scree"],
-                D4: ["Bow", "Knife", "Amulet", "Mask", "Bag", "Spear"],
-                D5: ["Wound", "Fracture", "Scab", "Bruise", "Gash", "Puncture"],
-                D6: ["Fang", "Tusk", "Claw", "Horn", "Antler", "Tooth"],
-                E1: ["Grinder", "Beater", "Breaker", "Cracker", "Destroyer", "Burner"],
-                E2: ["Archer", "Drummer", "Carver", "Hunter", "Dancer", "Whistler"],
-                E3: ["Mouth", "Vulva", "Penis", "Navel", "Skull", "Limb"],
-                E4: ["Crawler", "Shambler", "Runner", "Walker", "Stepper", "Creeper"],
-                E5: ["Friend", "Enemy", "Guide", "Companion", "Husband", "Wife"],
-                E6: ["Spirit", "Ghost", "Spectre", "Vision", "Cloud", "Shadow"],
-                F1: ["Red Deer", "Elk", "Aurochs", "Horse", "Mammoth", "Boar"],
-                F2: ["Fox", "Wolf", "Tiger", "Bear", "Dog", "Lion"],
-                F3: ["Worm", "Fly", "Snake", "Beetle", "Spider", "Slug"],
-                F4: ["Eel", "Pike", "Salmon", "Trout", "Herring", "Dogfish"],
-                F5: ["Serpent", "Wyrm", "Beast", "Giant", "Monster", "Brute"],
-                F6: ["Eater", "Gobbler", "Taker", "Chewer", "Devourer", "Biter"]
+                A: ["Howling", "Shrieking", "Gasping", "Whistling", "Grinding", "Bellowing"],
+                B: ["Gnawing", "Winnowing", "Cracking", "Broken", "Forgiving", "Knowing"],
+                C: ["Eyeless", "Mouthless", "Faceless", "Breathless", "Boneless", "Mindless"],
+                D: ["Creeping", "Crawling", "Hidden", "Galloping", "Walking", "Running"],
+                E: ["Fierce", "Angry", "Unforgiving", "Relentless", "Unstoppable", "Furious"],
+                F: ["Many-mouthed", "Many-eyed", "Many-handed", "Many-minded", "Many-limbed", "Many-figured"],
+                G: ["Gale-whipped", "Billow-cracked", "Cloud-cloaked", "Rain-shod", "Fog-eyed", "Mist-shaped"],
+                H: ["Copper-ringed", "Tusk-crowned", "Thorn-wrapped", "Thistle-winged", "Snake-clad", "Tangle-haired"],
+                I: ["Poison", "Toxic", "Fly-blown", "Broken", "Rancid", "Rotten"],
+                J: ["Bifurcated", "Bloated", "Spindle-limbed", "Wire-toothed", "Claw-handed", "Bent-backed"],
+                K: ["Flint", "Copper", "Tar", "Pitch", "Amber", "Shell"],
+                L: ["Lightning", "Thunder", "Ice", "Snow", "Rain", "Fog"],
+                M: ["Teeth", "Bone", "Rib", "Sinew", "Skin", "Hair"],
+                N: ["Blood", "Snot", "Semen", "Piss", "Shit", "Pus"],
+                O: ["Spark", "Flame", "Smoke", "Fume", "Ember", "Charcoal"],
+                P: ["Twig", "Branch", "Leaf", "Bark", "Bough", "Root"],
+                Q: ["Moss", "Reed", "Lichen", "Bloom", "Flower", "Vine"],
+                R: ["Fen", "Bog", "Marsh", "Lake", "River", "Stream"],
+                S: ["Moor", "Heath", "Wasteland", "Tundra", "Valley", "Ravine"],
+                T: ["Hill", "Mountain", "Crag", "Down", "Tor", "Plateau"],
+                U: ["Stone", "Rock", "Boulder", "Pebble", "Slate", "Scree"],
+                V: ["Bow", "Knife", "Amulet", "Mask", "Bag", "Spear"],
+                W: ["Wound", "Fracture", "Scab", "Bruise", "Gash", "Puncture"],
+                X: ["Fang", "Tusk", "Claw", "Horn", "Antler", "Tooth"],
+                Y: ["Grinder", "Beater", "Breaker", "Cracker", "Destroyer", "Burner"],
+                Z: ["Archer", "Drummer", "Carver", "Hunter", "Dancer", "Whistler"],
+                AA: ["Mouth", "Vulva", "Penis", "Navel", "Skull", "Limb"],
+                BB: ["Crawler", "Shambler", "Runner", "Walker", "Stepper", "Creeper"],
+                CC: ["Friend", "Enemy", "Guide", "Companion", "Husband", "Wife"],
+                DD: ["Spirit", "Ghost", "Spectre", "Vision", "Cloud", "Shadow"],
+                EE: ["Red Deer", "Elk", "Aurochs", "Horse", "Mammoth", "Boar"],
+                FF: ["Fox", "Wolf", "Tiger", "Bear", "Dog", "Lion"],
+                GG: ["Worm", "Fly", "Snake", "Beetle", "Spider", "Slug"],
+                HH: ["Eel", "Pike", "Salmon", "Trout", "Herring", "Dogfish"],
+                II: ["Serpent", "Wyrm", "Beast", "Giant", "Monster", "Brute"],
+                JJ: ["Eater", "Gobbler", "Taker", "Chewer", "Devourer", "Biter"]
             };
 
-            const usedComponents = new Set();
             const structureRoll = rollDice(6);
             let name = "The ";
             let part1, part2, part3;
 
-            // Helper function to select a unique random component from given groups
-            function getUniqueComponent(group1, group2) {
-                let component;
-                do {
-                    const group = rollDice(6) <= 3 ? group1 : group2;
-                    const tableNumber = rollDice(6);
-                    component = componentGroups[`${group}${tableNumber}`][rollDice(6) - 1];
-                } while (usedComponents.has(component));
-                usedComponents.add(component);
-                return component;
-            }
-
             // Choose structure based on dice roll
             if (structureRoll === 1) {
-                part1 = getUniqueComponent('A', 'B');
-                part2 = getUniqueComponent('C', 'D');
-                part3 = getUniqueComponent('E', 'F');
+                part1 = getRandomComponent('A');
+                part2 = getRandomComponent('G');
+                part3 = getRandomComponent('M');
                 name += `${part1} - ${part2} - ${part3}`;
             } else if (structureRoll === 2) {
-                part1 = getUniqueComponent('A', 'B');
-                part3 = getUniqueComponent('E', 'F');
-                name += `${part1} - ${part1} - ${part3} - ${part3}`;
+                part1 = getRandomComponent('B');
+                part2 = getRandomComponent('H');
+                name += `${part1} - ${part1} - ${part2} - ${part2}`;
             } else if (structureRoll === 3) {
-                part1 = getUniqueComponent('A', 'B');
-                part2 = getUniqueComponent('C', 'D');
-                name += `${part1} - ${part2} - ${part2}`;
+                part1 = getRandomComponent('C');
+                part2 = getRandomComponent('I');
+                name += `${part1} - ${part2} - ${part2} - ${part3}`;
             } else if (structureRoll === 4) {
-                part1 = getUniqueComponent('A', 'B');
-                part2 = getUniqueComponent('C', 'D');
-                part3 = getUniqueComponent('E', 'F');
+                part1 = getRandomComponent('D');
+                part2 = getRandomComponent('J');
+                part3 = getRandomComponent('N');
                 name += `${part1} - ${part1} - ${part2} - ${part3} - ${part3}`;
             } else if (structureRoll === 5) {
-                part3 = getUniqueComponent('E', 'F');
+                part3 = getRandomComponent('K');
                 name += `${part3} - ${part3}`;
             } else if (structureRoll === 6) {
-                part1 = getUniqueComponent('A', 'B');
-                part3 = getUniqueComponent('E', 'F');
+                part1 = getRandomComponent('L');
+                part3 = getRandomComponent('O');
                 name += `${part1} - ${part3}`;
             }
 
             return name;
+
+            // Helper function to select a random component from a given group
+            function getRandomComponent(group) {
+                const tableNumber = rollDice(6);
+                return componentGroups[`${group}${tableNumber}`][rollDice(6) - 1];
+            }
         }
 
         // Generate the nature of the spirit
@@ -166,13 +159,7 @@
                 "throbbing", "twisted", "writhing", "threatening", "faceless", "eyeless",
                 "ravening", "sinister", "rabid", "creeping", "rotting", "sinuous",
                 "amalgamation of moss", "ashes", "aurochs", "beast", "beetle", "boar",
-                "bundle of bones", "cloud", "collection of boulders", "creature", "dog", "eel",
-                "elk", "figure", "flesh", "form", "freshly skinned hide", "fumes",
-                "fungus", "heap of hides", "horse", "hyena", "jagged shape", "mass of mushrooms",
-                "mosquito", "ox", "pike", "pile of meat", "plume of smoke", "ribcage",
-                "sack of fluid", "skeleton", "smoke", "smoked flesh", "snake", "spectre",
-                "spider", "stack of reeds", "tangle of sinews", "tapeworm", "terrifying mishmash of parts", "tree",
-                "vapour", "vision", "wasp", "wild cat", "wolf", "worm"
+                "bundle of bones", "cloud", "collection of boulders", "creature", "dog", "eel"
             ];
 
             const sizes = [
@@ -180,16 +167,12 @@
                 "twenty feet tall", "thirty feet tall", "fifty feet tall", "ten feet long", "twenty feet long", "thirty feet long"
             ];
 
-            const smell1 = smells[rollDice(smells.length) - 1];
-            let smell2;
-            do {
-                smell2 = smells[rollDice(smells.length) - 1];
-            } while (smell2 === smell1);
-            
-            const sound = sounds[rollDice(sounds.length) - 1];
-            const voice = voices[rollDice(voices.length) - 1];
-            const form = forms[rollDice(forms.length) - 1];
-            const size = sizes[rollDice(sizes.length) - 1];
+            const smell1 = smells[rollDice(30) - 1];
+            const smell2 = smells[rollDice(30) - 1];
+            const sound = sounds[rollDice(12) - 1];
+            const voice = voices[rollDice(24) - 1];
+            const form = forms[rollDice(36) - 1];
+            const size = sizes[rollDice(12) - 1];
 
             return `When the spirit appears, there is a smell of <span class="highlight">${smell1}</span> and <span class="highlight">${smell2}</span>.\n` +
                 `When the spirit moves, it makes a sound like <span class="highlight">${sound}</span>.\n` +
