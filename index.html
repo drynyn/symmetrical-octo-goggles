@@ -39,12 +39,11 @@
     </style>
 </head>
 <body>
-    <h1>Random Spirit Generator</h1>
+    <h1>Maskwitch Spirit Generator</h1>
     <button onclick="generateSpirit()">Generate Spirit</button>
     <div id="result"></div>
 
     <script>
-        // Utility function to roll a dice with 'sides' number of faces
         function rollDice(sides) {
             return Math.floor(Math.random() * sides) + 1;
         }
@@ -52,42 +51,42 @@
         // Generate a random spirit name
         function generateSpiritName() {
             const componentGroups = {
-                A: ["Howling", "Shrieking", "Gasping", "Whistling", "Grinding", "Bellowing"],
-                B: ["Gnawing", "Winnowing", "Cracking", "Broken", "Forgiving", "Knowing"],
-                C: ["Eyeless", "Mouthless", "Faceless", "Breathless", "Boneless", "Mindless"],
-                D: ["Creeping", "Crawling", "Hidden", "Galloping", "Walking", "Running"],
-                E: ["Fierce", "Angry", "Unforgiving", "Relentless", "Unstoppable", "Furious"],
-                F: ["Many-mouthed", "Many-eyed", "Many-handed", "Many-minded", "Many-limbed", "Many-figured"],
-                G: ["Gale-whipped", "Billow-cracked", "Cloud-cloaked", "Rain-shod", "Fog-eyed", "Mist-shaped"],
-                H: ["Copper-ringed", "Tusk-crowned", "Thorn-wrapped", "Thistle-winged", "Snake-clad", "Tangle-haired"],
-                I: ["Poison", "Toxic", "Fly-blown", "Broken", "Rancid", "Rotten"],
-                J: ["Bifurcated", "Bloated", "Spindle-limbed", "Wire-toothed", "Claw-handed", "Bent-backed"],
-                K: ["Flint", "Copper", "Tar", "Pitch", "Amber", "Shell"],
-                L: ["Lightning", "Thunder", "Ice", "Snow", "Rain", "Fog"],
-                M: ["Teeth", "Bone", "Rib", "Sinew", "Skin", "Hair"],
-                N: ["Blood", "Snot", "Semen", "Piss", "Shit", "Pus"],
-                O: ["Spark", "Flame", "Smoke", "Fume", "Ember", "Charcoal"],
-                P: ["Twig", "Branch", "Leaf", "Bark", "Bough", "Root"],
-                Q: ["Moss", "Reed", "Lichen", "Bloom", "Flower", "Vine"],
-                R: ["Fen", "Bog", "Marsh", "Lake", "River", "Stream"],
-                S: ["Moor", "Heath", "Wasteland", "Tundra", "Valley", "Ravine"],
-                T: ["Hill", "Mountain", "Crag", "Down", "Tor", "Plateau"],
-                U: ["Stone", "Rock", "Boulder", "Pebble", "Slate", "Scree"],
-                V: ["Bow", "Knife", "Amulet", "Mask", "Bag", "Spear"],
-                W: ["Wound", "Fracture", "Scab", "Bruise", "Gash", "Puncture"],
-                X: ["Fang", "Tusk", "Claw", "Horn", "Antler", "Tooth"],
-                Y: ["Grinder", "Beater", "Breaker", "Cracker", "Destroyer", "Burner"],
-                Z: ["Archer", "Drummer", "Carver", "Hunter", "Dancer", "Whistler"],
-                AA: ["Mouth", "Vulva", "Penis", "Navel", "Skull", "Limb"],
-                BB: ["Crawler", "Shambler", "Runner", "Walker", "Stepper", "Creeper"],
-                CC: ["Friend", "Enemy", "Guide", "Companion", "Husband", "Wife"],
-                DD: ["Spirit", "Ghost", "Spectre", "Vision", "Cloud", "Shadow"],
-                EE: ["Red Deer", "Elk", "Aurochs", "Horse", "Mammoth", "Boar"],
-                FF: ["Fox", "Wolf", "Tiger", "Bear", "Dog", "Lion"],
-                GG: ["Worm", "Fly", "Snake", "Beetle", "Spider", "Slug"],
-                HH: ["Eel", "Pike", "Salmon", "Trout", "Herring", "Dogfish"],
-                II: ["Serpent", "Wyrm", "Beast", "Giant", "Monster", "Brute"],
-                JJ: ["Eater", "Gobbler", "Taker", "Chewer", "Devourer", "Biter"]
+                A1: ["Howling", "Shrieking", "Gasping", "Whistling", "Grinding", "Bellowing"],
+                A2: ["Gnawing", "Winnowing", "Cracking", "Broken", "Forgiving", "Knowing"],
+                A3: ["Eyeless", "Mouthless", "Faceless", "Breathless", "Boneless", "Mindless"],
+                A4: ["Creeping", "Crawling", "Hidden", "Galloping", "Walking", "Running"],
+                A5: ["Fierce", "Angry", "Unforgiving", "Relentless", "Unstoppable", "Furious"],
+                A6: ["Many-mouthed", "Many-eyed", "Many-handed", "Many-minded", "Many-limbed", "Many-figured"],
+                B1: ["Gale-whipped", "Billow-cracked", "Cloud-cloaked", "Rain-shod", "Fog-eyed", "Mist-shaped"],
+                B2: ["Copper-ringed", "Tusk-crowned", "Thorn-wrapped", "Thistle-winged", "Snake-clad", "Tangle-haired"],
+                B3: ["Poison", "Toxic", "Fly-blown", "Broken", "Rancid", "Rotten"],
+                B4: ["Bifurcated", "Bloated", "Spindle-limbed", "Wire-toothed", "Claw-handed", "Bent-backed"],
+                B5: ["Flint", "Copper", "Tar", "Pitch", "Amber", "Shell"],
+                B6: ["Lightning", "Thunder", "Ice", "Snow", "Rain", "Fog"],
+                C1: ["Teeth", "Bone", "Rib", "Sinew", "Skin", "Hair"],
+                C2: ["Blood", "Snot", "Semen", "Piss", "Shit", "Pus"],
+                C3: ["Spark", "Flame", "Smoke", "Fume", "Ember", "Charcoal"],
+                C4: ["Twig", "Branch", "Leaf", "Bark", "Bough", "Root"],
+                C5: ["Moss", "Reed", "Lichen", "Bloom", "Flower", "Vine"],
+                C6: ["Fen", "Bog", "Marsh", "Lake", "River", "Stream"],
+                D1: ["Moor", "Heath", "Wasteland", "Tundra", "Valley", "Ravine"],
+                D2: ["Hill", "Mountain", "Crag", "Down", "Tor", "Plateau"],
+                D3: ["Stone", "Rock", "Boulder", "Pebble", "Slate", "Scree"],
+                D4: ["Bow", "Knife", "Amulet", "Mask", "Bag", "Spear"],
+                D5: ["Wound", "Fracture", "Scab", "Bruise", "Gash", "Puncture"],
+                D6: ["Fang", "Tusk", "Claw", "Horn", "Antler", "Tooth"],
+                E1: ["Grinder", "Beater", "Breaker", "Cracker", "Destroyer", "Burner"],
+                E2: ["Archer", "Drummer", "Carver", "Hunter", "Dancer", "Whistler"],
+                E3: ["Mouth", "Vulva", "Penis", "Navel", "Skull", "Limb"],
+                E4: ["Crawler", "Shambler", "Runner", "Walker", "Stepper", "Creeper"],
+                E5: ["Friend", "Enemy", "Guide", "Companion", "Husband", "Wife"],
+                E6: ["Spirit", "Ghost", "Spectre", "Vision", "Cloud", "Shadow"],
+                F1: ["Red Deer", "Elk", "Aurochs", "Horse", "Mammoth", "Boar"],
+                F2: ["Fox", "Wolf", "Tiger", "Bear", "Dog", "Lion"],
+                F3: ["Worm", "Fly", "Snake", "Beetle", "Spider", "Slug"],
+                F4: ["Eel", "Pike", "Salmon", "Trout", "Herring", "Dogfish"],
+                F5: ["Serpent", "Wyrm", "Beast", "Giant", "Monster", "Brute"],
+                F6: ["Eater", "Gobbler", "Taker", "Chewer", "Devourer", "Biter"]
             };
 
             const structureRoll = rollDice(6);
@@ -96,36 +95,37 @@
 
             // Choose structure based on dice roll
             if (structureRoll === 1) {
-                part1 = getRandomComponent('A');
-                part2 = getRandomComponent('G');
-                part3 = getRandomComponent('M');
+                part1 = getRandomComponent('A', 'B');
+                part2 = getRandomComponent('C', 'D');
+                part3 = getRandomComponent('E', 'F');
                 name += `${part1} - ${part2} - ${part3}`;
             } else if (structureRoll === 2) {
-                part1 = getRandomComponent('B');
-                part2 = getRandomComponent('H');
-                name += `${part1} - ${part1} - ${part2} - ${part2}`;
+                part1 = getRandomComponent('A', 'B');
+                part3 = getRandomComponent('E', 'F');
+                name += `${part1} - ${part1} - ${part3} - ${part3}`;
             } else if (structureRoll === 3) {
-                part1 = getRandomComponent('C');
-                part2 = getRandomComponent('I');
+                part1 = getRandomComponent('A', 'B');
+                part2 = getRandomComponent('C', 'D');
                 name += `${part1} - ${part2} - ${part2} - ${part3}`;
             } else if (structureRoll === 4) {
-                part1 = getRandomComponent('D');
-                part2 = getRandomComponent('J');
-                part3 = getRandomComponent('N');
+                part1 = getRandomComponent('A', 'B');
+                part2 = getRandomComponent('C', 'D');
+                part3 = getRandomComponent('E', 'F');
                 name += `${part1} - ${part1} - ${part2} - ${part3} - ${part3}`;
             } else if (structureRoll === 5) {
-                part3 = getRandomComponent('K');
+                part3 = getRandomComponent('E', 'F');
                 name += `${part3} - ${part3}`;
             } else if (structureRoll === 6) {
-                part1 = getRandomComponent('L');
-                part3 = getRandomComponent('O');
+                part1 = getRandomComponent('A', 'B');
+                part3 = getRandomComponent('E', 'F');
                 name += `${part1} - ${part3}`;
             }
 
             return name;
 
-            // Helper function to select a random component from a given group
-            function getRandomComponent(group) {
+            // Helper function to select a random component from given groups
+            function getRandomComponent(group1, group2) {
+                const group = rollDice(6) <= 3 ? group1 : group2;
                 const tableNumber = rollDice(6);
                 return componentGroups[`${group}${tableNumber}`][rollDice(6) - 1];
             }
