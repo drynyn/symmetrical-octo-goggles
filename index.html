@@ -39,16 +39,17 @@
     </style>
 </head>
 <body>
-    <h1>Maskwitch Spirit Generator</h1>
+    <h1>Random Spirit Generator</h1>
     <button onclick="generateSpirit()">Generate Spirit</button>
     <div id="result"></div>
 
     <script>
+        // Utility function to roll a dice with 'sides' number of faces
         function rollDice(sides) {
             return Math.floor(Math.random() * sides) + 1;
         }
 
-        // Generate a random spirit name
+        // Generate a random spirit name without duplicates
         function generateSpiritName() {
             const componentGroups = {
                 A1: ["Howling", "Shrieking", "Gasping", "Whistling", "Grinding", "Bellowing"],
@@ -91,44 +92,50 @@
 
             const structureRoll = rollDice(6);
             let name = "The ";
+            let selectedComponents = new Set();
             let part1, part2, part3;
+
+            // Helper function to select a random component from given groups without duplicates
+            function getUniqueComponent(group1, group2) {
+                let component;
+                do {
+                    const group = rollDice(6) <= 3 ? group1 : group2;
+                    const tableNumber = rollDice(6);
+                    component = componentGroups[`${group}${tableNumber}`][rollDice(6) - 1];
+                } while (selectedComponents.has(component));
+                selectedComponents.add(component);
+                return component;
+            }
 
             // Choose structure based on dice roll
             if (structureRoll === 1) {
-                part1 = getRandomComponent('A', 'B');
-                part2 = getRandomComponent('C', 'D');
-                part3 = getRandomComponent('E', 'F');
+                part1 = getUniqueComponent('A', 'B');
+                part2 = getUniqueComponent('C', 'D');
+                part3 = getUniqueComponent('E', 'F');
                 name += `${part1} - ${part2} - ${part3}`;
             } else if (structureRoll === 2) {
-                part1 = getRandomComponent('A', 'B');
-                part3 = getRandomComponent('E', 'F');
+                part1 = getUniqueComponent('A', 'B');
+                part3 = getUniqueComponent('E', 'F');
                 name += `${part1} - ${part1} - ${part3} - ${part3}`;
             } else if (structureRoll === 3) {
-                part1 = getRandomComponent('A', 'B');
-                part2 = getRandomComponent('C', 'D');
+                part1 = getUniqueComponent('A', 'B');
+                part2 = getUniqueComponent('C', 'D');
                 name += `${part1} - ${part2} - ${part2} - ${part3}`;
             } else if (structureRoll === 4) {
-                part1 = getRandomComponent('A', 'B');
-                part2 = getRandomComponent('C', 'D');
-                part3 = getRandomComponent('E', 'F');
+                part1 = getUniqueComponent('A', 'B');
+                part2 = getUniqueComponent('C', 'D');
+                part3 = getUniqueComponent('E', 'F');
                 name += `${part1} - ${part1} - ${part2} - ${part3} - ${part3}`;
             } else if (structureRoll === 5) {
-                part3 = getRandomComponent('E', 'F');
+                part3 = getUniqueComponent('E', 'F');
                 name += `${part3} - ${part3}`;
             } else if (structureRoll === 6) {
-                part1 = getRandomComponent('A', 'B');
-                part3 = getRandomComponent('E', 'F');
+                part1 = getUniqueComponent('A', 'B');
+                part3 = getUniqueComponent('E', 'F');
                 name += `${part1} - ${part3}`;
             }
 
             return name;
-
-            // Helper function to select a random component from given groups
-            function getRandomComponent(group1, group2) {
-                const group = rollDice(6) <= 3 ? group1 : group2;
-                const tableNumber = rollDice(6);
-                return componentGroups[`${group}${tableNumber}`][rollDice(6) - 1];
-            }
         }
 
         // Generate the nature of the spirit
