@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             background-color: #111;
             color: #ddd;
-            text-align: left;
+            text-align: center;
             padding: 20px;
         }
         h1 {
@@ -32,15 +32,18 @@
             font-size: 18px;
             white-space: pre-wrap; /* Preserve formatting */
         }
+        .highlight {
+            color: #f0a500; /* Change this to any color you prefer for highlighting */
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h1>Random Spirit Generator</h1>
+    <h1>Maskwitch Spirit Generator</h1>
     <button onclick="generateSpirit()">Generate Spirit</button>
     <div id="result"></div>
 
     <script>
-        // Utility function to roll a dice with 'sides' number of faces
         function rollDice(sides) {
             return Math.floor(Math.random() * sides) + 1;
         }
@@ -131,37 +134,37 @@
         // Generate the nature of the spirit
         function generateSpiritNature() {
             const smells = [
-                "Animal fat", "Animal musk", "Bad breath", "Birch tar", "Body odour", "Burned meat",
-                "Burning hair", "Burnt hooves", "Damp soil", "Decayed flesh", "Decaying leaf litter", "Excrement",
-                "Fermented fruit", "Freshly broken flint", "Goat fur", "Moss", "Peat", "Pine needles",
-                "Piss", "Poorly tanned hides", "Rotten eggs", "Rotting reeds", "Sawed bones", "Smouldering herbs",
-                "Stagnant water", "Stale urine", "A Suppurating ulcer", "Wet animal fur", "Wet ashes", "Wood smoke"
+                "animal fat", "animal musk", "bad breath", "birch tar", "body odour", "burned meat",
+                "burning hair", "burnt hooves", "damp soil", "decayed flesh", "decaying leaf litter", "excrement",
+                "fermented fruit", "freshly broken flint", "goat fur", "moss", "peat", "pine needles",
+                "piss", "poorly tanned hides", "rotten eggs", "rotting reeds", "sawed bones", "smouldering herbs",
+                "stagnant water", "stale urine", "a suppurating ulcer", "wet animal fur", "wet ashes", "wood smoke"
             ];
 
             const sounds = [
-                "Breaking boughs", "Crunching gravel", "Sucking mud", "Clicking joints", "Grating dry bones", "Crackling dry leaves",
-                "Gusts of wind", "Tearing flesh", "Hands through tallow", "Slithering", "Bubbling broth", "A hundred slithering snakes"
+                "breaking boughs", "crunching gravel", "sucking mud", "clicking joints", "grating dry bones", "crackling dry leaves",
+                "gusts of wind", "tearing flesh", "hands through tallow", "slithering", "bubbling broth", "a hundred slithering snakes"
             ];
 
             const voices = [
-                "An obscene whisper", "An undertow of pebbles on a beach", "An unsettling, breathy whine", "The ancient sea washing on the pebble shore", "A bestial howl", "Booming",
-                "The cracking of a small fire", "Curiously high-pitched", "A dying animal", "Grating and painful to listen to", "Grinding ice", "Like a dozen people talking at once",
-                "Like rain", "Like something moving through undergrowth", "Like thunder", "Like waves", "A mesmerising drone", "Muffled muttering",
-                "A pained shriek", "A reedy whisper", "The roaring of a huge bonfire", "A shrill, frightened sound", "A slow groaning moan", "The sound of a cloud of mosquitos"
+                "an obscene whisper", "an undertow of pebbles on a beach", "an unsettling, breathy whine", "the ancient sea washing on the pebble shore", "a bestial howl", "booming",
+                "the cracking of a small fire", "curiously high-pitched", "a dying animal", "grating and painful to listen to", "grinding ice", "like a dozen people talking at once",
+                "like rain", "like something moving through undergrowth", "like thunder", "like waves", "a mesmerising drone", "muffled muttering",
+                "a pained shriek", "a reedy whisper", "the roaring of a huge bonfire", "a shrill, frightened sound", "a slow groaning moan", "the sound of a cloud of mosquitos"
             ];
 
             const forms = [
-                "Frightening", "Unnerving", "Terrifying", "Vibrating", "Quivering", "Pulsating",
-                "Misshapen", "Hunched", "Crawling", "Predatory", "Angular", "Constantly shifting",
-                "Throbbing", "Twisted", "Writhing", "Threatening", "Faceless", "Eyeless",
-                "Ravening", "Sinister", "Rabid", "Creeping", "Rotting", "Sinuous",
-                "Amalgamation of moss", "Ashes", "Aurochs", "Beast", "Beetle", "Boar",
-                "Bundle of bones", "Cloud", "Collection of boulders", "Creature", "Dog", "Eel"
+                "frightening", "unnerving", "terrifying", "vibrating", "quivering", "pulsating",
+                "misshapen", "hunched", "crawling", "predatory", "angular", "constantly shifting",
+                "throbbing", "twisted", "writhing", "threatening", "faceless", "eyeless",
+                "ravening", "sinister", "rabid", "creeping", "rotting", "sinuous",
+                "amalgamation of moss", "ashes", "aurochs", "beast", "beetle", "boar",
+                "bundle of bones", "cloud", "collection of boulders", "creature", "dog", "eel"
             ];
 
             const sizes = [
-                "Six feet tall", "Seven feet tall", "Eight feet tall", "Nine feet tall", "Ten feet tall", "Eleven feet tall",
-                "Twenty feet tall", "Thirty feet tall", "Fifty feet tall", "Ten feet long", "Twenty feet long", "Thirty feet long"
+                "six feet tall", "seven feet tall", "eight feet tall", "nine feet tall", "ten feet tall", "eleven feet tall",
+                "twenty feet tall", "thirty feet tall", "fifty feet tall", "ten feet long", "twenty feet long", "thirty feet long"
             ];
 
             const smell1 = smells[rollDice(30) - 1];
@@ -171,17 +174,17 @@
             const form = forms[rollDice(36) - 1];
             const size = sizes[rollDice(12) - 1];
 
-            return `When the spirit appears, there is a smell of ${smell1} and ${smell2}.\n` +
-                `When the spirit moves, it makes a sound like ${sound}.\n` +
-                `When it speaks, its voice is ${voice}.\n` +
-                `Its physical form is ${form} and it is ${size}.`;
+            return `When the spirit appears, there is a smell of <span class="highlight">${smell1}</span> and <span class="highlight">${smell2}</span>.\n` +
+                `When the spirit moves, it makes a sound like <span class="highlight">${sound}</span>.\n` +
+                `When it speaks, its voice is <span class="highlight">${voice}</span>.\n` +
+                `Its physical form is <span class="highlight">${form}</span> and it is <span class="highlight">${size}</span>.`;
         }
 
         // Generate and display the spirit name and nature
         function generateSpirit() {
             const name = generateSpiritName();
             const nature = generateSpiritNature();
-            document.getElementById("result").textContent = `${name}\n\n${nature}`;
+            document.getElementById("result").innerHTML = `${name}\n\n${nature}`;
         }
     </script>
 </body>
