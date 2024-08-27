@@ -5,70 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maskwitch Generator</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #111;
-            color: #ddd;
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            color: #f0a500;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #f0a500;
-            border: none;
-            color: #111;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        button:hover {
-            background-color: #d98a00;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-           
-        }
-        #wisdom {
-            margin-top: 20px;
-            font-size: 18px;
-            
-        }
-        #origin {
-            margin-top: 20px;
-            font-size: 18px;
-           
-        }
-        .highlight {
-            color: #f0a500; /* Highlight color */
-            font-weight: bold;
-        }
-        .highlightgreen {
-            color: #50C878; /* Highlight green*/
-            font-weight: bold;
-        }
-        .highlightred {
-            color: #FF1493; /* Highlight red*/
-            font-weight: bold;
-        }
-    </style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #ddd;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    color: #f0a500;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #f0a500;
+    border: none;
+    color: #111;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #d98a00;
+}
+#result, #wisdom, #origin {
+    margin-top: 20px;
+    font-size: 18px;
+    max-width: 800px; /* Limit the width of the output */
+    margin-left: auto; /* Center the output horizontally */
+    margin-right: auto; /* Center the output horizontally */
+    padding: 20px; /* Add padding inside the box */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+.highlight {
+    color: #f0a500; /* Highlight color */
+    font-weight: bold;
+}
+.highlightgreen {
+    color: #50C878; /* Highlight green */
+    font-weight: bold;
+}
+.highlightred {
+    color: #FF1493; /* Highlight red */
+    font-weight: bold;
+}
+</style>
+
 </head>
 <body>
-    <button onclick="generateSpirit()">Summon Spirit</button>
-    <div id="result"></div>
-    
+<button onclick="generateSpirit()">Summon Spirit</button>
+<div id="result"></div>
+   
 
-    <button onclick="generateMaskwitchOrigin()">Where do I come from?</button>
+
+<button onclick="generateMaskwitchOrigin()">Where do I come from?</button>
     
 <div id="origin"></div>
 
 
-    <button onclick="generateMaskwitchWisdom()">What do I know?</button>
 
-    <div id="wisdom"></div>
+<button onclick="generateMaskwitchWisdom()">What do I know?</button>
+
+<div id="wisdom"></div>
 
 
 
@@ -288,7 +288,7 @@
         function generateSpirit() {
             const name = generateSpiritName();
             const nature = generateSpiritNature();
-            document.getElementById("result").innerHTML = `${name}\n\n${nature}`;
+            document.getElementById("result").innerHTML = `<h2>${name}</h2><br> ${nature}`;
         }
 //
 //
