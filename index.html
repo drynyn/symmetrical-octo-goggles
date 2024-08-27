@@ -30,11 +30,16 @@
         #result {
             margin-top: 20px;
             font-size: 18px;
-            white-space: pre-wrap; /* Preserve formatting */
+            white-space: pre-wrap; 
         }
         .highlight {
-            color: #f0a500; /* Change this to any color you prefer for highlighting */
+            color: #f0a500; /* Corange */
             font-weight: bold;
+        }
+
+        .highlight2 {
+            color: #50C878;/* Cgreen */
+            font-weight: bold; 
         }
     </style>
 </head>
@@ -215,7 +220,7 @@
             return `When the spirit appears, there is a smell of <span class="highlight">${smell1}</span> and <span class="highlight">${smell2}</span>.\n` +
                 `When the spirit moves, it makes a sound like <span class="highlight">${sound}</span>.\n` +
                 `When it speaks, its voice is <span class="highlight">${voice}</span>.\n` +
-                `Its physical form is that of a <span class="highlight">${form}</span> ${description}` +
+                `Its physical form is that of a <span class="highlight">${form}</span> <span class="highlight2"> ${description}</span> ` +
                 (withOptionsList.length ? ` and it has ${withOptionsList.map(opt => `<span class="highlight">${opt}</span>`).join(', ')}.` : '.');
         }
 
