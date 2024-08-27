@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maskwitch Spirit Generator</title>
+    <title>Maskwitch Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,28 +30,68 @@
         #result {
             margin-top: 20px;
             font-size: 18px;
-            white-space: pre-wrap; 
+           
+        }
+        #wisdom {
+            margin-top: 20px;
+            font-size: 18px;
+            
+        }
+        #origin {
+            margin-top: 20px;
+            font-size: 18px;
+           
         }
         .highlight {
-            color: #f0a500; /* Corange */
+            color: #f0a500; /* Highlight color */
             font-weight: bold;
         }
-
-        .highlight2 {
-            color: #50C878;/* Cgreen */
-            font-weight: bold; 
+        .highlightgreen {
+            color: #50C878; /* Highlight green*/
+            font-weight: bold;
+        }
+        .highlightred {
+            color: #FF1493; /* Highlight red*/
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Random Spirit Generator</h1>
-    <button onclick="generateSpirit()">Generate Spirit</button>
+    <button onclick="generateSpirit()">Summon Spirit</button>
     <div id="result"></div>
+    
+
+    <button onclick="generateMaskwitchOrigin()">Where do I come from?</button>
+    
+<div id="origin"></div>
+
+
+    <button onclick="generateMaskwitchWisdom()">What do I know?</button>
+
+    <div id="wisdom"></div>
+
+
+
 
     <script>
         // Utility function to roll a dice with 'sides' number of faces
         function rollDice(sides) {
             return Math.floor(Math.random() * sides) + 1;
+        }
+
+        // Function to get a unique random component from a list
+        function getUniqueItem(array, usedItems) {
+            let item;
+            let attempts = 0;
+            const maxAttempts = array.length * 10;
+            do {
+                item = array[rollDice(array.length) - 1];
+                attempts++;
+                if (attempts > maxAttempts) {
+                    throw new Error('Too many attempts to find a unique item.');
+                }
+            } while (usedItems.includes(item));
+            return item;
         }
 
         // Generate a random spirit name
@@ -111,41 +151,52 @@
             let name = "The ";
             let part1, part2, part3;
 
+            const usedComponents = {
+                A: [],
+                B: [],
+                C: [],
+                D: [],
+                E: []
+            };
+
+            // Function to get a unique random component
+            function getUniqueComponent(group) {
+                let options = componentGroups[group];
+                let result;
+                result = getUniqueItem(options.flat(), usedComponents[group]);
+                usedComponents[group].push(result);
+                return result;
+            }
+
             // Choose structure based on dice roll
             if (structureRoll === 1) {
-                part1 = getRandomComponent('A');
-                part2 = getRandomComponent('C');
-                part3 = getRandomComponent('E');
+                part1 = getUniqueComponent('A');
+                part2 = getUniqueComponent('C');
+                part3 = getUniqueComponent('E');
                 name += `${part1} - ${part2} - ${part3}`;
             } else if (structureRoll === 2) {
-                part1 = getRandomComponent('A');
-                part3 = getRandomComponent('E');
+                part1 = getUniqueComponent('A');
+                part3 = getUniqueComponent('E');
                 name += `${part1} - ${part1} - ${part3} - ${part3}`;
             } else if (structureRoll === 3) {
-                part1 = getRandomComponent('A');
-                part2 = getRandomComponent('C');
+                part1 = getUniqueComponent('A');
+                part2 = getUniqueComponent('C');
                 name += `${part1} - ${part2} - ${part2}`;
             } else if (structureRoll === 4) {
-                part1 = getRandomComponent('A');
-                part2 = getRandomComponent('C');
-                part3 = getRandomComponent('E');
+                part1 = getUniqueComponent('A');
+                part2 = getUniqueComponent('C');
+                part3 = getUniqueComponent('E');
                 name += `${part1} - ${part1} - ${part2} - ${part3}`;
             } else if (structureRoll === 5) {
-                part3 = getRandomComponent('E');
+                part3 = getUniqueComponent('E');
                 name += `${part3} - ${part3}`;
             } else if (structureRoll === 6) {
-                part1 = getRandomComponent('A');
-                part3 = getRandomComponent('E');
+                part1 = getUniqueComponent('A');
+                part3 = getUniqueComponent('E');
                 name += `${part1} - ${part3}`;
             }
 
             return name;
-
-            // Helper function to select a random component from given group
-            function getRandomComponent(group) {
-                const table = rollDice(6) - 1;
-                return componentGroups[group][table][rollDice(6) - 1];
-            }
         }
 
         // Generate the nature of the spirit including description and features
@@ -200,27 +251,36 @@
                 "a matted coat", "glistening fluid flowing all over it", "spreading wispy antennae", "tendrils of writhing smoke", "poisonous breath", "human hands"
             ];
 
-            const smell1 = smells[rollDice(smells.length) - 1];
-            const smell2 = smells[rollDice(smells.length) - 1];
-            const sound = sounds[rollDice(sounds.length) - 1];
-            const voice = voices[rollDice(voices.length) - 1];
-            const form = forms[rollDice(forms.length) - 1];
-            const description = descriptions[rollDice(descriptions.length) - 1];
+            // Helper function to get unique items
+            function getUniqueItems(array, count, usedItems) {
+                const result = [];
+                const availableItems = array.filter(item => !usedItems.includes(item));
+                while (result.length < count && availableItems.length) {
+                    const item = getUniqueItem(array, usedItems);
+                    result.push(item);
+                    usedItems.push(item);
+                }
+                return result;
+            }
+
+            // Ensure unique selections
+            const usedSmells = [];
+            const usedWithOptions = [];
+
+            const [smell1, smell2] = getUniqueItems(smells, 2, usedSmells);
+            const sound = getUniqueItem(sounds, []);
+            const voice = getUniqueItem(voices, []);
+            const form = getUniqueItem(forms, []);
+            const description = getUniqueItem(descriptions, []);
             
             // Pick one or more "with" options
             const numWithOptions = rollDice(3); // Number of "with" options to add (1 to 3)
-            let withOptionsList = [];
-            while (withOptionsList.length < numWithOptions) {
-                const option = withOptions[rollDice(withOptions.length) - 1];
-                if (!withOptionsList.includes(option)) {
-                    withOptionsList.push(option);
-                }
-            }
+            let withOptionsList = getUniqueItems(withOptions, numWithOptions, usedWithOptions);
 
             return `When the spirit appears, there is a smell of <span class="highlight">${smell1}</span> and <span class="highlight">${smell2}</span>.\n` +
                 `When the spirit moves, it makes a sound like <span class="highlight">${sound}</span>.\n` +
                 `When it speaks, its voice is <span class="highlight">${voice}</span>.\n` +
-                `Its physical form is that of a <span class="highlight">${form}</span> <span class="highlight2"> ${description}</span> ` +
+                `Its physical form is that of a <span class="highlight">${form}</span> <span class="highlightgreen">${description}</span>` +
                 (withOptionsList.length ? ` and it has ${withOptionsList.map(opt => `<span class="highlight">${opt}</span>`).join(', ')}.` : '.');
         }
 
@@ -230,6 +290,282 @@
             const nature = generateSpiritNature();
             document.getElementById("result").innerHTML = `${name}\n\n${nature}`;
         }
+//
+//
+//
+//
+// Function to generate the Maskwitch origin
+function generateMaskwitchOrigin() {
+    // Roll dice for each table
+    const roll1 = rollDice(6);  // Table 1
+    const roll2 = rollDice(6);  // Table 2
+    const roll3 = rollDice(6);  // Table 3
+    const roll4 = rollDice(6);  // Table 4
+    const roll5 = rollDice(6);  // Table 5
+    const roll6 = rollDice(6);  // Table 6
+    const roll7 = rollDice(6);  // Table 7
+    const roll8 = rollDice(6);  // Table 8
+    const roll9 = rollDice(6);  // Table 9
+    const roll10 = rollDice(6); // Table 10
+
+    // Define the tables as arrays
+    const table1 = [
+        "When I was a baby",
+        "When I was a child",
+        "When I was abandoned",
+        "When I was born",
+        "When I was hurt",
+        "When I was lost"
+    ];
+
+    const table2 = [
+        "a crow",
+        "a snake",
+        "an elderwitch",
+        "an ancestor",
+        "a spirit",
+        "the witches"
+    ];
+
+    const table3 = [
+        "appeared to me",
+        "found me",
+        "came to me in a dream",
+        "came to life from a song",
+        "took me away",
+        "exchanged me for another child"
+    ];
+
+    const table4 = [
+        "and took me to",
+        "and travelled with me to",
+        "and dreamed of me journeying to",
+        "and left me under",
+        "showed me the way to",
+        "travelled with me far away to"
+    ];
+
+    const table5 = [
+        "the sea",
+        "a mountain",
+        "a marsh",
+        "a river",
+        "a witch lodge",
+        "an ice cave"
+    ];
+
+    const table6 = [
+        "where a booming sound",
+        "where a flock of white birds",
+        "where a many antlered stag",
+        "where a spirit with no edges",
+        "where a bone needle",
+        "where a meal of rendered animal fat",
+        "where the wind",
+        "where the bite of a beetle",
+        "where a strange figure made of branches",
+        "where a line-faced woman with no eyes",
+        "where the vapour from a birch bag of tar",
+        "where a spider with a human face",
+        "where the dreams of elder witches",
+        "where a huge transparent fluke worm",
+        "where a potion of elk piss",
+        "where the dream of deer heads in the lake",
+        "where an awesome fever",
+        "where the understanding of a beadnet"
+    ];
+
+    const table7 = [
+        "replaced my heart with",
+        "replaced my bones with",
+        "replaced my brain with",
+        "replaced my pain with",
+        "healed my life with",
+        "replaced my thoughts with"
+    ];
+
+    const table8 = [
+        "a felt",
+        "a woven",
+        "a glowing",
+        "a spirit",
+        "a smoke",
+        "a hard"
+    ];
+
+    const table9 = [
+        "stone",
+        "bone",
+        "nettle-thread",
+        "bead",
+        "sap",
+        "flint",
+        "thought",
+        "wisdom",
+        "feeling",
+        "rhythm",
+        "dream",
+        "knowing"
+    ];
+
+    const table10 = [
+        "and I became a witch.",
+        "and from that I made my first mask.",
+        "and that was how I found my first amulet.",
+        "and that was when I knew I was a witch.",
+        "and then I sought out other witches.",
+        "and then I was taught the ways of the witches"
+    ];
+
+    // Generate the Maskwitch origin based on dice rolls
+    const origin = `${table1[roll1 - 1]} ${table2[roll2 - 1]} ${table3[roll3 - 1]} ${table4[roll4 - 1]} ${table5[roll5 - 1]} ${table6[roll6 - 1]} <span class="highlight">${table7[roll7 - 1]}</span> ${table8[roll8 - 1]} ${table9[roll9 - 1]} <span class="highlightred">${table10[roll10 - 1]}</span> `;
+
+document.getElementById("origin").innerHTML = `${name}\n\n${origin}`;
+}
+
+//
+//
+//
+// Function to generate the wisdom
+
+function generateMaskwitchWisdom() {
+    // Roll dice for each table
+    const roll1 = rollDice(6);  // Table 1
+    const roll2 = rollDice(6);  // Table 2
+    const roll3 = rollDice(6);  // Table 3
+    const roll4 = rollDice(6);  // Table 4
+    const roll5 = rollDice(6);  // Table 5
+    const roll6 = rollDice(6);  // Table 6
+
+    // Define the tables as arrays
+    const table1 = [
+    "I remember that I once",
+    "Long ago I",
+    "In the times before, I",
+    "When I was young I",
+    "Before I was a witch, I",
+    "Once at a witch lodge I"
+];
+
+const table2 = [
+    "heard of",
+    "knew of",
+    "was told of",
+    "I knew",
+    "was taught of",
+    "learned of"
+];
+
+const table3 = [
+    "an elder witch who",
+    "a deer who",
+    "a snake who",
+    "a hare who",
+    "a stag who",
+    "a cave painting which",
+    "a raven who",
+    "a sparrow who",
+    "a spirit who",
+    "a dream which",
+    "a vision which",
+    "a hunter who",
+    "a lake which",
+    "a river which",
+    "a huge stone which",
+    "the clouds which",
+    "a community which",
+    "a wandering gatherer who"
+];
+
+
+const table4 = [
+    "sang the song of",
+    "spoke the story of",
+    "danced the dance of",
+    "taught me the tale of",
+    "showed the way of",
+    "dreamed of"
+];
+
+const table5 = [
+    "knotted fibres",
+    "scrapped hides",
+    "a drawn bowstring",
+    "a thrown pebble",
+    "a tangle of eels",
+    "bubbling pitch",
+    "the winter rain",
+    "the deep roots",
+    "rising waters",
+    "the deer hooves",
+    "hunter’s feet walking",
+    "the space between plant stems",
+    "the pattern of berries",
+    "the chatter of the reeds",
+    "the turning stars",
+    "light through the trees",
+    "leaves in the wind",
+    "the waves on the lake",
+    "the water in a stream",
+    "the dancing sparks",
+    "the rhythm of innards",
+    "the screaming of birds",
+    "the deer herds",
+    "the howling of wolves",
+    "a faraway landsong",
+    "a forgotten people",
+    "a rhythm of reeds",
+    "the weaving of fibres",
+    "the flight of herons",
+    "rising waters",
+    "the path of fish",
+    "the eyes of an eel",
+    "cracking of bones",
+    "the shape of distant hills",
+    "the booming of bitterns",
+    "the lichen on pine trees"
+];
+
+const table6 = [
+    "which told of a man who",
+    "which told of a woman who",
+    "which told of a horse who",
+    "which told of a witch who",
+    "which told of a dog who",
+    "which told of a hunter who"
+];
+
+const table7 = [
+    "found",
+    "learned the making of",
+    "danced to the knowledge of",
+    "left",
+    "dreamed of",
+    "knew the making of"
+];
+
+const table8 = [
+    "an amulet",
+    "a mask",
+    "a beadnet",
+    "a witch knife",
+    "a henge",
+    "a thing",
+    "a story",
+    "a seed",
+    "a dance",
+    "a painting",
+    "a spear"
+];
+    // Generate the Wisdom based on dice rolls
+    const wisdom = `${table1[roll1 - 1]} ${table2[roll2 - 1]} ${table3[roll3 - 1]} ${table4[roll4 - 1]} ${table5[roll5 - 1]} ${table6[roll5 - 1]} ${table7[roll5 - 1]} <span class="highlight">${table8[roll5 - 1]}</span>`;
+
+    document.getElementById("wisdom").innerHTML = `${name}\n\n${wisdom}`;
+}
+
     </script>
 </body>
 </html>
+
+
+
