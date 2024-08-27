@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Spirit Generator</title>
+    <title>Maskwitch Spirit Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -145,4 +145,64 @@
                 "burning hair", "burnt hooves", "damp soil", "decayed flesh", "decaying leaf litter", "excrement",
                 "fermented fruit", "freshly broken flint", "goat fur", "moss", "peat", "pine needles",
                 "piss", "poorly tanned hides", "rotten eggs", "rotting reeds", "sawed bones", "smouldering herbs",
-                "stagn
+                "stagnant water", "stale urine", "a suppurating ulcer", "wet animal fur", "wet ashes", "wood smoke"
+            ];
+
+            const sounds = [
+                "breaking boughs", "crunching gravel", "sucking mud", "clicking joints", "grating dry bones", "crackling dry leaves",
+                "gusts of wind", "tearing flesh", "hands through tallow", "slithering", "bubbling broth", "a hundred slithering snakes"
+            ];
+
+            const voices = [
+                "an obscene whisper", "an undertow of pebbles on a beach", "an unsettling, breathy whine", "the ancient sea washing on the pebble shore", "a bestial howl", "booming",
+                "the cracking of a small fire", "curiously high-pitched", "a dying animal", "grating and painful to listen to", "grinding ice", "like a dozen people talking at once",
+                "like rain", "like something moving through undergrowth", "like thunder", "like waves", "a mesmerising drone", "muffled muttering",
+                "a pained shriek", "a reedy whisper", "the roaring of a huge bonfire", "a shrill, frightened sound", "a slow groaning moan", "the sound of a cloud of mosquitos"
+            ];
+
+            const forms = [
+                "frightening", "unnerving", "terrifying", "vibrating", "quivering", "pulsating",
+                "misshapen", "hunched", "crawling", "predatory", "angular", "constantly shifting",
+                "throbbing", "twisted", "writhing", "threatening", "faceless", "eyeless",
+                "ravening", "sinister", "rabid", "creeping", "rotting", "sinuous",
+                "amalgamation of moss", "ashes", "aurochs", "beast", "beetle", "boar",
+                "bundle of bones", "cloud", "collection of boulders", "creature", "dog", "eel",
+                "elk", "figure", "flesh", "form", "freshly skinned hide", "fumes",
+                "fungus", "heap of hides", "horse", "hyena", "jagged shape", "mass of mushrooms",
+                "mosquito", "ox", "pike", "pile of meat", "plume of smoke", "ribcage",
+                "sack of fluid", "skeleton", "smoke", "smoked flesh", "snake", "spectre",
+                "spider", "stack of reeds", "tangle of sinews", "tapeworm", "terrifying mishmash of parts", "tree",
+                "vapour", "vision", "wasp", "wild cat", "wolf", "worm"
+            ];
+
+            const sizes = [
+                "six feet tall", "seven feet tall", "eight feet tall", "nine feet tall", "ten feet tall", "eleven feet tall",
+                "twenty feet tall", "thirty feet tall", "fifty feet tall", "ten feet long", "twenty feet long", "thirty feet long"
+            ];
+
+            const smell1 = smells[rollDice(smells.length) - 1];
+            let smell2;
+            do {
+                smell2 = smells[rollDice(smells.length) - 1];
+            } while (smell2 === smell1);
+            
+            const sound = sounds[rollDice(sounds.length) - 1];
+            const voice = voices[rollDice(voices.length) - 1];
+            const form = forms[rollDice(forms.length) - 1];
+            const size = sizes[rollDice(sizes.length) - 1];
+
+            return `When the spirit appears, there is a smell of <span class="highlight">${smell1}</span> and <span class="highlight">${smell2}</span>.\n` +
+                `When the spirit moves, it makes a sound like <span class="highlight">${sound}</span>.\n` +
+                `When it speaks, its voice is <span class="highlight">${voice}</span>.\n` +
+                `Its physical form is <span class="highlight">${form}</span> and it is <span class="highlight">${size}</span>.`;
+        }
+
+        // Generate and display the spirit name and nature
+        function generateSpirit() {
+            const name = generateSpiritName();
+            const nature = generateSpiritNature();
+            document.getElementById("result").innerHTML = `${name}\n\n${nature}`;
+        }
+    </script>
+</body>
+</html>
