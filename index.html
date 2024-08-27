@@ -49,7 +49,7 @@
             return Math.floor(Math.random() * sides) + 1;
         }
 
-        // Generate a random spirit name without duplicates
+        // Generate a random spirit name
         function generateSpiritName() {
             const componentGroups = {
                 A1: ["Howling", "Shrieking", "Gasping", "Whistling", "Grinding", "Bellowing"],
@@ -90,20 +90,20 @@
                 F6: ["Eater", "Gobbler", "Taker", "Chewer", "Devourer", "Biter"]
             };
 
+            const usedComponents = new Set();
             const structureRoll = rollDice(6);
             let name = "The ";
-            let selectedComponents = new Set();
             let part1, part2, part3;
 
-            // Helper function to select a random component from given groups without duplicates
+            // Helper function to select a unique random component from given groups
             function getUniqueComponent(group1, group2) {
                 let component;
                 do {
                     const group = rollDice(6) <= 3 ? group1 : group2;
                     const tableNumber = rollDice(6);
                     component = componentGroups[`${group}${tableNumber}`][rollDice(6) - 1];
-                } while (selectedComponents.has(component));
-                selectedComponents.add(component);
+                } while (usedComponents.has(component));
+                usedComponents.add(component);
                 return component;
             }
 
@@ -120,7 +120,7 @@
             } else if (structureRoll === 3) {
                 part1 = getUniqueComponent('A', 'B');
                 part2 = getUniqueComponent('C', 'D');
-                name += `${part1} - ${part2} - ${part2} - ${part3}`;
+                name += `${part1} - ${part2} - ${part2}`;
             } else if (structureRoll === 4) {
                 part1 = getUniqueComponent('A', 'B');
                 part2 = getUniqueComponent('C', 'D');
@@ -145,54 +145,4 @@
                 "burning hair", "burnt hooves", "damp soil", "decayed flesh", "decaying leaf litter", "excrement",
                 "fermented fruit", "freshly broken flint", "goat fur", "moss", "peat", "pine needles",
                 "piss", "poorly tanned hides", "rotten eggs", "rotting reeds", "sawed bones", "smouldering herbs",
-                "stagnant water", "stale urine", "a suppurating ulcer", "wet animal fur", "wet ashes", "wood smoke"
-            ];
-
-            const sounds = [
-                "breaking boughs", "crunching gravel", "sucking mud", "clicking joints", "grating dry bones", "crackling dry leaves",
-                "gusts of wind", "tearing flesh", "hands through tallow", "slithering", "bubbling broth", "a hundred slithering snakes"
-            ];
-
-            const voices = [
-                "an obscene whisper", "an undertow of pebbles on a beach", "an unsettling, breathy whine", "the ancient sea washing on the pebble shore", "a bestial howl", "booming",
-                "the cracking of a small fire", "curiously high-pitched", "a dying animal", "grating and painful to listen to", "grinding ice", "like a dozen people talking at once",
-                "like rain", "like something moving through undergrowth", "like thunder", "like waves", "a mesmerising drone", "muffled muttering",
-                "a pained shriek", "a reedy whisper", "the roaring of a huge bonfire", "a shrill, frightened sound", "a slow groaning moan", "the sound of a cloud of mosquitos"
-            ];
-
-            const forms = [
-                "frightening", "unnerving", "terrifying", "vibrating", "quivering", "pulsating",
-                "misshapen", "hunched", "crawling", "predatory", "angular", "constantly shifting",
-                "throbbing", "twisted", "writhing", "threatening", "faceless", "eyeless",
-                "ravening", "sinister", "rabid", "creeping", "rotting", "sinuous",
-                "amalgamation of moss", "ashes", "aurochs", "beast", "beetle", "boar",
-                "bundle of bones", "cloud", "collection of boulders", "creature", "dog", "eel"
-            ];
-
-            const sizes = [
-                "six feet tall", "seven feet tall", "eight feet tall", "nine feet tall", "ten feet tall", "eleven feet tall",
-                "twenty feet tall", "thirty feet tall", "fifty feet tall", "ten feet long", "twenty feet long", "thirty feet long"
-            ];
-
-            const smell1 = smells[rollDice(30) - 1];
-            const smell2 = smells[rollDice(30) - 1];
-            const sound = sounds[rollDice(12) - 1];
-            const voice = voices[rollDice(24) - 1];
-            const form = forms[rollDice(36) - 1];
-            const size = sizes[rollDice(12) - 1];
-
-            return `When the spirit appears, there is a smell of <span class="highlight">${smell1}</span> and <span class="highlight">${smell2}</span>.\n` +
-                `When the spirit moves, it makes a sound like <span class="highlight">${sound}</span>.\n` +
-                `When it speaks, its voice is <span class="highlight">${voice}</span>.\n` +
-                `Its physical form is <span class="highlight">${form}</span> and it is <span class="highlight">${size}</span>.`;
-        }
-
-        // Generate and display the spirit name and nature
-        function generateSpirit() {
-            const name = generateSpiritName();
-            const nature = generateSpiritNature();
-            document.getElementById("result").innerHTML = `${name}\n\n${nature}`;
-        }
-    </script>
-</body>
-</html>
+                "stagn
