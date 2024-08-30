@@ -57,7 +57,6 @@ button:hover {
 <body>
 <button onclick="generateSpirit()">Summon Spirit</button>
 <div id="result"></div>
-   
 
 
 <button onclick="generateMaskwitchOrigin()">Where do I come from?</button>
@@ -72,133 +71,120 @@ button:hover {
 
 
 
-
-    <script>
-        // Utility function to roll a dice with 'sides' number of faces
+<script>
+        // Utility function to roll a dice
         function rollDice(sides) {
             return Math.floor(Math.random() * sides) + 1;
         }
+	
 
-        // Function to get a unique random component from a list
-        function getUniqueItem(array, usedItems) {
-            let item;
-            let attempts = 0;
-            const maxAttempts = array.length * 10;
-            do {
-                item = array[rollDice(array.length) - 1];
-                attempts++;
-                if (attempts > maxAttempts) {
-                    throw new Error('Too many attempts to find a unique item.');
-                }
-            } while (usedItems.includes(item));
-            return item;
-        }
-
-        // Generate a random spirit name
-        function generateSpiritName() {
-            const componentGroups = {
-                A: [
-                    ["Howling", "Shrieking", "Gasping", "Whistling", "Grinding", "Bellowing"],
-                    ["Gnawing", "Winnowing", "Cracking", "Broken", "Forgiving", "Knowing"],
-                    ["Eyeless", "Mouthless", "Faceless", "Breathless", "Boneless", "Mindless"],
-                    ["Creeping", "Crawling", "Hidden", "Galloping", "Walking", "Running"],
-                    ["Fierce", "Angry", "Unforgiving", "Relentless", "Unstoppable", "Furious"],
-                    ["Many-mouthed", "Many-eyed", "Many-handed", "Many-minded", "Many-limbed", "Many-figured"]
-                ],
-                B: [
-                    ["Gale-whipped", "Billow-cracked", "Cloud-cloaked", "Rain-shod", "Fog-eyed", "Mist-shaped"],
-                    ["Copper-ringed", "Tusk-crowned", "Thorn-wrapped", "Thistle-winged", "Snake-clad", "Tangle-haired"],
-                    ["Poison", "Toxic", "Fly-blown", "Broken", "Rancid", "Rotten"],
-                    ["Bifurcated", "Bloated", "Spindle-limbed", "Wire-toothed", "Claw-handed", "Bent-backed"],
-                    ["Flint", "Copper", "Tar", "Pitch", "Amber", "Shell"],
-                    ["Lightning", "Thunder", "Ice", "Snow", "Rain", "Fog"]
-                ],
-                C: [
-                    ["Teeth", "Bone", "Rib", "Sinew", "Skin", "Hair"],
-                    ["Blood", "Snot", "Semen", "Piss", "Shit", "Pus"],
-                    ["Spark", "Flame", "Smoke", "Fume", "Ember", "Charcoal"],
-                    ["Twig", "Branch", "Leaf", "Bark", "Bough", "Root"],
-                    ["Moss", "Reed", "Lichen", "Bloom", "Flower", "Vine"],
-                    ["Fen", "Bog", "Marsh", "Lake", "River", "Stream"]
-                ],
-                D: [
-                    ["Moor", "Heath", "Wasteland", "Tundra", "Valley", "Ravine"],
-                    ["Hill", "Mountain", "Crag", "Down", "Tor", "Plateau"],
-                    ["Stone", "Rock", "Boulder", "Pebble", "Slate", "Scree"],
-                    ["Bow", "Knife", "Amulet", "Mask", "Bag", "Spear"],
-                    ["Wound", "Fracture", "Scab", "Bruise", "Gash", "Puncture"],
-                    ["Fang", "Tusk", "Claw", "Horn", "Antler", "Tooth"]
-                ],
-                E: [
-                    ["Grinder", "Beater", "Breaker", "Cracker", "Destroyer", "Burner"],
-                    ["Archer", "Drummer", "Carver", "Hunter", "Dancer", "Whistler"],
-                    ["Mouth", "Vulva", "Penis", "Navel", "Skull", "Limb"],
-                    ["Crawler", "Shambler", "Runner", "Walker", "Stepper", "Creeper"],
-                    ["Friend", "Enemy", "Guide", "Companion", "Husband", "Wife"],
-                    ["Spirit", "Ghost", "Spectre", "Vision", "Cloud", "Shadow"]
-                ],
-                F: [
-                    ["Red Deer", "Elk", "Aurochs", "Horse", "Mammoth", "Boar"],
-                    ["Fox", "Wolf", "Tiger", "Bear", "Dog", "Lion"],
-                    ["Worm", "Fly", "Snake", "Beetle", "Spider", "Slug"],
-                    ["Eel", "Pike", "Salmon", "Trout", "Herring", "Dogfish"],
-                    ["Serpent", "Wyrm", "Beast", "Giant", "Monster", "Brute"],
-                    ["Eater", "Gobbler", "Taker", "Chewer", "Devourer", "Biter"]
-                ]
-            };
-
-            const structureRoll = rollDice(6);
-            let name = "The ";
-            let part1, part2, part3;
-
-            const usedComponents = {
-                A: [],
-                B: [],
-                C: [],
-                D: [],
-                E: []
-            };
-
-            // Function to get a unique random component
-            function getUniqueComponent(group) {
-                let options = componentGroups[group];
-                let result;
-                result = getUniqueItem(options.flat(), usedComponents[group]);
-                usedComponents[group].push(result);
-                return result;
+function generateComponent(group) {
+    const roll1 = rollDice(6);
+    let component;
+    switch (group) {
+        case 'A':
+            component = rollDice(6);
+            switch (roll1) {
+                case 1: return ["Howling", "Shrieking", "Gasping", "Whistling", "Grinding", "Bellowing"][component - 1];
+                case 2: return ["Gnawing", "Winnowing", "Cracking", "Broken", "Forgiving", "Knowing"][component - 1];
+                case 3: return ["Eyeless", "Mouthless", "Faceless", "Breathless", "Boneless", "Mindless"][component - 1];
+                case 4: return ["Creeping", "Crawling", "Hidden", "Galloping", "Walking", "Running"][component - 1];
+                case 5: return ["Fierce", "Angry", "Unforgiving", "Relentless", "Unstoppable", "Furious"][component - 1];
+                case 6: return ["Many-mouthed", "Many-eyed", "Many-handed", "Many-minded", "Many-limbed", "Many-figured"][component - 1];
             }
-
-            // Choose structure based on dice roll
-            if (structureRoll === 1) {
-                part1 = getUniqueComponent('A');
-                part2 = getUniqueComponent('C');
-                part3 = getUniqueComponent('E');
-                name += `${part1} - ${part2} - ${part3}`;
-            } else if (structureRoll === 2) {
-                part1 = getUniqueComponent('A');
-                part3 = getUniqueComponent('E');
-                name += `${part1} - ${part1} - ${part3} - ${part3}`;
-            } else if (structureRoll === 3) {
-                part1 = getUniqueComponent('A');
-                part2 = getUniqueComponent('C');
-                name += `${part1} - ${part2} - ${part2}`;
-            } else if (structureRoll === 4) {
-                part1 = getUniqueComponent('A');
-                part2 = getUniqueComponent('C');
-                part3 = getUniqueComponent('E');
-                name += `${part1} - ${part1} - ${part2} - ${part3}`;
-            } else if (structureRoll === 5) {
-                part3 = getUniqueComponent('E');
-                name += `${part3} - ${part3}`;
-            } else if (structureRoll === 6) {
-                part1 = getUniqueComponent('A');
-                part3 = getUniqueComponent('E');
-                name += `${part1} - ${part3}`;
+            break;
+        case 'B':
+            component = rollDice(6);
+            switch (roll1) {
+                case 1: return ["Gale-whipped", "Billow-cracked", "Cloud-cloaked", "Rain-shod", "Fog-eyed", "Mist-shaped"][component - 1];
+                case 2: return ["Copper-ringed", "Tusk-crowned", "Thorn-wrapped", "Thistle-winged", "Snake-clad", "Tangle-haired"][component - 1];
+                case 3: return ["Poison", "Toxic", "Fly-blown", "Broken", "Rancid", "Rotten"][component - 1];
+                case 4: return ["Bifurcated", "Bloated", "Spindle-limbed", "Wire-toothed", "Claw-handed", "Bent-backed"][component - 1];
+                case 5: return ["Flint", "Copper", "Tar", "Pitch", "Amber", "Shell"][component - 1];
+                case 6: return ["Lightning", "Thunder", "Ice", "Snow", "Rain", "Fog"][component - 1];
             }
+            break;
+        case 'C':
+            component = rollDice(6);
+            switch (roll1) {
+                case 1: return ["Teeth", "Bone", "Rib", "Sinew", "Skin", "Hair"][component - 1];
+                case 2: return ["Blood", "Snot", "Semen", "Piss", "Shit", "Pus"][component - 1];
+                case 3: return ["Spark", "Flame", "Smoke", "Fume", "Ember", "Charcoal"][component - 1];
+                case 4: return ["Twig", "Branch", "Leaf", "Bark", "Bough", "Root"][component - 1];
+                case 5: return ["Moss", "Reed", "Lichen", "Bloom", "Flower", "Vine"][component - 1];
+                case 6: return ["Fen", "Bog", "Marsh", "Lake", "River", "Stream"][component - 1];
+            }
+            break;
+        case 'D':
+            component = rollDice(6);
+            switch (roll1) {
+                case 1: return ["Moor", "Heath", "Wasteland", "Tundra", "Valley", "Ravine"][component - 1];
+                case 2: return ["Hill", "Mountain", "Crag", "Down", "Tor", "Plateau"][component - 1];
+                case 3: return ["Stone", "Rock", "Boulder", "Pebble", "Slate", "Scree"][component - 1];
+                case 4: return ["Bow", "Knife", "Amulet", "Mask", "Bag", "Spear"][component - 1];
+                case 5: return ["Wound", "Fracture", "Scab", "Bruise", "Gash", "Puncture"][component - 1];
+                case 6: return ["Fang", "Tusk", "Claw", "Horn", "Antler", "Tooth"][component - 1];
+            }
+            break;
+        case 'E':
+            component = rollDice(6);
+            switch (roll1) {
+                case 1: return ["Grinder", "Beater", "Breaker", "Cracker", "Destroyer", "Burner"][component - 1];
+                case 2: return ["Archer", "Drummer", "Carver", "Hunter", "Dancer", "Whistler"][component - 1];
+                case 3: return ["Mouth", "Vulva", "Penis", "Navel", "Skull", "Limb"][component - 1];
+                case 4: return ["Crawler", "Shambler", "Runner", "Walker", "Stepper", "Creeper"][component - 1];
+                case 5: return ["Friend", "Enemy", "Guide", "Companion", "Husband", "Wife"][component - 1];
+                case 6: return ["Spirit", "Ghost", "Spectre", "Vision", "Cloud", "Shadow"][component - 1];
+            }
+            break;
+        case 'F':
+            component = rollDice(6);
+            switch (roll1) {
+                case 1: return ["Red Deer", "Elk", "Aurochs", "Horse", "Mammoth", "Boar"][component - 1];
+                case 2: return ["Fox", "Wolf", "Tiger", "Bear", "Dog", "Lion"][component - 1];
+                case 3: return ["Worm", "Fly", "Snake", "Beetle", "Spider", "Slug"][component - 1];
+                case 4: return ["Eel", "Pike", "Salmon", "Trout", "Herring", "Dogfish"][component - 1];
+                case 5: return ["Serpent", "Wyrm", "Beast", "Giant", "Monster", "Brute"][component - 1];
+                case 6: return ["Eater", "Gobbler", "Taker", "Chewer", "Devourer", "Biter"][component - 1];
+            }
+            break;
+    }
+}
 
-            return name;
-        }
+function generateSpiritName() {
+    const structureRoll = rollDice(6);
 
+    function getComponent(group) {
+        return generateComponent(group);
+    }
+
+    let name = "The ";
+
+    switch (structureRoll) {
+        case 1:
+            name += `${getComponent('A')} - ${getComponent('C')} - ${getComponent('E')}`;
+            break;
+        case 2:
+            name += `${getComponent('A')} - ${getComponent('A')} - ${getComponent('E')} - ${getComponent('E')}`;
+            break;
+        case 3:
+            name += `${getComponent('A')} - ${getComponent('C')} - ${getComponent('C')} - ${getComponent('E')}`;
+            break;
+        case 4:
+            name += `${getComponent('A')} - ${getComponent('A')} - ${getComponent('C')} - ${getComponent('E')} - ${getComponent('E')}`;
+            break;
+        case 5:
+            name += `${getComponent('E')} - ${getComponent('E')}`;
+            break;
+        case 6:
+            name += `${getComponent('A')} - ${getComponent('E')}`;
+            break;
+    }
+
+    return name;
+}
+
+	
         // Generate the nature of the spirit including description and features
         function generateSpiritNature() {
             const smells = [
@@ -251,31 +237,22 @@ button:hover {
                 "a matted coat", "glistening fluid flowing all over it", "spreading wispy antennae", "tendrils of writhing smoke", "poisonous breath", "human hands"
             ];
 
-            // Helper function to get unique items
-            function getUniqueItems(array, count, usedItems) {
-                const result = [];
-                const availableItems = array.filter(item => !usedItems.includes(item));
-                while (result.length < count && availableItems.length) {
-                    const item = getUniqueItem(array, usedItems);
-                    result.push(item);
-                    usedItems.push(item);
-                }
-                return result;
-            }
-
-            // Ensure unique selections
-            const usedSmells = [];
-            const usedWithOptions = [];
-
-            const [smell1, smell2] = getUniqueItems(smells, 2, usedSmells);
-            const sound = getUniqueItem(sounds, []);
-            const voice = getUniqueItem(voices, []);
-            const form = getUniqueItem(forms, []);
-            const description = getUniqueItem(descriptions, []);
+            const smell1 = smells[rollDice(smells.length) - 1];
+            const smell2 = smells[rollDice(smells.length) - 1];
+            const sound = sounds[rollDice(sounds.length) - 1];
+            const voice = voices[rollDice(voices.length) - 1];
+            const form = forms[rollDice(forms.length) - 1];
+            const description = descriptions[rollDice(descriptions.length) - 1];
             
             // Pick one or more "with" options
             const numWithOptions = rollDice(3); // Number of "with" options to add (1 to 3)
-            let withOptionsList = getUniqueItems(withOptions, numWithOptions, usedWithOptions);
+            let withOptionsList = [];
+            while (withOptionsList.length < numWithOptions) {
+                const option = withOptions[rollDice(withOptions.length) - 1];
+                if (!withOptionsList.includes(option)) {
+                    withOptionsList.push(option);
+                }
+            }
 
             return `When the spirit appears, there is a smell of <span class="highlight">${smell1}</span> and <span class="highlight">${smell2}</span>.\n` +
                 `When the spirit moves, it makes a sound like <span class="highlight">${sound}</span>.\n` +
@@ -283,6 +260,14 @@ button:hover {
                 `Its physical form is that of a <span class="highlight">${form}</span> <span class="highlightgreen">${description}</span>` +
                 (withOptionsList.length ? ` and it has ${withOptionsList.map(opt => `<span class="highlight">${opt}</span>`).join(', ')}.` : '.');
         }
+
+        // Generate and display the spirit name and nature
+        function generateSpirit() {
+            const name = generateSpiritName();
+            const nature = generateSpiritNature();
+            document.getElementById("result").innerHTML = `${name}\n\n${nature}`;
+        }
+	
 
         // Generate and display the spirit name and nature
         function generateSpirit() {
@@ -558,7 +543,7 @@ const table8 = [
     "a spear"
 ];
     // Generate the Wisdom based on dice rolls
-    const wisdom = `${table1[roll1 - 1]} ${table2[roll2 - 1]} ${table3[roll3 - 1]} ${table4[roll4 - 1]} ${table5[roll5 - 1]} ${table6[roll5 - 1]} ${table7[roll5 - 1]} <span class="highlight">${table8[roll5 - 1]}</span>`;
+    const wisdom = `${table1[roll1 - 1]} ${table2[roll2 - 1]} ${table3[roll3 - 1]} ${table4[roll4 - 1]} ${table5[roll5 - 1]} ${table6[roll5 - 1]} ${table7[roll5 - 1]} <span class="highlight">${table8[roll5 - 1]}</span>.`;
 
     document.getElementById("wisdom").innerHTML = `${name}\n\n${wisdom}`;
 }
@@ -566,6 +551,3 @@ const table8 = [
     </script>
 </body>
 </html>
-
-
-
