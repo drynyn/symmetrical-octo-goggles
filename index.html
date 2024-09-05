@@ -30,7 +30,7 @@ button {
 button:hover {
     background-color: #d98a00;
 }
-#result, #wisdom, #origin {
+#result, #wisdom, #origin, #knowledge, #goodat1, #badat1, #wisdom  {
     margin-top: 20px;
     font-size: 18px;
     max-width: 800px; /* Limit the width of the output */
@@ -57,16 +57,15 @@ button:hover {
 <body>
 <button onclick="generateSpirit()">Summon Spirit</button>
 <div id="result"></div>
-
-
-<button onclick="generateMaskwitchOrigin()">Where do I come from?</button>
-    
+<button onclick="generateMaskwitchOrigin()">Where do I come from?</button>    
 <div id="origin"></div>
-
-
-
-<button onclick="generateMaskwitchWisdom()">What do I know?</button>
-
+<button onclick="generateMaskwitchKnowlege()">What do I know?</button>
+<div id="knowledge"></div>
+<button onclick="generateGoodAt()">What am I good at?</button>
+<div id="goodat1"></div>
+<button onclick="generateBadAt()">What am I bad at?</button>
+<div id="badat1"></div>
+<button onclick="generateWisdom()">What wisdom do I have?</button>
 <div id="wisdom"></div>
 
 
@@ -411,9 +410,9 @@ document.getElementById("origin").innerHTML = `${name}\n\n${origin}`;
 //
 //
 //
-// Function to generate the wisdom
+// Function to generate the knowledge
 
-function generateMaskwitchWisdom() {
+function generateMaskwitchKnowlege() {
     // Roll dice for each table
     const roll1 = rollDice(6);  // Table 1
     const roll2 = rollDice(6);  // Table 2
@@ -542,10 +541,150 @@ const table8 = [
     "a painting",
     "a spear"
 ];
-    // Generate the Wisdom based on dice rolls
-    const wisdom = `${table1[roll1 - 1]} ${table2[roll2 - 1]} ${table3[roll3 - 1]} ${table4[roll4 - 1]} ${table5[roll5 - 1]} ${table6[roll5 - 1]} ${table7[roll5 - 1]} <span class="highlight">${table8[roll5 - 1]}</span>.`;
+    // Generate the knowledge based on dice rolls
+    const knowledge = `${table1[roll1 - 1]} ${table2[roll2 - 1]} ${table3[roll3 - 1]} ${table4[roll4 - 1]} ${table5[roll5 - 1]} ${table6[roll5 - 1]} ${table7[roll5 - 1]} <span class="highlight">${table8[roll5 - 1]}</span>.`;
 
-    document.getElementById("wisdom").innerHTML = `${name}\n\n${wisdom}`;
+    document.getElementById("knowledge").innerHTML = `${knowledge}`;
+}
+// Array to represent the different abilities and skills
+const abilities = [
+    "being strong",
+    "suffering injuries",
+    "enduring pain",
+    "resisting illness",
+    "being light on their feet",
+    "throwing things",
+    "fighting",
+    "spear-fighting",
+    "wrestling",
+    "using a sling",
+    "shooting a bow",
+    "intimidating people",
+    "being limber",
+    "running",
+    "catching",
+    "climbing",
+    "moving quickly",
+    "swimming",
+    "hunting",
+    "tracking",
+    "making a fire",
+    "building things",
+    "seeing long distances",
+    "being stealthy",
+    "keeping their temper",
+    "being fair",
+    "being wise",
+    "solving puzzles",
+    "knowing things",
+    "remembering things",
+    "being empathic",
+    "being kind",
+    "being merciful",
+    "being imaginative",
+    "being humble",
+    "being patient",
+    "listening",
+    "making people feel comfortable",
+    "encouraging others",
+    "being convincing",
+    "motivating people",
+    "being mentally resilient",
+    "healing injuries",
+    "carving",
+    "sewing",
+    "painting",
+    "forging",
+    "being sharp-eyed",
+    "hearing things",
+    "finding things",
+    "having ideas",
+    "remembering things",
+    "thinking quickly",
+    "being alert",
+    "singing",
+    "music",
+    "identifying plants",
+    "finding the way",
+    "noticing lies",
+    "public speaking",
+    "communing with Elderwitches",
+    "communing with animals",
+    "communing with the dead",
+    "deciphering patterns in ice",
+    "finding things",
+    "communing with spirits"
+];
+
+// Function to generate something the character is good at
+function generateGoodAt() {
+    const roll = rollDice(abilities.length);
+	document.getElementById("goodat1").innerHTML = `Good at <span class="highlight">${abilities[roll - 1]}</span>.`;
+}
+
+// Function to generate something the character is bad at
+function generateBadAt() {
+    const roll = rollDice(abilities.length);
+	document.getElementById("badat1").innerHTML = `Bad at <span class="highlight">${abilities[roll - 1]}.</span>`;
+}
+
+// Arrays to represent the different parts of the wisdom
+const table1 = [
+    "A good witch",
+    "A wise witch",
+    "An effective witch",
+    "A kind witch",
+    "A powerful witch",
+    "A strong witch"
+];
+
+const table2 = [
+    "acts",
+    "speaks",
+    "travels",
+    "knows things",
+    "battles",
+    "sees"
+];
+
+const table3 = [
+    "quietly, and seeks the wisdom of",
+    "quickly, but seeks the counsel of",
+    "with purpose, and seeks the ways of",
+    "in many ways, and seeks the understanding of",
+    "forcefully, but respects the ways of",
+    "kindly, and learns of"
+];
+
+const table4 = [
+    "animals",
+    "the people",
+    "local elder witches",
+    "the landscape",
+    "action",
+    "hidden places",
+    "battle",
+    "their fellow witches",
+    "making",
+    "the deep places",
+    "the journey",
+    "mending",
+    "patterns",
+    "the horizon",
+    "visions",
+    "rhythms",
+    "feelings",
+    "nourishment"
+];
+
+// Function to generate a random wisdom
+function generateWisdom() {
+    const part1 = table1[rollDice(6) - 1];
+    const part2 = table2[rollDice(6) - 1];
+    const part3 = table3[rollDice(6) - 1];
+    const part4 = table4[rollDice(6) - 1];
+
+	document.getElementById("wisdom").innerHTML = `${part1} ${part2} ${part3} ${part4}.`;
 }
 
     </script>
