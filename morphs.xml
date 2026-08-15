@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<morphDatabase
+    version="1.0"
+    game="Eclipse Phase 2e">
+
+    <habitats>
+
+        <habitat id="scum">
+            <name>Scum Swarm</name>
+        </habitat>
+
+        <habitat id="aquatic">
+            <name>Aquatic Habitat</name>
+        </habitat>
+
+        <habitat id="mars">
+            <name>Mars</name>
+        </habitat>
+
+        <habitat id="venus">
+            <name>Venus</name>
+        </habitat>
+
+        <habitat id="saturn">
+            <name>Saturn</name>
+        </habitat>
+
+        <habitat id="callisto">
+            <name>Callisto</name>
+        </habitat>
+
+        <habitat id="sol">
+            <name>Sol</name>
+        </habitat>
+
+        <habitat id="luna">
+            <name>Luna</name>
+        </habitat>
+
+        <habitat id="gate">
+            <name>Gate Habitat</name>
+        </habitat>
+
+    </habitats>
+
+
+    <morphs>
+
+
+        <!-- =====================================================
+             BIOMORP
+             ===================================================== -->
+
+        <morph
+            id="imp"
+            name="Imp"
+            type="Biomorph">
+
+            <cost>5</cost>
+
+            <availability base="40">
+                <habitat
+                    id="scum"
+                    value="80"/>
+            </availability>
+
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>2</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+
+            <movement>
+                <rate
+                    mode="Walker"
+                    normal="4"
+                    running="20"/>
+            </movement>
+
+            <ware>
+                <item>Biomods</item>
+                <item>Circadian Regulation</item>
+                <item>Clean Metabolism</item>
+                <item>Cortical Stack</item>
+                <item>Drug Glands (Moderate Complexity drug)</item>
+                <item>Enhanced Pheromones</item>
+                <item>Mesh Inserts</item>
+                <item>Scent Alteration</item>
+            </ware>
+
+            <commonExtras>
+                <item>Cyberbrain</item>
+                <item>Sex Switch</item>
+                <item>Toxin Filters</item>
+            </commonExtras>
+
+        </morph>
+
+
+        <!--
+            ADDITIONAL MORPHS GO HERE.
+
+            Example structure:
+
+            <morph
+                id="example"
+                name="Example"
+                type="Biomorph">
+
+                <cost>5</cost>
+
+                <availability base="40">
+                    <habitat
+                        id="mars"
+                        value="70"/>
+                </availability>
+
+                <stats>
+                    <wt>7</wt>
+                    <dur>35</dur>
+                    <dr>53</dr>
+                </stats>
+
+                <aptitudes>
+                    <insight>1</insight>
+                    <moxie>1</moxie>
+                    <vigor>1</vigor>
+                    <flex>1</flex>
+                </aptitudes>
+
+                <movement>
+                    <rate
+                        mode="Walker"
+                        normal="4"
+                        running="20"/>
+                </movement>
+
+                <ware>
+                    <item>Example Ware</item>
+                </ware>
+
+                <morphTraits>
+                    <item>Example Trait</item>
+                </morphTraits>
+
+                <commonExtras>
+                    <item>Example Extra</item>
+                </commonExtras>
+
+                <notes>
+                    Example note.
+                </notes>
+
+            </morph>
+        -->
+
+    </morphs>
+
+</morphDatabase>
