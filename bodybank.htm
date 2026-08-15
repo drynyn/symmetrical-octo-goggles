@@ -8,20 +8,16 @@
 
     <style>
         :root {
-            --black: #060809;
-            --dark: #0b1012;
-            --panel: #101719;
-            --panel-light: #151e21;
-            --line: #263438;
-
-            --green: #69e89a;
-            --green-dim: #31714d;
-            --cyan: #5ee7e7;
-            --yellow: #e7d86c;
-            --red: #ef6b6b;
-
-            --text: #d8e3e5;
-            --muted: #708084;
+            --bg: #050708;
+            --panel: #0c1113;
+            --panel2: #11191c;
+            --line: #26363a;
+            --cyan: #62e8eb;
+            --green: #6be79a;
+            --yellow: #e8d36b;
+            --red: #ed6c6c;
+            --text: #d8e1e3;
+            --muted: #718084;
         }
 
         * {
@@ -30,45 +26,44 @@
 
         body {
             margin: 0;
+            min-height: 100vh;
             background:
                 radial-gradient(
-                    circle at top right,
-                    #112021 0,
-                    var(--black) 45%
+                    circle at 80% 0%,
+                    #102124 0,
+                    var(--bg) 42%
                 );
             color: var(--text);
-            font-family: "Courier New", Courier, monospace;
-            min-height: 100vh;
+            font-family: "Courier New", monospace;
         }
 
         header {
             border-bottom: 1px solid var(--line);
             padding: 25px;
-            background: rgba(5, 8, 9, 0.9);
+            background: rgba(5, 7, 8, .95);
         }
 
-        .header-inner {
-            max-width: 1300px;
+        .header-inner,
+        main {
+            max-width: 1400px;
             margin: auto;
         }
 
         .logo {
             color: var(--cyan);
-            font-size: clamp(2rem, 6vw, 4rem);
+            font-size: clamp(2.2rem, 6vw, 4rem);
             font-weight: bold;
-            letter-spacing: 0.18em;
+            letter-spacing: .18em;
         }
 
         .subtitle {
             margin-top: 8px;
             color: var(--muted);
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
+            font-size: .75rem;
+            letter-spacing: .12em;
         }
 
         main {
-            max-width: 1300px;
-            margin: auto;
             padding: 25px;
         }
 
@@ -79,18 +74,18 @@
         }
 
         .panel {
-            background: rgba(16, 23, 25, 0.95);
+            background: rgba(12, 17, 19, .96);
             border: 1px solid var(--line);
             padding: 18px;
         }
 
         .panel-title {
             color: var(--cyan);
-            font-size: 0.8rem;
-            letter-spacing: 0.15em;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            font-size: .75rem;
+            letter-spacing: .15em;
             border-bottom: 1px solid var(--line);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .control-group {
@@ -99,12 +94,11 @@
 
         label {
             display: flex;
-            align-items: center;
             gap: 9px;
-            margin: 9px 0;
-            color: var(--text);
+            align-items: center;
+            margin: 10px 0;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: .8rem;
         }
 
         input[type="checkbox"] {
@@ -112,42 +106,29 @@
             width: 15px;
             height: 15px;
             margin: 0;
-            border: 1px solid var(--green-dim);
-            background: var(--black);
-            cursor: pointer;
+            border: 1px solid #397052;
+            background: #050708;
         }
 
         input[type="checkbox"]:checked {
             background: var(--green);
             border-color: var(--green);
-            box-shadow: 0 0 8px rgba(105, 232, 154, 0.35);
+            box-shadow: 0 0 8px #6be79a55;
         }
 
         input[type="number"],
-        input[type="text"],
-        select {
+        input[type="search"] {
             width: 100%;
-            background: var(--black);
+            background: var(--bg);
             border: 1px solid var(--line);
             color: var(--text);
             padding: 10px;
             font: inherit;
         }
 
-        input:focus,
-        select:focus {
+        input:focus {
             outline: none;
             border-color: var(--cyan);
-        }
-
-        .number-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .number-row input {
-            width: 90px;
         }
 
         button {
@@ -159,29 +140,29 @@
             font: inherit;
             font-weight: bold;
             cursor: pointer;
-            letter-spacing: 0.08em;
+            letter-spacing: .08em;
         }
 
         button:hover {
             background: var(--green);
-            color: var(--black);
+            color: var(--bg);
         }
 
-        .secondary-button {
+        button.secondary {
             margin-top: 8px;
             border-color: var(--line);
             color: var(--muted);
         }
 
-        .secondary-button:hover {
-            background: var(--panel-light);
+        button.secondary:hover {
+            background: var(--panel2);
             color: var(--text);
             border-color: var(--cyan);
         }
 
         .status {
             color: var(--muted);
-            font-size: 0.8rem;
+            font-size: .75rem;
             margin-bottom: 15px;
         }
 
@@ -189,94 +170,116 @@
             color: var(--green);
         }
 
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .results-title {
-            color: var(--green);
-            font-size: 1rem;
-        }
-
-        .results-count {
-            color: var(--muted);
-            font-size: 0.75rem;
-        }
-
         .inventory {
             display: grid;
-            grid-template-columns: repeat(
-                auto-fill,
-                minmax(280px, 1fr)
-            );
+            grid-template-columns:
+                repeat(auto-fill, minmax(300px, 1fr));
             gap: 10px;
         }
 
         .sleeve {
-            border: 1px solid var(--line);
             background: var(--panel);
-            padding: 14px;
-            position: relative;
+            border: 1px solid var(--line);
+            padding: 15px;
+            cursor: pointer;
         }
 
         .sleeve:hover {
-            border-color: var(--green-dim);
+            border-color: var(--cyan);
         }
 
         .sleeve-number {
             color: var(--muted);
-            font-size: 0.7rem;
+            font-size: .65rem;
         }
 
         .sleeve-name {
             color: var(--cyan);
+            font-size: 1.15rem;
             font-weight: bold;
-            font-size: 1.05rem;
             margin: 5px 0;
         }
 
         .sleeve-type {
             color: var(--muted);
-            font-size: 0.75rem;
+            font-size: .7rem;
             text-transform: uppercase;
         }
 
         .availability {
-            margin-top: 12px;
             display: flex;
             justify-content: space-between;
-            border-top: 1px solid var(--line);
+            margin-top: 12px;
             padding-top: 10px;
-            font-size: 0.75rem;
+            border-top: 1px solid var(--line);
+            font-size: .7rem;
         }
 
-        .availability-value {
+        .avail {
             color: var(--green);
         }
 
-        .modified {
+        .habitat-avail {
             color: var(--yellow);
         }
 
+        .details {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--line);
+            font-size: .72rem;
+            line-height: 1.55;
+        }
+
+        .sleeve.expanded .details {
+            display: block;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin: 10px 0;
+        }
+
+        .stat {
+            background: var(--panel2);
+            padding: 7px;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: .6rem;
+        }
+
+        .stat-value {
+            color: var(--text);
+            font-weight: bold;
+        }
+
+        .section {
+            margin-top: 12px;
+        }
+
+        .section-title {
+            color: var(--cyan);
+            font-size: .65rem;
+            margin-bottom: 5px;
+        }
+
         .summary {
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .summary-row {
             display: grid;
-            grid-template-columns: 1fr 60px 1fr;
+            grid-template-columns: 150px 50px 1fr;
             gap: 10px;
             align-items: center;
             margin: 7px 0;
-            font-size: 0.75rem;
-        }
-
-        .summary-name {
-            color: var(--text);
+            font-size: .7rem;
         }
 
         .summary-count {
@@ -295,26 +298,26 @@
         }
 
         .error {
-            border: 1px solid var(--red);
             color: var(--red);
+            border: 1px solid var(--red);
             padding: 15px;
-        }
-
-        .source {
-            margin-top: 20px;
-            color: var(--muted);
-            font-size: 0.65rem;
-            line-height: 1.5;
-        }
-
-        .source a {
-            color: var(--cyan);
         }
 
         .loading {
             color: var(--yellow);
             padding: 20px;
             border: 1px solid var(--line);
+        }
+
+        .credits {
+            margin-top: 25px;
+            color: var(--muted);
+            font-size: .65rem;
+            line-height: 1.6;
+        }
+
+        .credits a {
+            color: var(--cyan);
         }
 
         @media (max-width: 850px) {
@@ -330,9 +333,8 @@
 <header>
     <div class="header-inner">
         <div class="logo">BODYBANK</div>
-
         <div class="subtitle">
-            MORPHOLOGICAL ASSET DISTRIBUTION SYSTEM // EP2
+            MORPHOLOGICAL ASSET DISTRIBUTION SYSTEM // LOCAL NODE
         </div>
     </div>
 </header>
@@ -340,12 +342,10 @@
 <main>
 
     <div id="loading" class="loading">
-        CONNECTING TO MORPHOLOGICAL DATABASE...
+        INITIALISING LOCAL MORPH DATABASE...
     </div>
 
     <div id="application" class="layout" hidden>
-
-        <!-- CONTROLS -->
 
         <aside>
 
@@ -357,24 +357,19 @@
 
                 <div class="control-group">
 
-                    <label for="inventorySize">
+                    <label for="sleeveCount">
                         NUMBER OF SLEEVES
                     </label>
 
-                    <div class="number-row">
-                        <input
-                            id="inventorySize"
-                            type="number"
-                            min="1"
-                            max="500"
-                            value="20"
-                        >
-
-                        <span>UNITS</span>
-                    </div>
+                    <input
+                        id="sleeveCount"
+                        type="number"
+                        min="1"
+                        max="500"
+                        value="20"
+                    >
 
                 </div>
-
 
                 <div class="control-group">
 
@@ -386,58 +381,40 @@
 
                 </div>
 
-
                 <div class="control-group">
 
                     <div class="panel-title">
-                        HABITAT CONDITIONS
+                        HABITAT
                     </div>
 
                     <div id="habitatFilters"></div>
 
                 </div>
 
-
-                <button id="generateButton">
+                <button id="generate">
                     GENERATE BODYBANK
                 </button>
 
                 <button
-                    id="clearButton"
-                    class="secondary-button"
+                    id="reset"
+                    class="secondary"
                 >
-                    RESET FILTERS
+                    RESET
                 </button>
 
             </div>
 
         </aside>
 
-
-        <!-- RESULTS -->
-
         <section>
 
             <div class="panel">
 
-                <div class="results-header">
-
-                    <div class="results-title">
-                        BODYBANK INVENTORY
-                    </div>
-
-                    <div
-                        id="resultsCount"
-                        class="results-count"
-                    >
-                        --
-                    </div>
-
+                <div class="panel-title">
+                    BODYBANK INVENTORY
                 </div>
 
-                <div id="status" class="status">
-                    --
-                </div>
+                <div id="status" class="status"></div>
 
                 <div
                     id="inventory"
@@ -449,11 +426,20 @@
                     class="summary"
                 ></div>
 
-                <div class="source">
-                    Morph names and Availability values are read from
-                    the Eclipse Phase 2e Morph Recognition Guide.
-                    Bodybank uses Availability as a proportional
-                    weighting rather than an Availability Test.
+                <div class="credits">
+                    Eclipse Phase material used under
+                    Creative Commons Attribution-NonCommercial-ShareAlike
+                    4.0 International.
+                    <br><br>
+                    Eclipse Phase © Posthuman Studios LLC.
+                    <br>
+                    <a
+                        href="https://eclipsephase.com"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        eclipsephase.com
+                    </a>
                 </div>
 
             </div>
