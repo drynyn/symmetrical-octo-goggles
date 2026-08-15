@@ -1,10 +1,19 @@
 "use strict";
 
+
 let morphs = [];
 let habitats = [];
 
-const loading = document.getElementById("loading");
-const application = document.getElementById("application");
+let generatedInventory = [];
+
+let selectedSleeveIndex = null;
+
+
+const loading =
+    document.getElementById("loading");
+
+const application =
+    document.getElementById("application");
 
 const typeFilters =
     document.getElementById("typeFilters");
@@ -21,8 +30,11 @@ const generateButton =
 const resetButton =
     document.getElementById("reset");
 
-const inventory =
-    document.getElementById("inventory");
+const sleeveList =
+    document.getElementById("sleeveList");
+
+const detailsPanel =
+    document.getElementById("detailsPanel");
 
 const summary =
     document.getElementById("summary");
@@ -42,17 +54,23 @@ async function initialise() {
         const response =
             await fetch("morphs.xml");
 
+
         if (!response.ok) {
+
             throw new Error(
                 "Could not load morphs.xml"
             );
+
         }
+
 
         const text =
             await response.text();
 
+
         const parser =
             new DOMParser();
+
 
         const xml =
             parser.parseFromString(
@@ -60,25 +78,36 @@ async function initialise() {
                 "application/xml"
             );
 
+
         const parserError =
             xml.querySelector("parsererror");
 
+
         if (parserError) {
+
             throw new Error(
                 "morphs.xml contains invalid XML"
             );
+
         }
 
+
         parseHabitats(xml);
+
         parseMorphs(xml);
 
         buildTypeFilters();
+
         buildHabitatFilters();
 
+
         loading.hidden = true;
+
         application.hidden = false;
 
+
         generateBodybank();
+
 
     } catch (error) {
 
@@ -105,6 +134,7 @@ function parseHabitats(xml) {
             "habitats > habitat"
         )]
         .map(node => ({
+
             id:
                 node.getAttribute("id"),
 
@@ -112,8 +142,11 @@ function parseHabitats(xml) {
                 node.querySelector("name")
                     ?.textContent
                     .trim()
-                || node.getAttribute("id")
+                ||
+                node.getAttribute("id")
+
         }));
+
 }
 
 
@@ -139,7 +172,9 @@ function parseMorphs(xml) {
 function parseMorph(node) {
 
     const availability =
-        node.querySelector("availability");
+        node.querySelector(
+            "availability"
+        );
 
     const stats =
         node.querySelector("stats");
@@ -159,11 +194,13 @@ function parseMorph(node) {
         type:
             node.getAttribute("type"),
 
+
         cost:
             node.querySelector("cost")
                 ?.textContent
                 .trim()
             || null,
+
 
         availability: {
 
@@ -174,12 +211,16 @@ function parseMorph(node) {
                     || 0
                 ),
 
+
             habitats:
                 [...(
                     availability
-                        ?.querySelectorAll("habitat")
+                        ?.querySelectorAll(
+                            "habitat"
+                        )
                     || []
-                )].map(h => ({
+                )]
+                .map(h => ({
 
                     id:
                         h.getAttribute("id"),
@@ -193,18 +234,29 @@ function parseMorph(node) {
 
         },
 
+
         stats: {
 
             wt:
-                getNumber(stats, "wt"),
+                getNumber(
+                    stats,
+                    "wt"
+                ),
 
             dur:
-                getNumber(stats, "dur"),
+                getNumber(
+                    stats,
+                    "dur"
+                ),
 
             dr:
-                getNumber(stats, "dr")
+                getNumber(
+                    stats,
+                    "dr"
+                )
 
         },
+
 
         aptitudes: {
 
@@ -234,10 +286,14 @@ function parseMorph(node) {
 
         },
 
+
         movement:
-            [...node.querySelectorAll(
-                "movement rate"
-            )].map(rate => ({
+            [
+                ...node.querySelectorAll(
+                    "movement rate"
+                )
+            ]
+            .map(rate => ({
 
                 mode:
                     rate.getAttribute("mode"),
@@ -250,11 +306,13 @@ function parseMorph(node) {
 
             })),
 
+
         ware:
             getList(
                 node,
                 "ware item"
             ),
+
 
         morphTraits:
             getList(
@@ -262,11 +320,21 @@ function parseMorph(node) {
                 "morphTraits item"
             ),
 
+
+        /*
+         * IMPORTANT:
+         *
+         * This is the list of POSSIBLE common
+         * extras. We do not automatically give
+         * the sleeve all of them.
+         */
+
         commonExtras:
             getList(
                 node,
                 "commonExtras item"
             ),
+
 
         notes:
             node.querySelector("notes")
@@ -282,18 +350,24 @@ function parseMorph(node) {
 // HELPERS
 // ============================================================
 
-function getNumber(parent, selector) {
+function getNumber(
+    parent,
+    selector
+) {
 
     if (!parent) {
         return null;
     }
 
+
     const node =
         parent.querySelector(selector);
+
 
     if (!node) {
         return null;
     }
+
 
     return Number(
         node.textContent.trim()
@@ -301,35 +375,42 @@ function getNumber(parent, selector) {
 }
 
 
-function getList(parent, selector) {
+function getList(
+    parent,
+    selector
+) {
 
     return [
         ...parent.querySelectorAll(selector)
-    ].map(node =>
+    ]
+    .map(node =>
         node.textContent.trim()
     );
+
 }
 
 
 // ============================================================
-// TYPE FILTERS
+// FILTERS
 // ============================================================
 
 function buildTypeFilters() {
 
     typeFilters.innerHTML = "";
 
+
     const types =
-        [...new Set(
-            morphs.map(morph => morph.type)
-        )].sort();
+        [
+            ...new Set(
+                morphs.map(
+                    morph => morph.type
+                )
+            )
+        ]
+        .sort();
 
 
     types.forEach(type => {
-
-        const id =
-            "type-" + slugify(type);
-
 
         const label =
             document.createElement("label");
@@ -349,17 +430,16 @@ function buildTypeFilters() {
 
 
         typeFilters.appendChild(label);
+
     });
+
 }
 
-
-// ============================================================
-// HABITAT FILTERS
-// ============================================================
 
 function buildHabitatFilters() {
 
     habitatFilters.innerHTML = "";
+
 
     habitats.forEach(habitat => {
 
@@ -381,12 +461,14 @@ function buildHabitatFilters() {
 
 
         habitatFilters.appendChild(label);
+
     });
+
 }
 
 
 // ============================================================
-// SELECTION
+// SELECTED FILTERS
 // ============================================================
 
 function getSelectedTypes() {
@@ -395,9 +477,11 @@ function getSelectedTypes() {
         ...typeFilters.querySelectorAll(
             "input:checked"
         )
-    ].map(input =>
+    ]
+    .map(input =>
         input.value
     );
+
 }
 
 
@@ -407,14 +491,16 @@ function getSelectedHabitats() {
         ...habitatFilters.querySelectorAll(
             ".habitat-checkbox:checked"
         )
-    ].map(input =>
+    ]
+    .map(input =>
         input.value
     );
+
 }
 
 
 // ============================================================
-// EFFECTIVE AVAILABILITY
+// AVAILABILITY
 // ============================================================
 
 function getEffectiveAvailability(
@@ -429,10 +515,9 @@ function getEffectiveAvailability(
 
 
     /*
-     * If several habitat conditions are selected,
-     * use the highest explicit habitat value.
-     *
-     * This prevents stacking unrelated habitat values.
+     * If multiple selected habitats have
+     * explicit Availability values, use
+     * the highest applicable value.
      */
 
     for (
@@ -453,7 +538,9 @@ function getEffectiveAvailability(
                 );
 
             modified = true;
+
         }
+
     }
 
 
@@ -461,11 +548,39 @@ function getEffectiveAvailability(
         value,
         modified
     };
+
 }
 
 
 // ============================================================
-// WEIGHTED RANDOM
+// COMMON EXTRAS
+// ============================================================
+
+function generateCommonExtras(
+    possibleExtras
+) {
+
+    /*
+     * Each Common Extra has an independent
+     * 50% chance of being present.
+     *
+     * This means:
+     *
+     * 0 extras is possible.
+     * 1 extra is possible.
+     * Multiple extras are possible.
+     * All extras are possible.
+     */
+
+    return possibleExtras.filter(
+        () => Math.random() < 0.5
+    );
+
+}
+
+
+// ============================================================
+// WEIGHTED RANDOM SELECTION
 // ============================================================
 
 function weightedRandom(items) {
@@ -491,29 +606,36 @@ function weightedRandom(items) {
 
         roll -= item.weight;
 
+
         if (roll <= 0) {
             return item;
         }
+
     }
 
 
     return items[
         items.length - 1
     ];
+
 }
 
 
 // ============================================================
-// GENERATE
+// GENERATE BODYBANK
 // ============================================================
 
 function generateBodybank() {
 
     let amount =
-        Number(sleeveCount.value);
+        Number(
+            sleeveCount.value
+        );
 
 
-    if (!Number.isFinite(amount)) {
+    if (
+        !Number.isFinite(amount)
+    ) {
         amount = 20;
     }
 
@@ -539,6 +661,10 @@ function generateBodybank() {
     const selectedHabitats =
         getSelectedHabitats();
 
+
+    /*
+     * Construct the weighted morph pool.
+     */
 
     const pool =
         morphs
@@ -583,13 +709,13 @@ function generateBodybank() {
             );
 
 
-    if (pool.length === 0) {
+    if (!pool.length) {
 
-        inventory.innerHTML = `
-            <div class="error">
-                NO ELIGIBLE MORPHS.
-                <br><br>
-                Select at least one morph type.
+        sleeveList.innerHTML = "";
+
+        detailsPanel.innerHTML = `
+            <div class="empty-details">
+                NO ELIGIBLE MORPHS
             </div>
         `;
 
@@ -600,15 +726,14 @@ function generateBodybank() {
 
 
     /*
-     * IMPORTANT:
+     * Generate individual sleeves.
      *
-     * The selected morph remains in the pool.
+     * The pool is NOT reduced after a draw.
      *
-     * Therefore every draw is independent and
-     * duplicate sleeves are possible.
+     * Therefore duplicates are possible.
      */
 
-    const generated = [];
+    generatedInventory = [];
 
 
     for (
@@ -617,30 +742,56 @@ function generateBodybank() {
         i++
     ) {
 
-        const result =
+        const selected =
             weightedRandom(pool);
 
 
-        if (result) {
-
-            generated.push({
-
-                ...result.morph,
-
-                effectiveAvailability:
-                    result.availability,
-
-                habitatModified:
-                    result.modified
-
-            });
-
+        if (!selected) {
+            continue;
         }
+
+
+        const morph =
+            selected.morph;
+
+
+        /*
+         * Generate the Common Extras for
+         * THIS PARTICULAR SLEEVE.
+         */
+
+        const commonExtras =
+            generateCommonExtras(
+                morph.commonExtras
+            );
+
+
+        generatedInventory.push({
+
+            ...morph,
+
+            effectiveAvailability:
+                selected.availability,
+
+            habitatModified:
+                selected.modified,
+
+            generatedCommonExtras:
+                commonExtras
+
+        });
+
     }
 
 
-    renderInventory(generated);
-    renderSummary(generated);
+    selectedSleeveIndex = null;
+
+
+    renderSleeveList();
+
+    renderEmptyDetails();
+
+    renderSummary();
 
 
     const habitatNames =
@@ -660,14 +811,17 @@ function generateBodybank() {
 
 
     status.innerHTML = `
+
         <strong>
-            ${generated.length}
+            ${generatedInventory.length}
         </strong>
+
         physical sleeves generated
 
         //
 
         CONDITIONS:
+
         <strong>
             ${
                 habitatNames.length
@@ -681,126 +835,288 @@ function generateBodybank() {
         //
 
         AVAILABILITY = WEIGHT
+
+        //
+
+        COMMON EXTRAS = RANDOMISED
+
     `;
+
 }
 
 
 // ============================================================
-// RENDER INVENTORY
+// SLEEVE LIST
 // ============================================================
 
-function renderInventory(generated) {
+function renderSleeveList() {
 
-    inventory.innerHTML = "";
+    sleeveList.innerHTML = "";
 
 
-    generated.forEach(
+    generatedInventory.forEach(
         (morph, index) => {
 
-            const card =
-                document.createElement("div");
+            const tile =
+                document.createElement(
+                    "div"
+                );
 
 
-            card.className =
-                "sleeve";
+            tile.className =
+                "sleeve-tile";
 
 
-            card.innerHTML = `
+            tile.dataset.index =
+                index;
+
+
+            const availabilityLabel =
+                morph.habitatModified
+                    ? "HABITAT AVAIL"
+                    : "AVAIL";
+
+
+            tile.innerHTML = `
 
                 <div class="sleeve-number">
+
                     SLEEVE
                     ${String(index + 1)
                         .padStart(3, "0")}
+
                 </div>
+
 
                 <div class="sleeve-name">
-                    ${escapeHtml(morph.name)}
+
+                    ${escapeHtml(
+                        morph.name
+                    )}
+
                 </div>
+
 
                 <div class="sleeve-type">
-                    ${escapeHtml(morph.type)}
+
+                    ${escapeHtml(
+                        morph.type
+                    )}
+
                 </div>
 
-                <div class="availability">
 
-                    <span>
-                        ${
-                            morph.habitatModified
-                                ? "HABITAT AVAIL"
-                                : "AVAIL"
-                        }
+                <div class="sleeve-meta">
+
+                    <span class="mp">
+
+                        ${escapeHtml(
+                            morph.cost
+                                ? morph.cost + " MP"
+                                : "— MP"
+                        )}
+
                     </span>
+
 
                     <span class="${
                         morph.habitatModified
                             ? "habitat-avail"
                             : "avail"
                     }">
+
+                        ${availabilityLabel}:
                         ${morph.effectiveAvailability}
+
                     </span>
 
                 </div>
 
-                <div class="details">
-
-                    ${renderStats(morph)}
-
-                    ${renderAptitudes(morph)}
-
-                    ${renderMovement(morph)}
-
-                    ${renderListSection(
-                        "WARE",
-                        morph.ware
-                    )}
-
-                    ${renderListSection(
-                        "MORPH TRAITS",
-                        morph.morphTraits
-                    )}
-
-                    ${renderListSection(
-                        "COMMON EXTRAS",
-                        morph.commonExtras
-                    )}
-
-                    ${
-                        morph.notes
-                            ? `
-                                <div class="section">
-                                    <div class="section-title">
-                                        NOTES
-                                    </div>
-                                    ${escapeHtml(
-                                        morph.notes
-                                    )}
-                                </div>
-                              `
-                            : ""
-                    }
-
-                </div>
             `;
 
 
-            card.addEventListener(
+            tile.addEventListener(
                 "click",
                 () => {
-                    card.classList.toggle(
-                        "expanded"
-                    );
+
+                    selectSleeve(index);
+
                 }
             );
 
 
-            inventory.appendChild(card);
+            sleeveList.appendChild(tile);
+
         }
     );
+
+}
+
+
+// ============================================================
+// SELECT SLEEVE
+// ============================================================
+
+function selectSleeve(index) {
+
+    selectedSleeveIndex =
+        index;
+
+
+    document
+        .querySelectorAll(
+            ".sleeve-tile"
+        )
+        .forEach(tile => {
+
+            tile.classList.toggle(
+                "selected",
+
+                Number(
+                    tile.dataset.index
+                ) === index
+            );
+
+        });
+
+
+    renderDetails(
+        generatedInventory[index],
+        index
+    );
+
+}
+
+
+// ============================================================
+// EMPTY DETAILS
+// ============================================================
+
+function renderEmptyDetails() {
+
+    detailsPanel.innerHTML = `
+
+        <div class="empty-details">
+
+            SELECT A SLEEVE
+            <br><br>
+            TO VIEW DETAILS
+
+        </div>
+
+    `;
+
 }
 
 
 // ============================================================
 // DETAILS
+// ============================================================
+
+function renderDetails(
+    morph,
+    index
+) {
+
+    detailsPanel.innerHTML = `
+
+        <div class="detail-header">
+
+            <div class="detail-number">
+
+                SLEEVE
+                ${String(index + 1)
+                    .padStart(3, "0")}
+
+            </div>
+
+
+            <div class="detail-name">
+
+                ${escapeHtml(
+                    morph.name
+                )}
+
+            </div>
+
+
+            <div class="detail-type">
+
+                ${escapeHtml(
+                    morph.type
+                )}
+
+            </div>
+
+
+            <div class="detail-badges">
+
+                <div class="badge mp">
+
+                    COST:
+                    ${
+                        morph.cost
+                            ? escapeHtml(
+                                morph.cost
+                            ) + " MP"
+                            : "—"
+                    }
+
+                </div>
+
+
+                <div class="badge avail">
+
+                    ${
+                        morph.habitatModified
+                            ? "HABITAT AVAILABILITY"
+                            : "AVAILABILITY"
+                    }:
+
+                    ${morph.effectiveAvailability}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        ${renderStats(morph)}
+
+        ${renderAptitudes(morph)}
+
+        ${renderMovement(morph)}
+
+        ${renderListSection(
+            "WARE",
+            morph.ware
+        )}
+
+        ${renderListSection(
+            "MORPH TRAITS",
+            morph.morphTraits
+        )}
+
+        ${renderGeneratedExtras(
+            morph
+        )}
+
+        ${
+            morph.notes
+                ? renderNotes(
+                    morph.notes
+                )
+                : ""
+        }
+
+    `;
+
+}
+
+
+// ============================================================
+// STATS
 // ============================================================
 
 function renderStats(morph) {
@@ -816,49 +1132,71 @@ function renderStats(morph) {
 
     return `
 
-        <div class="section-title">
-            MORPH STATS
+        <div class="detail-section">
+
+            <div class="detail-section-title">
+                MORPH STATS
+            </div>
+
+
+            <div class="stat-grid">
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        WT
+                    </div>
+
+                    <div class="stat-value">
+                        ${display(
+                            morph.stats.wt
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        DUR
+                    </div>
+
+                    <div class="stat-value">
+                        ${display(
+                            morph.stats.dur
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        DR
+                    </div>
+
+                    <div class="stat-value">
+                        ${display(
+                            morph.stats.dr
+                        )}
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="stat-grid">
-
-            <div class="stat">
-                <div class="stat-label">
-                    WT
-                </div>
-                <div class="stat-value">
-                    ${display(
-                        morph.stats.wt
-                    )}
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">
-                    DUR
-                </div>
-                <div class="stat-value">
-                    ${display(
-                        morph.stats.dur
-                    )}
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">
-                    DR
-                </div>
-                <div class="stat-value">
-                    ${display(
-                        morph.stats.dr
-                    )}
-                </div>
-            </div>
-
-        </div>
     `;
+
 }
 
+
+// ============================================================
+// APTITUDES
+// ============================================================
 
 function renderAptitudes(morph) {
 
@@ -878,52 +1216,86 @@ function renderAptitudes(morph) {
 
     return `
 
-        <div class="section-title">
-            APTITUDES
+        <div class="detail-section">
+
+            <div class="detail-section-title">
+                APTITUDES
+            </div>
+
+
+            <div class="aptitude-grid">
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        INSIGHT
+                    </div>
+
+                    <div class="stat-value">
+                        ${display(
+                            a.insight
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        MOXIE
+                    </div>
+
+                    <div class="stat-value">
+                        ${display(
+                            a.moxie
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        VIGOR
+                    </div>
+
+                    <div class="stat-value">
+                        ${display(
+                            a.vigor
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        FLEX
+                    </div>
+
+                    <div class="stat-value">
+                        ${display(
+                            a.flex
+                        )}
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="stat-grid">
-
-            <div class="stat">
-                <div class="stat-label">
-                    INSIGHT
-                </div>
-                <div class="stat-value">
-                    ${display(a.insight)}
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">
-                    MOXIE
-                </div>
-                <div class="stat-value">
-                    ${display(a.moxie)}
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">
-                    VIGOR
-                </div>
-                <div class="stat-value">
-                    ${display(a.vigor)}
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-label">
-                    FLEX
-                </div>
-                <div class="stat-value">
-                    ${display(a.flex)}
-                </div>
-            </div>
-
-        </div>
     `;
+
 }
 
+
+// ============================================================
+// MOVEMENT
+// ============================================================
 
 function renderMovement(morph) {
 
@@ -932,37 +1304,112 @@ function renderMovement(morph) {
     }
 
 
-    const lines =
-        morph.movement
-            .map(movement => `
-                <div>
-                    ${escapeHtml(
-                        movement.mode
-                    )}
-                    ${escapeHtml(
-                        movement.normal
-                    )}
-                    /
-                    ${escapeHtml(
-                        movement.running
-                    )}
-                </div>
-            `)
-            .join("");
-
-
     return `
 
-        <div class="section">
-            <div class="section-title">
+        <div class="detail-section">
+
+            <div class="detail-section-title">
                 MOVEMENT
             </div>
 
-            ${lines}
+
+            ${morph.movement
+                .map(movement => `
+
+                    <div class="movement-row">
+
+                        ${escapeHtml(
+                            movement.mode
+                        )}
+
+                        :
+
+                        ${escapeHtml(
+                            movement.normal
+                        )}
+
+                        /
+
+                        ${escapeHtml(
+                            movement.running
+                        )}
+
+                    </div>
+
+                `)
+                .join("")
+            }
+
         </div>
+
     `;
+
 }
 
+
+// ============================================================
+// GENERATED COMMON EXTRAS
+// ============================================================
+
+function renderGeneratedExtras(
+    morph
+) {
+
+    return `
+
+        <div class="detail-section">
+
+            <div class="detail-section-title">
+
+                COMMON EXTRAS
+                // RANDOMISED
+
+            </div>
+
+
+            ${
+                morph.generatedCommonExtras
+                    .length
+
+                    ? `
+
+                        <ul class="data-list">
+
+                            ${
+                                morph.generatedCommonExtras
+                                    .map(extra =>
+                                        `<li>
+                                            ${escapeHtml(
+                                                extra
+                                            )}
+                                        </li>`
+                                    )
+                                    .join("")
+                            }
+
+                        </ul>
+
+                      `
+
+                    : `
+
+                        <div class="none">
+                            None
+                        </div>
+
+                      `
+            }
+
+        </div>
+
+    `;
+
+}
+
+
+// ============================================================
+// LIST SECTIONS
+// ============================================================
 
 function renderListSection(
     title,
@@ -976,23 +1423,57 @@ function renderListSection(
 
     return `
 
-        <div class="section">
+        <div class="detail-section">
 
-            <div class="section-title">
+            <div class="detail-section-title">
+
                 ${escapeHtml(title)}
+
             </div>
 
-            ${items
-                .map(item =>
-                    `<div>
-                        ${escapeHtml(item)}
-                    </div>`
-                )
-                .join("")
-            }
+
+            <ul class="data-list">
+
+                ${items
+                    .map(item =>
+                        `<li>
+                            ${escapeHtml(item)}
+                        </li>`
+                    )
+                    .join("")
+                }
+
+            </ul>
 
         </div>
+
     `;
+
+}
+
+
+// ============================================================
+// NOTES
+// ============================================================
+
+function renderNotes(notes) {
+
+    return `
+
+        <div class="detail-section">
+
+            <div class="detail-section-title">
+                NOTES
+            </div>
+
+            <div>
+                ${escapeHtml(notes)}
+            </div>
+
+        </div>
+
+    `;
+
 }
 
 
@@ -1000,20 +1481,27 @@ function renderListSection(
 // SUMMARY
 // ============================================================
 
-function renderSummary(generated) {
+function renderSummary() {
 
     const counts =
         new Map();
 
 
-    generated.forEach(morph => {
+    generatedInventory.forEach(
+        morph => {
 
-        counts.set(
-            morph.name,
-            (counts.get(morph.name) || 0) + 1
-        );
+            counts.set(
+                morph.name,
 
-    });
+                (
+                    counts.get(
+                        morph.name
+                    ) || 0
+                ) + 1
+            );
+
+        }
+    );
 
 
     const entries =
@@ -1037,9 +1525,11 @@ function renderSummary(generated) {
 
 
     summary.innerHTML = `
+
         <div class="panel-title">
             INVENTORY DISTRIBUTION
         </div>
+
     `;
 
 
@@ -1047,7 +1537,9 @@ function renderSummary(generated) {
         ([name, count]) => {
 
             const row =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             row.className =
@@ -1069,17 +1561,21 @@ function renderSummary(generated) {
                     <div
                         class="bar-fill"
                         style="width: ${
-                            (count / maximum) * 100
+                            (count / maximum)
+                            * 100
                         }%"
                     ></div>
 
                 </div>
+
             `;
 
 
             summary.appendChild(row);
+
         }
     );
+
 }
 
 
@@ -1095,18 +1591,23 @@ function reset() {
     typeFilters
         .querySelectorAll("input")
         .forEach(input => {
+
             input.checked = true;
+
         });
 
 
     habitatFilters
         .querySelectorAll("input")
         .forEach(input => {
+
             input.checked = false;
+
         });
 
 
     generateBodybank();
+
 }
 
 
@@ -1119,26 +1620,39 @@ function display(value) {
     return value === null
         ? "—"
         : value;
-}
 
-
-function slugify(value) {
-
-    return value
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-|-$/g, "");
 }
 
 
 function escapeHtml(value) {
 
     return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
 }
 
 
@@ -1150,6 +1664,7 @@ generateButton.addEventListener(
     "click",
     generateBodybank
 );
+
 
 resetButton.addEventListener(
     "click",
