@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>BODYBANK</title>
 
     <style>
         :root {
-            --bg: #080b0d;
-            --panel: #10161a;
-            --panel2: #151d22;
-            --text: #d7e2e5;
-            --muted: #718087;
-            --cyan: #37e0e8;
-            --green: #75e68a;
-            --red: #e86666;
-            --yellow: #e6cf66;
-            --border: #26363d;
+            --black: #060809;
+            --dark: #0b1012;
+            --panel: #101719;
+            --panel-light: #151e21;
+            --line: #263438;
+
+            --green: #69e89a;
+            --green-dim: #31714d;
+            --cyan: #5ee7e7;
+            --yellow: #e7d86c;
+            --red: #ef6b6b;
+
+            --text: #d8e3e5;
+            --muted: #708084;
         }
 
         * {
@@ -25,146 +30,297 @@
 
         body {
             margin: 0;
-            background: var(--bg);
+            background:
+                radial-gradient(
+                    circle at top right,
+                    #112021 0,
+                    var(--black) 45%
+                );
             color: var(--text);
-            font-family: "Courier New", monospace;
+            font-family: "Courier New", Courier, monospace;
+            min-height: 100vh;
         }
 
         header {
+            border-bottom: 1px solid var(--line);
             padding: 25px;
-            border-bottom: 1px solid var(--border);
-            background: #0b1013;
+            background: rgba(5, 8, 9, 0.9);
+        }
+
+        .header-inner {
+            max-width: 1300px;
+            margin: auto;
         }
 
         .logo {
             color: var(--cyan);
-            font-size: 2rem;
+            font-size: clamp(2rem, 6vw, 4rem);
             font-weight: bold;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.18em;
         }
 
         .subtitle {
+            margin-top: 8px;
             color: var(--muted);
-            margin-top: 6px;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
         }
 
         main {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: auto;
             padding: 25px;
         }
 
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        input,
-        select,
-        button {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 10px;
-            font-family: inherit;
-        }
-
-        input {
-            flex: 1;
-            min-width: 220px;
-        }
-
-        button {
-            cursor: pointer;
-            color: var(--cyan);
-        }
-
-        button:hover {
-            background: var(--panel2);
-            border-color: var(--cyan);
-        }
-
-        #status {
-            color: var(--muted);
-            margin-bottom: 15px;
-        }
-
-        .sleeves {
+        .layout {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 15px;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
         }
 
-        .sleeve {
-            background: var(--panel);
-            border: 1px solid var(--border);
+        .panel {
+            background: rgba(16, 23, 25, 0.95);
+            border: 1px solid var(--line);
             padding: 18px;
         }
 
-        .sleeve:hover {
+        .panel-title {
+            color: var(--cyan);
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 9px 0;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            margin: 0;
+            border: 1px solid var(--green-dim);
+            background: var(--black);
+            cursor: pointer;
+        }
+
+        input[type="checkbox"]:checked {
+            background: var(--green);
+            border-color: var(--green);
+            box-shadow: 0 0 8px rgba(105, 232, 154, 0.35);
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            background: var(--black);
+            border: 1px solid var(--line);
+            color: var(--text);
+            padding: 10px;
+            font: inherit;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
             border-color: var(--cyan);
         }
 
-        .sleeve-header {
+        .number-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .number-row input {
+            width: 90px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: transparent;
+            border: 1px solid var(--green);
+            color: var(--green);
+            font: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 0.08em;
+        }
+
+        button:hover {
+            background: var(--green);
+            color: var(--black);
+        }
+
+        .secondary-button {
+            margin-top: 8px;
+            border-color: var(--line);
+            color: var(--muted);
+        }
+
+        .secondary-button:hover {
+            background: var(--panel-light);
+            color: var(--text);
+            border-color: var(--cyan);
+        }
+
+        .status {
+            color: var(--muted);
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+
+        .status strong {
+            color: var(--green);
+        }
+
+        .results-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .results-title {
+            color: var(--green);
+            font-size: 1rem;
+        }
+
+        .results-count {
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        .inventory {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fill,
+                minmax(280px, 1fr)
+            );
             gap: 10px;
-            margin-bottom: 12px;
+        }
+
+        .sleeve {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            padding: 14px;
+            position: relative;
+        }
+
+        .sleeve:hover {
+            border-color: var(--green-dim);
+        }
+
+        .sleeve-number {
+            color: var(--muted);
+            font-size: 0.7rem;
         }
 
         .sleeve-name {
             color: var(--cyan);
-            font-size: 1.15rem;
             font-weight: bold;
+            font-size: 1.05rem;
+            margin: 5px 0;
         }
 
-        .id {
+        .sleeve-type {
             color: var(--muted);
             font-size: 0.75rem;
-        }
-
-        .tag {
-            display: inline-block;
-            border: 1px solid var(--border);
-            padding: 3px 6px;
-            margin: 2px;
-            font-size: 0.75rem;
-            color: var(--green);
-        }
-
-        .details {
-            margin-top: 15px;
-            line-height: 1.6;
-        }
-
-        .label {
-            color: var(--muted);
+            text-transform: uppercase;
         }
 
         .availability {
-            margin-top: 15px;
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--line);
             padding-top: 10px;
-            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
         }
 
-        .available {
+        .availability-value {
             color: var(--green);
         }
 
-        .unavailable {
-            color: var(--red);
-        }
-
-        .restricted {
+        .modified {
             color: var(--yellow);
         }
 
+        .summary {
+            margin-top: 20px;
+        }
+
+        .summary-row {
+            display: grid;
+            grid-template-columns: 1fr 60px 1fr;
+            gap: 10px;
+            align-items: center;
+            margin: 7px 0;
+            font-size: 0.75rem;
+        }
+
+        .summary-name {
+            color: var(--text);
+        }
+
+        .summary-count {
+            color: var(--green);
+            text-align: right;
+        }
+
+        .bar {
+            height: 5px;
+            background: #172124;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: var(--green);
+        }
+
         .error {
-            color: var(--red);
             border: 1px solid var(--red);
+            color: var(--red);
             padding: 15px;
+        }
+
+        .source {
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 0.65rem;
+            line-height: 1.5;
+        }
+
+        .source a {
+            color: var(--cyan);
+        }
+
+        .loading {
+            color: var(--yellow);
+            padding: 20px;
+            border: 1px solid var(--line);
+        }
+
+        @media (max-width: 850px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -172,38 +328,139 @@
 <body>
 
 <header>
-    <div class="logo">BODYBANK</div>
-    <div class="subtitle">
-        MORPHOLOGICAL ASSET REGISTRY // NODE: LOCAL
+    <div class="header-inner">
+        <div class="logo">BODYBANK</div>
+
+        <div class="subtitle">
+            MORPHOLOGICAL ASSET DISTRIBUTION SYSTEM // EP2
+        </div>
     </div>
 </header>
 
 <main>
 
-    <div class="controls">
-        <input
-            type="text"
-            id="search"
-            placeholder="Search designation, type, purpose..."
-        >
-
-        <select id="typeFilter">
-            <option value="all">ALL MORPH TYPES</option>
-        </select>
-
-        <select id="availabilityFilter">
-            <option value="all">ALL STATUS</option>
-            <option value="available">AVAILABLE</option>
-            <option value="restricted">RESTRICTED</option>
-            <option value="unavailable">UNAVAILABLE</option>
-        </select>
-
-        <button id="randomButton">RANDOM SLEEVE</button>
+    <div id="loading" class="loading">
+        CONNECTING TO MORPHOLOGICAL DATABASE...
     </div>
 
-    <div id="status">Connecting to Bodybank...</div>
+    <div id="application" class="layout" hidden>
 
-    <div id="sleeves" class="sleeves"></div>
+        <!-- CONTROLS -->
+
+        <aside>
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    BANK CONFIGURATION
+                </div>
+
+                <div class="control-group">
+
+                    <label for="inventorySize">
+                        NUMBER OF SLEEVES
+                    </label>
+
+                    <div class="number-row">
+                        <input
+                            id="inventorySize"
+                            type="number"
+                            min="1"
+                            max="500"
+                            value="20"
+                        >
+
+                        <span>UNITS</span>
+                    </div>
+
+                </div>
+
+
+                <div class="control-group">
+
+                    <div class="panel-title">
+                        MORPH TYPES
+                    </div>
+
+                    <div id="typeFilters"></div>
+
+                </div>
+
+
+                <div class="control-group">
+
+                    <div class="panel-title">
+                        HABITAT CONDITIONS
+                    </div>
+
+                    <div id="habitatFilters"></div>
+
+                </div>
+
+
+                <button id="generateButton">
+                    GENERATE BODYBANK
+                </button>
+
+                <button
+                    id="clearButton"
+                    class="secondary-button"
+                >
+                    RESET FILTERS
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- RESULTS -->
+
+        <section>
+
+            <div class="panel">
+
+                <div class="results-header">
+
+                    <div class="results-title">
+                        BODYBANK INVENTORY
+                    </div>
+
+                    <div
+                        id="resultsCount"
+                        class="results-count"
+                    >
+                        --
+                    </div>
+
+                </div>
+
+                <div id="status" class="status">
+                    --
+                </div>
+
+                <div
+                    id="inventory"
+                    class="inventory"
+                ></div>
+
+                <div
+                    id="summary"
+                    class="summary"
+                ></div>
+
+                <div class="source">
+                    Morph names and Availability values are read from
+                    the Eclipse Phase 2e Morph Recognition Guide.
+                    Bodybank uses Availability as a proportional
+                    weighting rather than an Availability Test.
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
 
 </main>
 
