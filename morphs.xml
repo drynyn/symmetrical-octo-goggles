@@ -1,167 +1,887 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<morphDatabase
-    version="1.0"
-    game="Eclipse Phase 2e">
+    <title>BODYBANK</title>
 
-    <habitats>
+    <style>
 
-        <habitat id="scum">
-            <name>Scum Swarm</name>
-        </habitat>
+        :root {
+            --bg: #050708;
+            --panel: #0c1113;
+            --panel2: #11191c;
+            --line: #26363a;
 
-        <habitat id="aquatic">
-            <name>Aquatic Habitat</name>
-        </habitat>
+            --cyan: #62e8eb;
+            --green: #6be79a;
+            --yellow: #e8d36b;
+            --red: #ed6c6c;
 
-        <habitat id="mars">
-            <name>Mars</name>
-        </habitat>
-
-        <habitat id="venus">
-            <name>Venus</name>
-        </habitat>
-
-        <habitat id="saturn">
-            <name>Saturn</name>
-        </habitat>
-
-        <habitat id="callisto">
-            <name>Callisto</name>
-        </habitat>
-
-        <habitat id="sol">
-            <name>Sol</name>
-        </habitat>
-
-        <habitat id="luna">
-            <name>Luna</name>
-        </habitat>
-
-        <habitat id="gate">
-            <name>Gate Habitat</name>
-        </habitat>
-
-    </habitats>
+            --text: #d8e1e3;
+            --muted: #718084;
+        }
 
 
-    <morphs>
+        * {
+            box-sizing: border-box;
+        }
 
 
-        <!-- =====================================================
-             BIOMORP
-             ===================================================== -->
+        body {
+            margin: 0;
+            min-height: 100vh;
 
-        <morph
-            id="imp"
-            name="Imp"
-            type="Biomorph">
+            background:
+                radial-gradient(
+                    circle at 80% 0%,
+                    #102124 0,
+                    var(--bg) 42%
+                );
 
-            <cost>5</cost>
+            color: var(--text);
 
-            <availability base="40">
-                <habitat
-                    id="scum"
-                    value="80"/>
-            </availability>
-
-            <stats>
-                <wt>7</wt>
-                <dur>35</dur>
-                <dr>53</dr>
-            </stats>
-
-            <aptitudes>
-                <insight>0</insight>
-                <moxie>2</moxie>
-                <vigor>1</vigor>
-                <flex>1</flex>
-            </aptitudes>
-
-            <movement>
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="20"/>
-            </movement>
-
-            <ware>
-                <item>Biomods</item>
-                <item>Circadian Regulation</item>
-                <item>Clean Metabolism</item>
-                <item>Cortical Stack</item>
-                <item>Drug Glands (Moderate Complexity drug)</item>
-                <item>Enhanced Pheromones</item>
-                <item>Mesh Inserts</item>
-                <item>Scent Alteration</item>
-            </ware>
-
-            <commonExtras>
-                <item>Cyberbrain</item>
-                <item>Sex Switch</item>
-                <item>Toxin Filters</item>
-            </commonExtras>
-
-        </morph>
+            font-family:
+                "Courier New",
+                monospace;
+        }
 
 
-        <!--
-            ADDITIONAL MORPHS GO HERE.
+        header {
+            border-bottom: 1px solid var(--line);
 
-            Example structure:
+            padding: 25px;
 
-            <morph
-                id="example"
-                name="Example"
-                type="Biomorph">
+            background:
+                rgba(5, 7, 8, .95);
+        }
 
-                <cost>5</cost>
 
-                <availability base="40">
-                    <habitat
-                        id="mars"
-                        value="70"/>
-                </availability>
+        .header-inner,
+        main {
+            max-width: 1400px;
+            margin: auto;
+        }
 
-                <stats>
-                    <wt>7</wt>
-                    <dur>35</dur>
-                    <dr>53</dr>
-                </stats>
 
-                <aptitudes>
-                    <insight>1</insight>
-                    <moxie>1</moxie>
-                    <vigor>1</vigor>
-                    <flex>1</flex>
-                </aptitudes>
+        .logo {
+            color: var(--cyan);
 
-                <movement>
-                    <rate
-                        mode="Walker"
-                        normal="4"
-                        running="20"/>
-                </movement>
+            font-size:
+                clamp(2.2rem, 6vw, 4rem);
 
-                <ware>
-                    <item>Example Ware</item>
-                </ware>
+            font-weight: bold;
 
-                <morphTraits>
-                    <item>Example Trait</item>
-                </morphTraits>
+            letter-spacing: .18em;
+        }
 
-                <commonExtras>
-                    <item>Example Extra</item>
-                </commonExtras>
 
-                <notes>
-                    Example note.
-                </notes>
+        .subtitle {
+            margin-top: 8px;
 
-            </morph>
-        -->
+            color: var(--muted);
 
-    </morphs>
+            font-size: .75rem;
 
-</morphDatabase>
+            letter-spacing: .12em;
+        }
+
+
+        main {
+            padding: 25px;
+        }
+
+
+        .layout {
+            display: grid;
+
+            grid-template-columns:
+                300px minmax(0, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .panel {
+            background:
+                rgba(12, 17, 19, .96);
+
+            border: 1px solid var(--line);
+
+            padding: 18px;
+        }
+
+
+        .panel-title {
+            color: var(--cyan);
+
+            font-size: .75rem;
+
+            letter-spacing: .15em;
+
+            border-bottom:
+                1px solid var(--line);
+
+            padding-bottom: 10px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+
+        label {
+            display: flex;
+
+            gap: 9px;
+
+            align-items: center;
+
+            margin: 10px 0;
+
+            cursor: pointer;
+
+            font-size: .8rem;
+        }
+
+
+        input[type="checkbox"] {
+            appearance: none;
+
+            width: 15px;
+            height: 15px;
+
+            margin: 0;
+
+            border:
+                1px solid #397052;
+
+            background: #050708;
+        }
+
+
+        input[type="checkbox"]:checked {
+            background: var(--green);
+
+            border-color:
+                var(--green);
+
+            box-shadow:
+                0 0 8px #6be79a55;
+        }
+
+
+        input[type="number"] {
+            width: 100%;
+
+            background: var(--bg);
+
+            border:
+                1px solid var(--line);
+
+            color: var(--text);
+
+            padding: 10px;
+
+            font: inherit;
+        }
+
+
+        input:focus {
+            outline: none;
+
+            border-color:
+                var(--cyan);
+        }
+
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            background: transparent;
+
+            border:
+                1px solid var(--green);
+
+            color: var(--green);
+
+            font: inherit;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            letter-spacing: .08em;
+        }
+
+
+        button:hover {
+            background: var(--green);
+
+            color: var(--bg);
+        }
+
+
+        button.secondary {
+            margin-top: 8px;
+
+            border-color: var(--line);
+
+            color: var(--muted);
+        }
+
+
+        button.secondary:hover {
+            background: var(--panel2);
+
+            color: var(--text);
+
+            border-color: var(--cyan);
+        }
+
+
+        .status {
+            color: var(--muted);
+
+            font-size: .75rem;
+
+            margin-bottom: 15px;
+        }
+
+
+        .status strong {
+            color: var(--green);
+        }
+
+
+        /*
+         * MAIN BODYBANK AREA
+         */
+
+        .bodybank {
+            display: grid;
+
+            grid-template-columns:
+                minmax(260px, 380px)
+                minmax(0, 1fr);
+
+            min-height: 650px;
+
+            border:
+                1px solid var(--line);
+        }
+
+
+        /*
+         * VERTICAL SLEEVE LIST
+         */
+
+        .sleeve-list {
+            border-right:
+                1px solid var(--line);
+
+            overflow-y: auto;
+
+            max-height: 750px;
+        }
+
+
+        .sleeve-tile {
+            padding: 13px 15px;
+
+            border-bottom:
+                1px solid var(--line);
+
+            cursor: pointer;
+
+            background: var(--panel);
+        }
+
+
+        .sleeve-tile:hover {
+            background:
+                var(--panel2);
+        }
+
+
+        .sleeve-tile.selected {
+            background:
+                #102426;
+
+            border-left:
+                3px solid var(--cyan);
+
+            padding-left: 12px;
+        }
+
+
+        .sleeve-number {
+            color: var(--muted);
+
+            font-size: .6rem;
+
+            margin-bottom: 3px;
+        }
+
+
+        .sleeve-name {
+            color: var(--cyan);
+
+            font-size: .95rem;
+
+            font-weight: bold;
+        }
+
+
+        .sleeve-type {
+            color: var(--muted);
+
+            font-size: .6rem;
+
+            text-transform: uppercase;
+
+            margin-top: 3px;
+        }
+
+
+        .sleeve-meta {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-top: 9px;
+
+            padding-top: 8px;
+
+            border-top:
+                1px solid var(--line);
+
+            font-size: .65rem;
+        }
+
+
+        .mp {
+            color: var(--yellow);
+        }
+
+
+        .avail {
+            color: var(--green);
+        }
+
+
+        .habitat-avail {
+            color: var(--yellow);
+        }
+
+
+        /*
+         * DETAILS PANEL
+         */
+
+        .details-panel {
+            padding: 25px;
+
+            overflow-y: auto;
+
+            max-height: 750px;
+        }
+
+
+        .empty-details {
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: var(--muted);
+
+            text-align: center;
+
+            font-size: .75rem;
+
+            letter-spacing: .1em;
+        }
+
+
+        .detail-header {
+            border-bottom:
+                1px solid var(--line);
+
+            padding-bottom: 18px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .detail-number {
+            color: var(--muted);
+
+            font-size: .65rem;
+        }
+
+
+        .detail-name {
+            color: var(--cyan);
+
+            font-size: 2rem;
+
+            font-weight: bold;
+
+            margin: 5px 0;
+        }
+
+
+        .detail-type {
+            color: var(--muted);
+
+            font-size: .7rem;
+
+            text-transform: uppercase;
+        }
+
+
+        .detail-badges {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .badge {
+            border:
+                1px solid var(--line);
+
+            padding: 7px 10px;
+
+            font-size: .7rem;
+        }
+
+
+        .badge.mp {
+            color: var(--yellow);
+
+            border-color:
+                #6b6335;
+        }
+
+
+        .badge.avail {
+            color: var(--green);
+
+            border-color:
+                #397052;
+        }
+
+
+        .detail-section {
+            margin-top: 25px;
+        }
+
+
+        .detail-section-title {
+            color: var(--cyan);
+
+            font-size: .7rem;
+
+            letter-spacing: .12em;
+
+            border-bottom:
+                1px solid var(--line);
+
+            padding-bottom: 7px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .stat-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 7px;
+        }
+
+
+        .stat {
+            background: var(--panel2);
+
+            padding: 10px;
+
+            text-align: center;
+        }
+
+
+        .stat-label {
+            color: var(--muted);
+
+            font-size: .6rem;
+        }
+
+
+        .stat-value {
+            color: var(--text);
+
+            font-weight: bold;
+
+            margin-top: 3px;
+        }
+
+
+        .aptitude-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 7px;
+        }
+
+
+        .movement-row {
+            padding: 7px 0;
+
+            border-bottom:
+                1px solid var(--line);
+
+            font-size: .75rem;
+        }
+
+
+        .data-list {
+            margin: 0;
+            padding: 0;
+
+            list-style: none;
+        }
+
+
+        .data-list li {
+            padding: 6px 0;
+
+            border-bottom:
+                1px solid var(--line);
+
+            font-size: .75rem;
+        }
+
+
+        .data-list li::before {
+            content: "> ";
+
+            color: var(--green);
+        }
+
+
+        .none {
+            color: var(--muted);
+
+            font-size: .7rem;
+
+            font-style: italic;
+        }
+
+
+        /*
+         * SUMMARY
+         */
+
+        .summary {
+            margin-top: 25px;
+        }
+
+
+        .summary-row {
+            display: grid;
+
+            grid-template-columns:
+                150px 50px 1fr;
+
+            gap: 10px;
+
+            align-items: center;
+
+            margin: 7px 0;
+
+            font-size: .7rem;
+        }
+
+
+        .summary-count {
+            color: var(--green);
+
+            text-align: right;
+        }
+
+
+        .bar {
+            height: 5px;
+
+            background: #172124;
+        }
+
+
+        .bar-fill {
+            height: 100%;
+
+            background: var(--green);
+        }
+
+
+        .error {
+            color: var(--red);
+
+            border:
+                1px solid var(--red);
+
+            padding: 15px;
+        }
+
+
+        .loading {
+            color: var(--yellow);
+
+            padding: 20px;
+
+            border:
+                1px solid var(--line);
+        }
+
+
+        .credits {
+            margin-top: 25px;
+
+            color: var(--muted);
+
+            font-size: .65rem;
+
+            line-height: 1.6;
+        }
+
+
+        @media (max-width: 900px) {
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .bodybank {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .sleeve-list {
+                border-right: none;
+
+                border-bottom:
+                    1px solid var(--line);
+
+                max-height: 350px;
+            }
+
+            .details-panel {
+                min-height: 500px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<header>
+
+    <div class="header-inner">
+
+        <div class="logo">
+            BODYBANK
+        </div>
+
+        <div class="subtitle">
+            MORPHOLOGICAL ASSET DISTRIBUTION SYSTEM
+            // LOCAL NODE
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <div id="loading" class="loading">
+        INITIALISING LOCAL MORPH DATABASE...
+    </div>
+
+
+    <div
+        id="application"
+        class="layout"
+        hidden
+    >
+
+        <!-- =================================================
+             CONTROLS
+             ================================================= -->
+
+        <aside>
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    BANK CONFIGURATION
+                </div>
+
+
+                <div class="control-group">
+
+                    <label for="sleeveCount">
+                        NUMBER OF SLEEVES
+                    </label>
+
+                    <input
+                        id="sleeveCount"
+                        type="number"
+                        min="1"
+                        max="500"
+                        value="20"
+                    >
+
+                </div>
+
+
+                <div class="control-group">
+
+                    <div class="panel-title">
+                        MORPH TYPES
+                    </div>
+
+                    <div id="typeFilters"></div>
+
+                </div>
+
+
+                <div class="control-group">
+
+                    <div class="panel-title">
+                        HABITAT
+                    </div>
+
+                    <div id="habitatFilters"></div>
+
+                </div>
+
+
+                <button id="generate">
+                    GENERATE BODYBANK
+                </button>
+
+
+                <button
+                    id="reset"
+                    class="secondary"
+                >
+                    RESET
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =================================================
+             BODYBANK
+             ================================================= -->
+
+        <section>
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    BODYBANK INVENTORY
+                </div>
+
+
+                <div id="status" class="status"></div>
+
+
+                <div class="bodybank">
+
+                    <!-- VERTICAL LIST -->
+
+                    <div
+                        id="sleeveList"
+                        class="sleeve-list"
+                    ></div>
+
+
+                    <!-- DETAILS -->
+
+                    <div
+                        id="detailsPanel"
+                        class="details-panel"
+                    >
+
+                        <div class="empty-details">
+
+                            SELECT A SLEEVE
+                            <br>
+                            TO VIEW DETAILS
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="summary"
+                    class="summary"
+                ></div>
+
+
+                <div class="credits">
+
+                    Eclipse Phase material used under
+                    Creative Commons Attribution-NonCommercial-ShareAlike
+                    4.0 International.
+
+                    <br><br>
+
+                    Eclipse Phase © Posthuman Studios LLC.
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script src="bodybank.js"></script>
+
+</body>
+</html>
