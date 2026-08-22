@@ -590,7 +590,7 @@ function weightedRandom(items) {
 
     const exponent =
         normalBias?.checked
-            ? 2.5
+            ? 1.5
             : 1;
 
     const total =
@@ -849,7 +849,7 @@ function generateBodybank() {
         //
 
         ${normalBias?.checked
-            ? "AVAILABILITY = WEIGHT²·⁵"
+            ? "AVAILABILITY = WEIGHT¹·⁵"
             : "AVAILABILITY = WEIGHT"
         }
 
