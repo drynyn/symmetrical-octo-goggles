@@ -24,6 +24,9 @@ const habitatFilters =
 const sleeveCount =
     document.getElementById("sleeveCount");
 
+const normalBias =
+    document.getElementById("normalBias");
+
 const generateButton =
     document.getElementById("generate");
 
@@ -585,10 +588,18 @@ function generateCommonExtras(
 
 function weightedRandom(items) {
 
+    const exponent =
+        normalBias?.checked
+            ? 2.5
+            : 1;
+
     const total =
         items.reduce(
             (sum, item) =>
-                sum + item.weight,
+                sum + Math.pow(
+                    item.weight,
+                    exponent
+                ),
             0
         );
 
@@ -604,7 +615,10 @@ function weightedRandom(items) {
 
     for (const item of items) {
 
-        roll -= item.weight;
+        roll -= Math.pow(
+            item.weight,
+            exponent
+        );
 
 
         if (roll <= 0) {
@@ -839,6 +853,11 @@ function generateBodybank() {
         //
 
         COMMON EXTRAS = RANDOMISED
+
+        //
+
+        NORMAL BIAS =
+        ${normalBias?.checked ? "ON" : "OFF"}
 
     `;
 
@@ -1669,6 +1688,12 @@ generateButton.addEventListener(
 resetButton.addEventListener(
     "click",
     reset
+);
+
+
+normalBias.addEventListener(
+    "change",
+    generateBodybank
 );
 
 
