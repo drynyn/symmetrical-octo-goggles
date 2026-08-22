@@ -1,0 +1,46 @@
+name: Adjust generator
+
+on:
+  push:
+    paths:
+      - '.github/workflows/adjust-generator.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Patch generator
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('bodybank.js')
+          s = p.read_text()
+
+          old_status = '''        AVAILABILITY = WEIGHT\n\n        //\n\n        COMMON EXTRAS = RANDOMISED\n\n        //\n\n        NORMAL BIAS =\n        ${normalBias?.checked ? "ON" : "OFF"}\n'''
+          new_status = '''        ${normalBias?.checked\n            ? "AVAILABILITY = WEIGHT²·⁵"\n            : "AVAILABILITY = WEIGHT"\n        }\n\n        //\n\n        COMMON EXTRAS = RANDOMISED\n'''
+
+          if old_status not in s:
+              raise SystemExit('Expected status block not found')
+          s = s.replace(old_status, new_status, 1)
+
+          old_listener = '''normalBias.addEventListener(\n    "change",\n    generateBodybank\n);\n\n\n'''
+          if old_listener not in s:
+              raise SystemExit('Expected normalBias listener not found')
+          s = s.replace(old_listener, '', 1)
+
+          p.write_text(s)
+          PY
+
+      - name: Commit changes and remove patch workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bodybank.js .github/workflows/adjust-generator.yml
+          git commit -m "Update normal bias status display"
+          git push
