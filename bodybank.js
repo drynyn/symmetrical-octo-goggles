@@ -1482,7 +1482,7 @@ function renderNotes(notes) {
 // ============================================================
 
 function renderSummary() {
-
+/*
     const counts =
         new Map();
 
@@ -1574,7 +1574,7 @@ function renderSummary() {
             summary.appendChild(row);
 
         }
-    );
+    )*/
 
 }
 
