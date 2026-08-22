@@ -848,16 +848,14 @@ function generateBodybank() {
 
         //
 
-        AVAILABILITY = WEIGHT
+        ${normalBias?.checked
+            ? "AVAILABILITY = WEIGHT²·⁵"
+            : "AVAILABILITY = WEIGHT"
+        }
 
         //
 
         COMMON EXTRAS = RANDOMISED
-
-        //
-
-        NORMAL BIAS =
-        ${normalBias?.checked ? "ON" : "OFF"}
 
     `;
 
@@ -1688,12 +1686,6 @@ generateButton.addEventListener(
 resetButton.addEventListener(
     "click",
     reset
-);
-
-
-normalBias.addEventListener(
-    "change",
-    generateBodybank
 );
 
 
