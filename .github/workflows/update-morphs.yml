@@ -3,8 +3,6 @@ name: Update morph database from Eclipse Phase 2e
 on:
   push:
     branches: [main]
-    paths:
-      - '.github/workflows/update-morphs.yml'
 
 permissions:
   contents: write
@@ -48,10 +46,6 @@ jobs:
               s = re.sub(r'[^a-z0-9]+', '-', s).strip('-')
               return s or 'morph'
 
-          def number(pattern, text, default=None):
-              m = re.search(pattern, text, re.I)
-              return float(m.group(1)) if m else default
-
           def parse_cost(s):
               m = re.search(r'Cost:\s*[^()]*?(?:\\((\\d+)\\s*MP\\)|([0-9]+)\\s*MP)', s, re.I)
               if not m:
@@ -72,8 +66,9 @@ jobs:
           morphs = {}
 
           for category, url in URLS:
-              html = session.get(url, timeout=30).text
-              soup = BeautifulSoup(html, 'html.parser')
+              response = session.get(url, timeout=30)
+              response.raise_for_status()
+              soup = BeautifulSoup(response.text, 'html.parser')
               headings = soup.find_all(['h2', 'h3'])
 
               for heading in headings:
@@ -86,16 +81,16 @@ jobs:
 
                   bits = []
                   node = heading
-                  for _ in range(12):
+                  for _ in range(20):
                       node = node.find_next()
                       if node is None:
                           break
                       text = clean(node.get_text(' ', strip=True))
                       if 'Cost:' in text and 'Avail:' in text:
                           bits.append(text)
-                      if 'Movement Rate:' in text or 'Ware:' in text or 'Common Extras:' in text or 'Morph Traits:' in text:
+                      if any(x in text for x in ('Movement Rate:', 'Ware:', 'Common Extras:', 'Morph Traits:')):
                           bits.append(text)
-                      if len(bits) >= 5:
+                      if len(bits) >= 6:
                           break
 
                   blob = '\n'.join(dict.fromkeys(bits))
@@ -109,26 +104,19 @@ jobs:
                   cost = parse_cost(blob)
                   avail, habitat_values = parse_avail(blob)
                   entry = {
-                      'id': slug(name),
-                      'name': name,
-                      'type': category,
-                      'cost': cost,
-                      'avail': avail,
-                      'habitats': habitat_values,
+                      'id': slug(name), 'name': name, 'type': category,
+                      'cost': cost, 'avail': avail, 'habitats': habitat_values,
                       'blob': blob,
                   }
 
                   stat = re.search(r'WT:\s*([0-9]+)\\s*[•/]\\s*DUR:\s*([0-9]+)\\s*[•/]\\s*DR:\s*([0-9]+)', blob)
                   if stat:
                       entry['stats'] = tuple(map(int, stat.groups()))
-
                   apt = re.search(r'Insight\s*([0-9]+),\s*Moxie\s*([0-9]+),\s*Vigor\s*([0-9]+),\s*Flex\s*([0-9]+)', blob)
                   if apt:
                       entry['aptitudes'] = tuple(map(int, apt.groups()))
-
                   morphs[key] = entry
 
-          # Preserve a useful ordering.
           entries = sorted(morphs.values(), key=lambda e: (e['type'], e['name'].lower()))
 
           root = ET.Element('bodybank')
@@ -143,14 +131,12 @@ jobs:
 
           morph_nodes = ET.SubElement(root, 'morphs')
           for e in entries:
-              attrs = {'id': e['id'], 'name': e['name'], 'type': e['type']}
-              m = ET.SubElement(morph_nodes, 'morph', attrs)
+              m = ET.SubElement(morph_nodes, 'morph', id=e['id'], name=e['name'], type=e['type'])
               if e['cost'] is not None:
                   ET.SubElement(m, 'cost').text = str(e['cost'])
               a = ET.SubElement(m, 'availability', base=str(e['avail']))
               for place, value in e['habitats']:
-                  pid = slug(place)
-                  ET.SubElement(a, 'habitat', id=pid, value=str(value))
+                  ET.SubElement(a, 'habitat', id=slug(place), value=str(value))
               if 'stats' in e:
                   s = ET.SubElement(m, 'stats')
                   for tag, val in zip(('wt','dur','dr'), e['stats']):
@@ -178,3 +164,5 @@ jobs:
           git rm .github/workflows/update-morphs.yml
           git commit -m 'Remove temporary morph importer workflow'
           git push
+
+# importer trigger
