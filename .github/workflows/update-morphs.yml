@@ -1,0 +1,180 @@
+name: Update morph database from Eclipse Phase 2e
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-morphs.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build morph database
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'PY'
+          import re
+          import unicodedata
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          import requests
+          from bs4 import BeautifulSoup
+
+          URLS = [
+              ('Biomorph', 'https://eclipsephase.github.io/en/SUPP/02-CO/03/01-biomorphs.html'),
+              ('Uplift Biomorph', 'https://eclipsephase.github.io/en/SUPP/02-CO/03/02-uplift-biomorphs.html'),
+              ('Pod Biomorph', 'https://eclipsephase.github.io/en/SUPP/02-CO/03/03-pod-biomorphs.html'),
+              ('Exomorph Biomorph', 'https://eclipsephase.github.io/en/SUPP/02-CO/03/04-exomorph-biomorphs.html'),
+              ('Synthmorph', 'https://eclipsephase.github.io/en/SUPP/02-CO/03/05-synthmorphs.html'),
+              ('Infomorph', 'https://eclipsephase.github.io/en/SUPP/02-CO/03/06-infomorphs.html'),
+              ('Core Synthmorph', 'https://eclipsephase.github.io/en/SUPP/02-CO/03/07-core-morphs.html'),
+          ]
+
+          session = requests.Session()
+          session.headers['User-Agent'] = 'symmetrical-octo-goggles-morph-import/1.0'
+
+          def clean(s):
+              return re.sub(r'\\s+', ' ', s.replace('\u00a0', ' ')).strip()
+
+          def slug(s):
+              s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
+              s = re.sub(r'[^a-z0-9]+', '-', s).strip('-')
+              return s or 'morph'
+
+          def number(pattern, text, default=None):
+              m = re.search(pattern, text, re.I)
+              return float(m.group(1)) if m else default
+
+          def parse_cost(s):
+              m = re.search(r'Cost:\s*[^()]*?(?:\\((\\d+)\\s*MP\\)|([0-9]+)\\s*MP)', s, re.I)
+              if not m:
+                  m = re.search(r'Cost:\s*(?:Rare\\s*)?(\\d+)', s, re.I)
+              return m.group(1) or m.group(2) if m else None
+
+          def parse_avail(s):
+              m = re.search(r'Avail:\s*([0-9]+|NA)(.*?)(?=\\n|$)', s, re.I)
+              if not m:
+                  return 0, []
+              base = 0 if m.group(1).upper() == 'NA' else int(m.group(1))
+              extras = []
+              tail = m.group(2)
+              for n, place in re.findall(r'([0-9]+)\\s*(?:in|on)\\s+([^,;]+)', tail, re.I):
+                  extras.append((clean(place), int(n)))
+              return base, extras
+
+          morphs = {}
+
+          for category, url in URLS:
+              html = session.get(url, timeout=30).text
+              soup = BeautifulSoup(html, 'html.parser')
+              headings = soup.find_all(['h2', 'h3'])
+
+              for heading in headings:
+                  name = clean(heading.get_text(' ', strip=True))
+                  if not name or name.lower() in {
+                      'biomorphs','uplift biomorphs','pod biomorphs','exomorph biomorphs',
+                      'synthmorphs','infomorphs','core morphs'
+                  }:
+                      continue
+
+                  bits = []
+                  node = heading
+                  for _ in range(12):
+                      node = node.find_next()
+                      if node is None:
+                          break
+                      text = clean(node.get_text(' ', strip=True))
+                      if 'Cost:' in text and 'Avail:' in text:
+                          bits.append(text)
+                      if 'Movement Rate:' in text or 'Ware:' in text or 'Common Extras:' in text or 'Morph Traits:' in text:
+                          bits.append(text)
+                      if len(bits) >= 5:
+                          break
+
+                  blob = '\n'.join(dict.fromkeys(bits))
+                  if 'Cost:' not in blob or 'Avail:' not in blob:
+                      continue
+
+                  key = name.lower()
+                  if key in morphs:
+                      continue
+
+                  cost = parse_cost(blob)
+                  avail, habitat_values = parse_avail(blob)
+                  entry = {
+                      'id': slug(name),
+                      'name': name,
+                      'type': category,
+                      'cost': cost,
+                      'avail': avail,
+                      'habitats': habitat_values,
+                      'blob': blob,
+                  }
+
+                  stat = re.search(r'WT:\s*([0-9]+)\\s*[•/]\\s*DUR:\s*([0-9]+)\\s*[•/]\\s*DR:\s*([0-9]+)', blob)
+                  if stat:
+                      entry['stats'] = tuple(map(int, stat.groups()))
+
+                  apt = re.search(r'Insight\s*([0-9]+),\s*Moxie\s*([0-9]+),\s*Vigor\s*([0-9]+),\s*Flex\s*([0-9]+)', blob)
+                  if apt:
+                      entry['aptitudes'] = tuple(map(int, apt.groups()))
+
+                  morphs[key] = entry
+
+          # Preserve a useful ordering.
+          entries = sorted(morphs.values(), key=lambda e: (e['type'], e['name'].lower()))
+
+          root = ET.Element('bodybank')
+          habitats = ET.SubElement(root, 'habitats')
+          for hid, hname in [
+              ('standard', 'Standard'), ('scum', 'Scum Swarm'), ('mars', 'Mars'),
+              ('aquatic', 'Aquatic Habitat'), ('saturn', 'Saturn'), ('jupiter', 'Jupiter'),
+              ('venus', 'Venus'), ('uranus', 'Uranus'), ('belt', 'Main Belt'), ('gate', 'Gate / Uplift Habitat')
+          ]:
+              h = ET.SubElement(habitats, 'habitat', id=hid)
+              ET.SubElement(h, 'name').text = hname
+
+          morph_nodes = ET.SubElement(root, 'morphs')
+          for e in entries:
+              attrs = {'id': e['id'], 'name': e['name'], 'type': e['type']}
+              m = ET.SubElement(morph_nodes, 'morph', attrs)
+              if e['cost'] is not None:
+                  ET.SubElement(m, 'cost').text = str(e['cost'])
+              a = ET.SubElement(m, 'availability', base=str(e['avail']))
+              for place, value in e['habitats']:
+                  pid = slug(place)
+                  ET.SubElement(a, 'habitat', id=pid, value=str(value))
+              if 'stats' in e:
+                  s = ET.SubElement(m, 'stats')
+                  for tag, val in zip(('wt','dur','dr'), e['stats']):
+                      ET.SubElement(s, tag).text = str(val)
+              if 'aptitudes' in e:
+                  apts = ET.SubElement(m, 'aptitudes')
+                  for tag, val in zip(('insight','moxie','vigor','flex'), e['aptitudes']):
+                      ET.SubElement(apts, tag).text = str(val)
+
+          ET.indent(root, space='    ')
+          Path('morphs.xml').write_text(ET.tostring(root, encoding='unicode') + '\n', encoding='utf-8')
+          print(f'Imported {len(entries)} morphs')
+          PY
+
+      - name: Commit database
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add morphs.xml
+          git diff --cached --quiet || git commit -m 'Update morph database from Eclipse Phase 2e guide'
+          git push
+
+      - name: Remove importer workflow
+        run: |
+          git rm .github/workflows/update-morphs.yml
+          git commit -m 'Remove temporary morph importer workflow'
+          git push
