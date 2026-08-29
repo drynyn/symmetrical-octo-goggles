@@ -1,8 +1,10 @@
-name: Update morph database from Eclipse Phase 2e
+name: Build morph database from Eclipse Phase 2e
 
 on:
   push:
     branches: [main]
+    paths:
+      - '.github/workflows/update-morphs.yml'
 
 permissions:
   contents: write
@@ -13,9 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install parser
+        run: python -m pip install requests beautifulsoup4
+
       - name: Build morph database
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python - <<'PY'
           import re
@@ -35,38 +38,140 @@ jobs:
               ('Core Synthmorph', 'https://eclipsephase.github.io/en/SUPP/02-CO/03/07-core-morphs.html'),
           ]
 
-          session = requests.Session()
-          session.headers['User-Agent'] = 'symmetrical-octo-goggles-morph-import/1.0'
+          # Known human-readable habitat/condition names.
+          HABITAT_ALIASES = {
+              'mars': ('mars', 'Mars'),
+              'venus': ('venus', 'Venus'),
+              'titan': ('titan', 'Titan'),
+              'luna': ('luna', 'Luna'),
+              'sol': ('sol', 'Sol / Solar'),
+              'saturn': ('saturn', 'Saturn'),
+              'uranus': ('uranus', 'Uranus'),
+              'jupiter': ('jupiter', 'Jupiter'),
+              'aquatic habs': ('aquatic', 'Aquatic Habitat'),
+              'aquatic habitat': ('aquatic', 'Aquatic Habitat'),
+              'scum swarms': ('scum', 'Scum Swarm'),
+              'scum swarm': ('scum', 'Scum Swarm'),
+              'micrograv habs': ('micrograv', 'Microgravity Habitats'),
+              'microgravity habs': ('micrograv', 'Microgravity Habitats'),
+              'gate habs': ('gate', 'Gate Habitats'),
+              'gate habitats': ('gate', 'Gate Habitats'),
+              'high-g exoplanets': ('high-g', 'High-G Exoplanets'),
+              'around sol': ('sol', 'Sol / Solar'),
+              'around saturn': ('saturn', 'Saturn'),
+              'at uranus/jupiter': ('uranus-jupiter', 'Uranus / Jupiter'),
+          }
 
-          def clean(s):
-              return re.sub(r'\\s+', ' ', s.replace('\u00a0', ' ')).strip()
+          def clean(text):
+              return re.sub(r'\\s+', ' ', text.replace('\\u00a0', ' ')).strip()
 
-          def slug(s):
-              s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
-              s = re.sub(r'[^a-z0-9]+', '-', s).strip('-')
-              return s or 'morph'
+          def slug(text):
+              text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode().lower()
+              text = re.sub(r'[^a-z0-9]+', '-', text).strip('-')
+              return text or 'morph'
 
-          def parse_cost(s):
-              m = re.search(r'Cost:\s*[^()]*?(?:\\((\\d+)\\s*MP\\)|([0-9]+)\\s*MP)', s, re.I)
-              if not m:
-                  m = re.search(r'Cost:\s*(?:Rare\\s*)?(\\d+)', s, re.I)
-              return m.group(1) or m.group(2) if m else None
+          def split_outside_parens(text):
+              parts, current, depth = [], [], 0
+              for ch in text:
+                  if ch == '(':
+                      depth += 1
+                  elif ch == ')' and depth:
+                      depth -= 1
+                  if ch == ',' and depth == 0:
+                      part = clean(''.join(current))
+                      if part:
+                          parts.append(part)
+                      current = []
+                  else:
+                      current.append(ch)
+              part = clean(''.join(current))
+              if part:
+                  parts.append(part)
+              return parts
 
-          def parse_avail(s):
-              m = re.search(r'Avail:\s*([0-9]+|NA)(.*?)(?=\\n|$)', s, re.I)
+          def parse_cost(text):
+              m = re.search(r'Cost:\s*(?:Rare\\s*\\(\\s*)?(\\d+)\\s*MP', text, re.I)
+              return int(m.group(1)) if m else None
+
+          def habitat_condition(raw):
+              raw = clean(raw).strip('()').lower()
+              raw = re.sub(r'^(?:on|in|at|around|within)\\s+', '', raw)
+              raw = raw.rstrip('.')
+              if raw in HABITAT_ALIASES:
+                  return [HABITAT_ALIASES[raw]]
+              if raw.startswith('uranus/jupiter'):
+                  return [('uranus', 'Uranus'), ('jupiter', 'Jupiter')]
+              return [(slug(raw), raw.title())]
+
+          def parse_availability(text):
+              m = re.search(r'Avail:\s*(NA|\\d+)(.*)$', text, re.I)
               if not m:
                   return 0, []
               base = 0 if m.group(1).upper() == 'NA' else int(m.group(1))
-              extras = []
-              tail = m.group(2)
-              for n, place in re.findall(r'([0-9]+)\\s*(?:in|on)\\s+([^,;]+)', tail, re.I):
-                  extras.append((clean(place), int(n)))
-              return base, extras
+              tail = clean(m.group(2))
+              conditions = []
+              # Handle parenthesized conditions and any trailing conditions.
+              for raw in re.findall(r'\\(([^)]*)\\)', tail):
+                  vm = re.search(r'(\\d+)\\s+(?:in|on|at|around)\\s+(.+)', raw, re.I)
+                  if vm:
+                      conditions.extend((hid, value) for hid, value in habitat_condition(vm.group(2)) for _ in [0])
+                      # Replace condition placeholders with the actual value.
+                      conditions = [(hid, value, int(vm.group(1))) if len(item) == 2 and item[0] == hid else item for item in conditions]
+              # Simpler second pass, allowing shared values like Uranus/Jupiter.
+              out = []
+              for vm in re.finditer(r'(\\d+)\\s+(?:in|on|at|around)\\s+([^()]+)', tail, re.I):
+                  val = int(vm.group(1))
+                  for hid, hname in habitat_condition(vm.group(2)):
+                      out.append((hid, hname, val))
+              # De-duplicate.
+              seen = set()
+              dedup = []
+              for item in out:
+                  if item not in seen:
+                      seen.add(item)
+                      dedup.append(item)
+              return base, dedup
+
+          def parse_blockquote(blockquote):
+              data = {}
+              for li in blockquote.find_all('li'):
+                  text = clean(li.get_text(' ', strip=True))
+                  if text.startswith('Cost:'):
+                      data['cost'] = parse_cost(text)
+                      data['avail_text'] = text
+                  elif text.startswith('WT:'):
+                      m = re.search(r'WT:\s*(\\d+)\\s*[•/]\\s*DUR:\s*(\\d+)\\s*[•/]\\s*DR:\s*(\\d+)', text)
+                      if m:
+                          data['stats'] = tuple(map(int, m.groups()))
+                  elif text.startswith('Insight'):
+                      m = re.search(r'Insight\\s*(\\d+),\\s*Moxie\\s*(\\d+),\\s*Vigor\\s*(\\d+),\\s*Flex\\s*(\\d+)', text)
+                      if m:
+                          data['aptitudes'] = tuple(map(int, m.groups()))
+                  elif text.startswith('Movement Rate:'):
+                      data['movement'] = text.split(':', 1)[1].strip()
+                  elif text.startswith('Ware:'):
+                      data['ware'] = text.split(':', 1)[1].strip()
+                  elif text.startswith('Morph Traits:'):
+                      data['traits'] = text.split(':', 1)[1].strip()
+                  elif text.startswith('Common Extras:'):
+                      data['extras'] = text.split(':', 1)[1].strip()
+                  elif text.startswith('Notes:'):
+                      data['notes'] = text.split(':', 1)[1].strip()
+              return data
 
           morphs = {}
+          all_habitats = {
+              'standard': 'Standard', 'scum': 'Scum Swarm', 'mars': 'Mars',
+              'aquatic': 'Aquatic Habitat', 'saturn': 'Saturn', 'jupiter': 'Jupiter',
+              'venus': 'Venus', 'uranus': 'Uranus', 'belt': 'Main Belt',
+              'gate': 'Gate / Uplift Habitat'
+          }
+
+          session = requests.Session()
+          session.headers['User-Agent'] = 'symmetrical-octo-goggles-morph-import/1.0'
 
           for category, url in URLS:
-              response = session.get(url, timeout=30)
+              response = session.get(url, timeout=60)
               response.raise_for_status()
               soup = BeautifulSoup(response.text, 'html.parser')
               headings = soup.find_all(['h2', 'h3'])
@@ -79,90 +184,130 @@ jobs:
                   }:
                       continue
 
-                  bits = []
-                  node = heading
-                  for _ in range(20):
-                      node = node.find_next()
-                      if node is None:
-                          break
-                      text = clean(node.get_text(' ', strip=True))
-                      if 'Cost:' in text and 'Avail:' in text:
-                          bits.append(text)
-                      if any(x in text for x in ('Movement Rate:', 'Ware:', 'Common Extras:', 'Morph Traits:')):
-                          bits.append(text)
-                      if len(bits) >= 6:
-                          break
-
-                  blob = '\n'.join(dict.fromkeys(bits))
-                  if 'Cost:' not in blob or 'Avail:' not in blob:
+                  # Find the first blockquote belonging to this heading,
+                  # but never cross another morph heading.
+                  blockquote = heading.find_next('blockquote')
+                  next_heading = heading.find_next(['h2', 'h3'])
+                  if blockquote is None or (next_heading is not None and next_heading.sourceline and blockquote.sourceline and next_heading.sourceline < blockquote.sourceline):
                       continue
 
-                  key = name.lower()
+                  data = parse_blockquote(blockquote)
+                  if 'cost' not in data or 'avail_text' not in data:
+                      continue
+
+                  key = (category, name.lower())
                   if key in morphs:
                       continue
 
-                  cost = parse_cost(blob)
-                  avail, habitat_values = parse_avail(blob)
-                  entry = {
-                      'id': slug(name), 'name': name, 'type': category,
-                      'cost': cost, 'avail': avail, 'habitats': habitat_values,
-                      'blob': blob,
-                  }
+                  base, conditions = parse_availability(data['avail_text'])
+                  for hid, hname, _ in conditions:
+                      all_habitats[hid] = hname
 
-                  stat = re.search(r'WT:\s*([0-9]+)\\s*[•/]\\s*DUR:\s*([0-9]+)\\s*[•/]\\s*DR:\s*([0-9]+)', blob)
-                  if stat:
-                      entry['stats'] = tuple(map(int, stat.groups()))
-                  apt = re.search(r'Insight\s*([0-9]+),\s*Moxie\s*([0-9]+),\s*Vigor\s*([0-9]+),\s*Flex\s*([0-9]+)', blob)
-                  if apt:
-                      entry['aptitudes'] = tuple(map(int, apt.groups()))
+                  # Flexbot modules are components rather than complete sleeves;
+                  # retain them in the XML but give them zero availability so they
+                  # are never selected by the bodybank generator.
+                  is_module = 'module' in clean(heading.get_text(' ', strip=True)).lower() or any(
+                      x in name.lower() for x in ('apiary', 'aviary', 'bard', 'cleric', 'conjurer', 'crafter', 'fighter', 'rogue', 'wizard')
+                  ) and category == 'Synthmorph'
+                  if is_module:
+                      base = 0
+
+                  entry = {
+                      'id': slug(name),
+                      'name': name,
+                      'type': category,
+                      'cost': data['cost'],
+                      'avail': base,
+                      'conditions': conditions,
+                      'stats': data.get('stats'),
+                      'aptitudes': data.get('aptitudes'),
+                      'movement': data.get('movement'),
+                      'ware': data.get('ware'),
+                      'traits': data.get('traits'),
+                      'extras': data.get('extras'),
+                      'notes': data.get('notes'),
+                  }
+                  if is_module:
+                      entry['notes'] = ((entry['notes'] + '; ') if entry['notes'] else '') + 'Flexbot module'
                   morphs[key] = entry
 
-          entries = sorted(morphs.values(), key=lambda e: (e['type'], e['name'].lower()))
+          # Sanity check against the guide's navigation list: every leaf entry
+          # should have been parsed into the XML.
+          expected_minimum = 120
+          if len(morphs) < expected_minimum:
+              raise RuntimeError(f'Only parsed {len(morphs)} morphs; refusing to overwrite morphs.xml')
+
+          # Group habitats in a stable, useful order.
+          habitat_order = [
+              'standard', 'scum', 'mars', 'luna', 'venus', 'titan', 'sol',
+              'aquatic', 'micrograv', 'belt', 'saturn', 'jupiter', 'uranus',
+              'uranus-jupiter', 'high-g', 'gate'
+          ]
+          ordered_habitats = []
+          seen_h = set()
+          for hid in habitat_order + sorted(all_habitats):
+              if hid in all_habitats and hid not in seen_h:
+                  ordered_habitats.append((hid, all_habitats[hid]))
+                  seen_h.add(hid)
 
           root = ET.Element('bodybank')
-          habitats = ET.SubElement(root, 'habitats')
-          for hid, hname in [
-              ('standard', 'Standard'), ('scum', 'Scum Swarm'), ('mars', 'Mars'),
-              ('aquatic', 'Aquatic Habitat'), ('saturn', 'Saturn'), ('jupiter', 'Jupiter'),
-              ('venus', 'Venus'), ('uranus', 'Uranus'), ('belt', 'Main Belt'), ('gate', 'Gate / Uplift Habitat')
-          ]:
-              h = ET.SubElement(habitats, 'habitat', id=hid)
+          hs = ET.SubElement(root, 'habitats')
+          for hid, hname in ordered_habitats:
+              h = ET.SubElement(hs, 'habitat', id=hid)
               ET.SubElement(h, 'name').text = hname
 
-          morph_nodes = ET.SubElement(root, 'morphs')
-          for e in entries:
-              m = ET.SubElement(morph_nodes, 'morph', id=e['id'], name=e['name'], type=e['type'])
-              if e['cost'] is not None:
-                  ET.SubElement(m, 'cost').text = str(e['cost'])
-              a = ET.SubElement(m, 'availability', base=str(e['avail']))
-              for place, value in e['habitats']:
-                  ET.SubElement(a, 'habitat', id=slug(place), value=str(value))
-              if 'stats' in e:
+          ms = ET.SubElement(root, 'morphs')
+          for e in sorted(morphs.values(), key=lambda x: (x['type'], x['name'].lower())):
+              m = ET.SubElement(ms, 'morph', id=e['id'], name=e['name'], type=e['type'])
+              ET.SubElement(m, 'cost').text = str(e['cost'])
+              av = ET.SubElement(m, 'availability', base=str(e['avail']))
+              for hid, hname, val in e['conditions']:
+                  ET.SubElement(av, 'habitat', id=hid, value=str(val))
+              if e['stats']:
                   s = ET.SubElement(m, 'stats')
-                  for tag, val in zip(('wt','dur','dr'), e['stats']):
+                  for tag, val in zip(('wt', 'dur', 'dr'), e['stats']):
                       ET.SubElement(s, tag).text = str(val)
-              if 'aptitudes' in e:
-                  apts = ET.SubElement(m, 'aptitudes')
-                  for tag, val in zip(('insight','moxie','vigor','flex'), e['aptitudes']):
-                      ET.SubElement(apts, tag).text = str(val)
+              if e['aptitudes']:
+                  a = ET.SubElement(m, 'aptitudes')
+                  for tag, val in zip(('insight', 'moxie', 'vigor', 'flex'), e['aptitudes']):
+                      ET.SubElement(a, tag).text = str(val)
+              if e['movement']:
+                  mv = ET.SubElement(m, 'movement')
+                  for piece in split_outside_parens(e['movement']):
+                      mm = re.match(r'(.+?)\\s+(\\d+)\\/(\\d+)$', piece)
+                      if mm:
+                          ET.SubElement(mv, 'rate', mode=mm.group(1), normal=mm.group(2), running=mm.group(3))
+              for field, tag in [('ware', 'ware'), ('traits', 'morphTraits'), ('extras', 'commonExtras')]:
+                  if e[field]:
+                      parent = ET.SubElement(m, tag)
+                      for item in split_outside_parens(e[field]):
+                          ET.SubElement(parent, 'item').text = item
+              if e['notes']:
+                  ET.SubElement(m, 'notes').text = e['notes']
 
           ET.indent(root, space='    ')
           Path('morphs.xml').write_text(ET.tostring(root, encoding='unicode') + '\n', encoding='utf-8')
-          print(f'Imported {len(entries)} morphs')
+          print(f'Imported {len(morphs)} morphs')
+          print('Morphs by type:')
+          from collections import Counter
+          for t, n in sorted(Counter(e['type'] for e in morphs.values()).items()):
+              print(f'  {t}: {n}')
           PY
 
-      - name: Commit database
+      - name: Verify and commit
         run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          root = ET.parse('morphs.xml').getroot()
+          morphs = root.find('morphs')
+          entries = morphs.findall('morph')
+          names = [m.get('name') for m in entries]
+          if len(entries) < 120 or len(names) != len(set(names)):
+              raise SystemExit('Morph XML verification failed')
+          print(f'Verified {len(entries)} unique morph entries')
+          PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add morphs.xml
-          git diff --cached --quiet || git commit -m 'Update morph database from Eclipse Phase 2e guide'
+          git diff --cached --quiet || git commit -m 'Expand morph database from Eclipse Phase 2e guide'
           git push
-
-      - name: Remove importer workflow
-        run: |
-          git rm .github/workflows/update-morphs.yml
-          git commit -m 'Remove temporary morph importer workflow'
-          git push
-
-# importer trigger
