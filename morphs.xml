@@ -97,7 +97,8 @@
             <commonExtras>
                 <item>Direction Sense</item>
                 <item>Radiation Sense</item>
-                <item>Respirocytes. Many have the Planned Obsolescence trait.</item>
+                <item>Respirocytes</item>
+                <item>Planned Obsolescence</item>
             </commonExtras>
         </morph>
         <morph id="aquanaut" name="Aquanaut" type="Biomorph">
@@ -248,7 +249,8 @@
                 <item>Adrenal Surge</item>
                 <item>Claws</item>
                 <item>Hardened Skeleton</item>
-                <item>Medichines. Many also have the Unattractiveness (Level 1) trait.</item>
+                <item>Medichines</item>
+                <item>Unattractiveness (Level 1)</item>
             </commonExtras>
             <notes>Large size</notes>
         </morph>
@@ -421,9 +423,11 @@
                 <item>Stress Control</item>
             </ware>
             <commonExtras>
-                <item>Popular add-ons include Drug Glands (Psike-Out, Nofux, TGS, Comfurt)</item>
+                <item>Drug Glands (Psike-Out, Nofux, TGS, Comfurt)</item>
                 <item>Endocrine Control</item>
-                <item>Neuromodulation. Many also have the Psi Camouflage and/or Psi Defense traits.</item>
+                <item>Neuromodulation</item>
+                <item>Psi Camouflage</item>
+                <item>Psi Defense</item>
             </commonExtras>
         </morph>
         <morph id="flat" name="Flat" type="Biomorph">
@@ -444,7 +448,7 @@
                 <rate mode="Walker" normal="4" running="20" />
             </movement>
             <commonExtras>
-                <item>Many have the Genetic Defect trait.</item>
+                <item>Genetic Defect</item>
             </commonExtras>
         </morph>
         <morph id="freeman" name="Freeman" type="Biomorph">
@@ -480,7 +484,8 @@
                 <item>Timidity (Level 2)</item>
             </morphTraits>
             <commonExtras>
-                <item>Popular add-ons include Drug Glands (Retcon) and Neuromodulation</item>
+                <item>Drug Glands (Retcon)</item>
+                <item>Neuromodulation</item>
             </commonExtras>
         </morph>
         <morph id="fury" name="Fury" type="Biomorph">
@@ -696,7 +701,8 @@
             </ware>
             <commonExtras>
                 <item>Enhanced Vision</item>
-                <item>T-Ray Emitter. Many have the Striking Looks trait.</item>
+                <item>T-Ray Emitter</item>
+                <item>Striking Looks</item>
             </commonExtras>
         </morph>
         <morph id="hibernoid" name="Hibernoid" type="Biomorph">
@@ -804,9 +810,10 @@
                 <item>Mind Amp</item>
                 <item>Multi-Tasking</item>
                 <item>Neuromodulation</item>
-                <item>Oracles. Many have the Acumen</item>
+                <item>Oracles</item>
+                <item>Acumen</item>
                 <item>Addiction</item>
-                <item>and/or Fast Metabolism traits.</item>
+                <item>Fast Metabolism</item>
             </commonExtras>
         </morph>
         <morph id="imp" name="Imp" type="Biomorph">
@@ -933,7 +940,8 @@
                 <item>Non-Human Biochemistry (Level 2)</item>
             </morphTraits>
             <commonExtras>
-                <item>Hibernation. Many have the Enhanced Behavior (Introversion, Level 2) trait.</item>
+                <item>Hibernation</item>
+                <item>Enhanced Behavior (Introversion, Level 2)</item>
             </commonExtras>
             <notes>Very Large size</notes>
         </morph>
@@ -966,7 +974,8 @@
             <commonExtras>
                 <item>Bodysculpting (Hooves)</item>
                 <item>Respirocytes</item>
-                <item>Toxin Filters. Many have the Unattractiveness trait.</item>
+                <item>Toxin Filters</item>
+                <item>Unattractiveness</item>
             </commonExtras>
         </morph>
         <morph id="observer" name="Observer" type="Biomorph">
@@ -1100,7 +1109,8 @@
                 <item>Non-Human Biochemistry (Level 1)</item>
             </morphTraits>
             <commonExtras>
-                <item>Respirocytes. Many have the Limberness trait.</item>
+                <item>Respirocytes</item>
+                <item>Limberness</item>
             </commonExtras>
         </morph>
         <morph id="ruster" name="Ruster" type="Biomorph">
@@ -1129,7 +1139,7 @@
                 <item>Radiation Sense</item>
             </ware>
             <commonExtras>
-                <item>Many have the Planned Obsolescence trait.</item>
+                <item>Planned Obsolescence</item>
             </commonExtras>
         </morph>
         <morph id="salamander" name="Salamander" type="Biomorph">
@@ -1306,7 +1316,7 @@
                 <item>Mesh Inserts</item>
             </ware>
             <commonExtras>
-                <item>Many have the Striking Looks trait.</item>
+                <item>Striking Looks</item>
             </commonExtras>
         </morph>
         <morph id="theseus" name="Theseus" type="Biomorph">
@@ -1925,7 +1935,9 @@
                 <item>Enhanced Vision</item>
                 <item>Heat Tolerance</item>
                 <item>Utilimod</item>
-                <item>Vacuum Sealing. Many have the Composure and/or Empathy traits.</item>
+                <item>Vacuum Sealing.</item>
+                <item>Composure</item>
+                <item>Empathy</item>
             </commonExtras>
         </morph>
         <morph id="basic-pod" name="Basic Pod" type="Pod Biomorph">
@@ -2277,7 +2289,8 @@
                 <item>Sex Switch</item>
             </ware>
             <commonExtras>
-                <item>Many have the Striking Looks or Addiction traits.</item>
+                <item>Striking Looks</item>
+                <item>Addiction</item>
             </commonExtras>
         </morph>
         <morph id="ripwing" name="Ripwing" type="Pod Biomorph">
@@ -2364,7 +2377,8 @@
             <commonExtras>
                 <item>Hardened Skeleton</item>
                 <item>Muscle Augmentation</item>
-                <item>Neurachem. Many have the Unattractiveness trait.</item>
+                <item>Neurachem</item>
+                <item>Unattractiveness</item>
             </commonExtras>
             <notes>4 arms, 4 legs</notes>
         </morph>
@@ -2500,7 +2514,8 @@
             <commonExtras>
                 <item>Adrenal Surge</item>
                 <item>Grip Pads</item>
-                <item>Muscle Augmentation. Many have the Limberness trait.</item>
+                <item>Muscle Augmentation</item>
+                <item>Limberness</item>
             </commonExtras>
         </morph>
         <morph id="vac-pod" name="Vac Pod" type="Pod Biomorph">
@@ -4787,7 +4802,7 @@
                 <item>Non-Human Biochemistry (Level 1)</item>
             </morphTraits>
             <commonExtras>
-                <item>Many have the Impaired Balance trait.</item>
+                <item>Impaired Balance</item>
             </commonExtras>
         </morph>
         <morph id="neo-porpoise" name="Neo-Porpoise" type="Uplift Biomorph">
