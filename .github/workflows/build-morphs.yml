@@ -1,0 +1,48 @@
+name: Build complete morph database
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'build_morphs.py'
+      - '.github/workflows/build-morphs.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install parser
+        run: python -m pip install requests beautifulsoup4
+
+      - name: Build morph database
+        run: python build_morphs.py
+
+      - name: Verify XML
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          root = ET.parse('morphs.xml').getroot()
+          entries = root.find('morphs').findall('morph')
+          names = [m.get('name') for m in entries]
+          assert len(entries) == 139, f'Expected 139 morphs, found {len(entries)}'
+          assert len(names) == len(set(names)), 'Duplicate morph names found'
+          assert all(m.find('availability') is not None for m in entries), 'Missing availability'
+          print('Verified 139 unique morph entries')
+          PY
+
+      - name: Commit morph database
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add morphs.xml
+          if git diff --cached --quiet; then
+            echo 'morphs.xml unchanged'
+            exit 0
+          fi
+          git commit -m 'Expand morph database with complete Eclipse Phase 2e guide'
+          git push
