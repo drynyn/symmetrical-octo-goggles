@@ -59,32 +59,28 @@ ALIASES = {
 }
 
 
-def clean(text):
-    return " ".join(text.replace(chr(160), " ").split()).strip()
+def clean(s):
+    return " ".join(s.replace(chr(160), " ").split()).strip()
 
 
-def slug(text):
-    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode().lower()
-    return re.sub("[^a-z0-9]+", "-", text).strip("-") or "morph"
+def slug(s):
+    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower()
+    return re.sub("[^a-z0-9]+", "-", s).strip("-") or "morph"
 
 
-def split_items(text):
-    parts, current, depth = [], [], 0
-    for ch in text:
-        if ch == "(":
-            depth += 1
-        elif ch == ")" and depth:
-            depth -= 1
+def split_items(s):
+    parts, cur, depth = [], [], 0
+    for ch in s:
+        if ch == "(": depth += 1
+        elif ch == ")" and depth: depth -= 1
         if ch == "," and depth == 0:
-            value = clean("".join(current))
-            if value:
-                parts.append(value)
-            current = []
+            value = clean("".join(cur))
+            if value: parts.append(value)
+            cur = []
         else:
-            current.append(ch)
-    value = clean("".join(current))
-    if value:
-        parts.append(value)
+            cur.append(ch)
+    value = clean("".join(cur))
+    if value: parts.append(value)
     return parts
 
 
@@ -93,7 +89,7 @@ def parse_availability(text):
     base = 0 if not match or match.group(1).upper() == "NA" else int(match.group(1))
     tail = text[match.end():] if match else text
     conditions = []
-    for value, place in re.findall(r"([0-9]+) +(in|on|at|around|within) +([^(),]+)", tail, re.I):
+    for value, _prep, place in re.findall(r"([0-9]+) +(in|on|at|around|within) +([^(),]+)", tail, re.I):
         place = clean(place).lower().rstrip(".")
         targets = ALIASES.get(place)
         if targets is None and "/" in place and "uranus" in place and "jupiter" in place:
@@ -114,18 +110,15 @@ def parse_entry(heading):
             for li in node.find_all("li"):
                 text = clean(li.get_text(" ", strip=True))
                 if text.startswith("Cost:"):
-                    match = re.search(r"Cost:.*?([0-9]+) MP", text)
-                    if match:
-                        data["cost"] = int(match.group(1))
+                    cm = re.search(r"Cost:.*?([0-9]+) MP", text)
+                    if cm: data["cost"] = int(cm.group(1))
                     data["availability"] = text
                 elif text.startswith("WT:"):
-                    match = re.search(r"WT: +([0-9]+) +[•/] +DUR: +([0-9]+) +[•/] +DR: +([0-9]+)", text)
-                    if match:
-                        data["stats"] = tuple(map(int, match.groups()))
+                    sm = re.search(r"WT: +([0-9]+) +[•/] +DUR: +([0-9]+) +[•/] +DR: +([0-9]+)", text)
+                    if sm: data["stats"] = tuple(map(int, sm.groups()))
                 elif text.startswith("Insight"):
-                    match = re.search(r"Insight +([0-9]+), +Moxie +([0-9]+), +Vigor +([0-9]+), +Flex +([0-9]+)", text)
-                    if match:
-                        data["aptitudes"] = tuple(map(int, match.groups()))
+                    am = re.search(r"Insight +([0-9]+), +Moxie +([0-9]+), +Vigor +([0-9]+), +Flex +([0-9]+)", text)
+                    if am: data["aptitudes"] = tuple(map(int, am.groups()))
                 elif text.startswith("Movement Rate:"):
                     data["movement"] = text.split(":", 1)[1].strip()
                 elif text.startswith("Ware:"):
@@ -158,10 +151,8 @@ def main():
             if not data or "cost" not in data or "availability" not in data:
                 continue
             base, conditions = parse_availability(data["availability"])
-            for hid, name2, _ in conditions:
-                habitats[hid] = name2
-            if name in morphs:
-                raise RuntimeError(f"Duplicate morph: {name}")
+            for hid, hn, _ in conditions: habitats[hid] = hn
+            if name in morphs: raise RuntimeError(f"Duplicate morph: {name}")
             morphs[name] = {
                 "id": slug(name), "name": name, "type": category, "cost": data["cost"],
                 "avail": 0 if name.endswith("Module") else base, "conditions": conditions,
@@ -175,45 +166,35 @@ def main():
     missing = sorted(expected - found)
     unexpected = sorted(found - expected)
     if missing or unexpected or len(found) != 139:
-        print("FOUND", len(found))
-        print("MISSING", missing)
-        print("UNEXPECTED", unexpected)
+        print("FOUND", len(found)); print("MISSING", missing); print("UNEXPECTED", unexpected)
         raise RuntimeError("Morph guide verification failed")
 
     root = ET.Element("bodybank")
-    habitats_node = ET.SubElement(root, "habitats")
+    hs = ET.SubElement(root, "habitats")
     for hid, name in sorted(habitats.items()):
-        node = ET.SubElement(habitats_node, "habitat", id=hid)
-        ET.SubElement(node, "name").text = name
-
-    morphs_node = ET.SubElement(root, "morphs")
-    for morph in sorted(morphs.values(), key=lambda x: (x["type"], x["name"].lower())):
-        node = ET.SubElement(morphs_node, "morph", id=morph["id"], name=morph["name"], type=morph["type"])
-        ET.SubElement(node, "cost").text = str(morph["cost"])
-        availability = ET.SubElement(node, "availability", base=str(morph["avail"]))
-        for hid, _, value in morph["conditions"]:
-            ET.SubElement(availability, "habitat", id=hid, value=str(value))
-        if morph["stats"]:
-            stats = ET.SubElement(node, "stats")
-            for tag, value in zip(("wt", "dur", "dr"), morph["stats"]):
-                ET.SubElement(stats, tag).text = str(value)
-        if morph["aptitudes"]:
-            apt = ET.SubElement(node, "aptitudes")
-            for tag, value in zip(("insight", "moxie", "vigor", "flex"), morph["aptitudes"]):
-                ET.SubElement(apt, tag).text = str(value)
-        if morph["movement"]:
-            movement = ET.SubElement(node, "movement")
-            for item in split_items(morph["movement"]):
-                match = re.match(r"(.+) +([0-9]+)/([0-9]+)$", item)
-                if match:
-                    ET.SubElement(movement, "rate", mode=match.group(1), normal=match.group(2), running=match.group(3))
-        for source, tag in (("ware", "ware"), ("traits", "morphTraits"), ("extras", "commonExtras")):
-            if morph[source]:
-                parent = ET.SubElement(node, tag)
-                for item in split_items(morph[source]):
-                    ET.SubElement(parent, "item").text = item
-        if morph["notes"]:
-            ET.SubElement(node, "notes").text = morph["notes"]
+        h = ET.SubElement(hs, "habitat", id=hid); ET.SubElement(h, "name").text = name
+    ms = ET.SubElement(root, "morphs")
+    for e in sorted(morphs.values(), key=lambda x: (x["type"], x["name"].lower())):
+        m = ET.SubElement(ms, "morph", id=e["id"], name=e["name"], type=e["type"])
+        ET.SubElement(m, "cost").text = str(e["cost"])
+        av = ET.SubElement(m, "availability", base=str(e["avail"]))
+        for hid, _hn, val in e["conditions"]: ET.SubElement(av, "habitat", id=hid, value=str(val))
+        if e["stats"]:
+            st = ET.SubElement(m, "stats")
+            for tag, val in zip(("wt", "dur", "dr"), e["stats"]): ET.SubElement(st, tag).text = str(val)
+        if e["aptitudes"]:
+            ap = ET.SubElement(m, "aptitudes")
+            for tag, val in zip(("insight", "moxie", "vigor", "flex"), e["aptitudes"]): ET.SubElement(ap, tag).text = str(val)
+        if e["movement"]:
+            mv = ET.SubElement(m, "movement")
+            for item in split_items(e["movement"]):
+                mm = re.match(r"(.+) +([0-9]+)/([0-9]+)$", item)
+                if mm: ET.SubElement(mv, "rate", mode=mm.group(1), normal=mm.group(2), running=mm.group(3))
+        for field, tag in (("ware", "ware"), ("traits", "morphTraits"), ("extras", "commonExtras")):
+            if e[field]:
+                parent = ET.SubElement(m, tag)
+                for item in split_items(e[field]): ET.SubElement(parent, "item").text = item
+        if e["notes"]: ET.SubElement(m, "notes").text = e["notes"]
 
     ET.indent(root, space="    ")
     Path("morphs.xml").write_text(ET.tostring(root, encoding="unicode") + "\n", encoding="utf-8")
