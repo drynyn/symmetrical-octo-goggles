@@ -25,37 +25,20 @@ Arachnoid|Arachnikoma Variant|Biocore|Case|Cetus|Cloud Skimmer|Courier|Daitya|Co
 Agent|Digimorph|Djinn|Echo|Ikon|Neo|Operator|Sage|Spectre
 Overmind|Sexton|Warden
 '''.splitlines() for x in line.split('|') if x]
-
 assert len(EXPECTED) == 139
 
 HABITATS = {
-    "standard": "Standard",
-    "scum": "Scum Swarm",
-    "mars": "Mars",
-    "aquatic": "Aquatic Habitat",
-    "saturn": "Saturn",
-    "jupiter": "Jupiter",
-    "venus": "Venus",
-    "uranus": "Uranus",
-    "belt": "Main Belt",
-    "gate": "Gate / Uplift Habitat",
+    "standard": "Standard", "scum": "Scum Swarm", "mars": "Mars", "aquatic": "Aquatic Habitat",
+    "saturn": "Saturn", "jupiter": "Jupiter", "venus": "Venus", "uranus": "Uranus",
+    "belt": "Main Belt", "gate": "Gate / Uplift Habitat"
 }
-
 ALIASES = {
-    "mars": [("mars", "Mars")],
-    "venus": [("venus", "Venus")],
-    "titan": [("titan", "Titan")],
-    "luna": [("luna", "Luna")],
-    "saturn": [("saturn", "Saturn")],
-    "jupiter": [("jupiter", "Jupiter")],
-    "uranus": [("uranus", "Uranus")],
-    "aquatic habs": [("aquatic", "Aquatic Habitat")],
-    "aquatic habitat": [("aquatic", "Aquatic Habitat")],
-    "micrograv habs": [("micrograv", "Microgravity Habitats")],
-    "microgravity habs": [("micrograv", "Microgravity Habitats")],
-    "gate habs": [("gate", "Gate Habitats")],
-    "gate habitats": [("gate", "Gate Habitats")],
-    "high-g exoplanets": [("high-g", "High-G Exoplanets")],
+    "mars": [("mars", "Mars")], "venus": [("venus", "Venus")], "titan": [("titan", "Titan")],
+    "luna": [("luna", "Luna")], "saturn": [("saturn", "Saturn")], "jupiter": [("jupiter", "Jupiter")],
+    "uranus": [("uranus", "Uranus")], "aquatic habs": [("aquatic", "Aquatic Habitat")],
+    "aquatic habitat": [("aquatic", "Aquatic Habitat")], "micrograv habs": [("micrograv", "Microgravity Habitats")],
+    "microgravity habs": [("micrograv", "Microgravity Habitats")], "gate habs": [("gate", "Gate Habitats")],
+    "gate habitats": [("gate", "Gate Habitats")], "high-g exoplanets": [("high-g", "High-G Exoplanets")]
 }
 
 
@@ -103,8 +86,10 @@ def parse_availability(text):
 
 def parse_entry(heading):
     for node in heading.find_all_next():
-        if node is not heading and getattr(node, "name", None) == "h2":
-            return None
+        # Ignore the h3 that appears inside the stat-block blockquote.
+        if node is not heading and getattr(node, "name", None) in ("h2", "h3"):
+            if node.find_parent("blockquote") is None:
+                return None
         if getattr(node, "name", None) == "blockquote":
             data = {}
             for li in node.find_all("li"):
@@ -143,9 +128,12 @@ def main():
         response = session.get(url, timeout=60)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
-        for heading in soup.find_all("h2"):
+        # Main entries and variants are h2/h3 outside blockquotes. The h3 inside
+        # each blockquote is the duplicate display heading and is ignored.
+        headings = [h for h in soup.find_all(["h2", "h3"]) if h.find_parent("blockquote") is None]
+        for heading in headings:
             name = clean(heading.get_text(" ", strip=True)).replace(" / ", "/")
-            if name in {"Biomorphs", "Uplift Biomorphs", "Pod Biomorphs", "Exomorph Biomorphs", "Synthmorphs", "Infomorphs", "Core Morphs"}:
+            if name in {"Biomorphs", "Uplift Biomorphs", "Pod Biomorphs", "Exomorph Biomorphs", "Synthmorphs", "Infomorphs", "Core Morphs", "Flexbot Modules", "Flexbots"}:
                 continue
             data = parse_entry(heading)
             if not data or "cost" not in data or "availability" not in data:
@@ -158,7 +146,7 @@ def main():
                 "avail": 0 if name.endswith("Module") else base, "conditions": conditions,
                 "stats": data.get("stats"), "aptitudes": data.get("aptitudes"),
                 "movement": data.get("movement"), "ware": data.get("ware"),
-                "traits": data.get("traits"), "extras": data.get("extras"), "notes": data.get("notes"),
+                "traits": data.get("traits"), "extras": data.get("extras"), "notes": data.get("notes")
             }
 
     found = set(morphs)
