@@ -12,9 +12,6 @@
         <habitat id="gate">
             <name>Gate Habitats</name>
         </habitat>
-        <habitat id="gate-uplift-habs">
-            <name>Gate/Uplift Habs</name>
-        </habitat>
         <habitat id="high-g">
             <name>High-G Exoplanets</name>
         </habitat>
@@ -32,9 +29,6 @@
         </habitat>
         <habitat id="saturn">
             <name>Saturn</name>
-        </habitat>
-        <habitat id="scum">
-            <name>Scum Swarm</name>
         </habitat>
         <habitat id="scum-swarms">
             <name>Scum Swarms</name>
@@ -59,6 +53,9 @@
         </habitat>
         <habitat id="uranus">
             <name>Uranus</name>
+        </habitat>
+        <habitat id="uplift">
+            <name>Uplift Hab</name>
         </habitat>
         <habitat id="venus">
             <name>Venus</name>
@@ -3649,7 +3646,8 @@
         <morph id="opteryx" name="Opteryx" type="Synthmorph">
             <cost>4</cost>
             <availability base="30">
-                <habitat id="gate-uplift-habs" value="50" />
+                <habitat id="gate" value="50" />
+                <habitat id="uplift" value="50" />
             </availability>
             <stats>
                 <wt>5</wt>
