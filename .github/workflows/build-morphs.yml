@@ -19,6 +19,19 @@ jobs:
       - name: Install parser
         run: python -m pip install requests beautifulsoup4
 
+      - name: Patch Flexbot system entry
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('build_morphs.py')
+          s = p.read_text()
+          needle = '    found = set(morphs)\n'
+          inject = '''    # Flexbot is described by the guide as a modular system rather than a\n    # standalone purchasable morph, so it has no Cost/Avail line. Retain it as\n    # an informational XML entry with zero availability so it is not selected.\n    morphs["Flexbot"] = {\n        "id": "flexbot", "name": "Flexbot", "type": "Synthmorph", "cost": 0,\n        "avail": 0, "conditions": [],\n        "stats": None, "aptitudes": None,\n        "movement": "Thrust Vector (Gas Jet) 8/40, Walker 4/12",\n        "ware": "Access Jacks, Cortical Stack, Cyberbrain, Lidar, Mesh Inserts, Mnemonics, Modular Design, Puppet Sock, Shape Adjusting",\n        "traits": "Exotic Morphology (Level 3)",\n        "extras": None,\n        "notes": "Modular flexbot system. Light Frame (Armor 6/4), Small size. Use the module rules and module-specific characteristics from the guide."\n    }\n\n'''
+          if needle not in s:
+              raise SystemExit('Patch point not found')
+          p.write_text(s.replace(needle, inject + needle, 1))
+          PY
+
       - name: Build morph database
         run: python build_morphs.py
 
@@ -32,7 +45,9 @@ jobs:
           assert len(entries) == 139, f'Expected 139 morphs, found {len(entries)}'
           assert len(names) == len(set(names)), 'Duplicate morph names found'
           assert all(m.find('availability') is not None for m in entries), 'Missing availability'
-          print('Verified 139 unique morph entries')
+          flexbot = next(m for m in entries if m.get('name') == 'Flexbot')
+          assert flexbot.find('availability').get('base') == '0'
+          print('Verified 139 unique morph entries including Flexbot')
           PY
 
       - name: Commit morph database
