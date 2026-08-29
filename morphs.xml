@@ -1,172 +1,90 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <bodybank>
-
     <habitats>
-
-        <habitat id="standard">
-            <name>Standard</name>
-        </habitat>
-
-        <habitat id="scum">
-            <name>Scum Swarm</name>
-        </habitat>
-
-        <habitat id="mars">
-            <name>Mars</name>
-        </habitat>
-
         <habitat id="aquatic">
             <name>Aquatic Habitat</name>
         </habitat>
-
-        <habitat id="saturn">
-            <name>Saturn</name>
-        </habitat>
-
-        <habitat id="jupiter">
-            <name>Jupiter</name>
-        </habitat>
-
-        <habitat id="venus">
-            <name>Venus</name>
-        </habitat>
-
-        <habitat id="uranus">
-            <name>Uranus</name>
-        </habitat>
-
         <habitat id="belt">
             <name>Main Belt</name>
         </habitat>
-
-        <habitat id="gate">
-            <name>Gate / Uplift Habitat</name>
+        <habitat id="callisto">
+            <name>Callisto</name>
         </habitat>
-
+        <habitat id="gate">
+            <name>Gate Habitats</name>
+        </habitat>
+        <habitat id="gate-uplift-habs">
+            <name>Gate/Uplift Habs</name>
+        </habitat>
+        <habitat id="high-g">
+            <name>High-G Exoplanets</name>
+        </habitat>
+        <habitat id="jupiter">
+            <name>Jupiter</name>
+        </habitat>
+        <habitat id="luna">
+            <name>Luna</name>
+        </habitat>
+        <habitat id="mars">
+            <name>Mars</name>
+        </habitat>
+        <habitat id="micrograv">
+            <name>Microgravity Habitats</name>
+        </habitat>
+        <habitat id="saturn">
+            <name>Saturn</name>
+        </habitat>
+        <habitat id="scum">
+            <name>Scum Swarm</name>
+        </habitat>
+        <habitat id="scum-swarms">
+            <name>Scum Swarms</name>
+        </habitat>
+        <habitat id="sol">
+            <name>Sol</name>
+        </habitat>
+        <habitat id="standard">
+            <name>Standard</name>
+        </habitat>
+        <habitat id="the-main-belt">
+            <name>The Main Belt</name>
+        </habitat>
+        <habitat id="the-outer-rim">
+            <name>The Outer Rim</name>
+        </habitat>
+        <habitat id="the-outer-system">
+            <name>The Outer System</name>
+        </habitat>
+        <habitat id="titan">
+            <name>Titan</name>
+        </habitat>
+        <habitat id="uranus">
+            <name>Uranus</name>
+        </habitat>
+        <habitat id="venus">
+            <name>Venus</name>
+        </habitat>
     </habitats>
-
-
     <morphs>
-
-
-        <morph
-            id="imp"
-            name="Imp"
-            type="Biomorph">
-
-            <cost>5</cost>
-
-            <availability base="40">
-
-                <habitat
-                    id="scum"
-                    value="80" />
-
-            </availability>
-
-
-            <stats>
-
-                <wt>7</wt>
-                <dur>35</dur>
-                <dr>53</dr>
-
-            </stats>
-
-
-            <aptitudes>
-
-                <insight>0</insight>
-                <moxie>2</moxie>
-                <vigor>1</vigor>
-                <flex>1</flex>
-
-            </aptitudes>
-
-
-            <movement>
-
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="20" />
-
-            </movement>
-
-
-            <ware>
-
-                <item>Biomods</item>
-                <item>Circadian Regulation</item>
-                <item>Clean Metabolism</item>
-                <item>Cortical Stack</item>
-                <item>Drug Glands (Moderate Complexity drug)</item>
-                <item>Enhanced Pheromones</item>
-                <item>Mesh Inserts</item>
-                <item>Scent Alteration</item>
-
-            </ware>
-
-
-            <commonExtras>
-
-                <item>Cyberbrain</item>
-                <item>Sex Switch</item>
-                <item>Toxin Filters</item>
-
-            </commonExtras>
-
-        </morph>
-
-
-        <morph
-            id="alpiner"
-            name="Alpiner"
-            type="Biomorph">
-
+        <morph id="alpiner" name="Alpiner" type="Biomorph">
             <cost>4</cost>
-
             <availability base="50">
-
-                <habitat
-                    id="mars"
-                    value="70" />
-
+                <habitat id="mars" value="70" />
             </availability>
-
-
             <stats>
-
                 <wt>8</wt>
                 <dur>40</dur>
                 <dr>60</dr>
-
             </stats>
-
-
             <aptitudes>
-
                 <insight>0</insight>
                 <moxie>0</moxie>
                 <vigor>1</vigor>
                 <flex>2</flex>
-
             </aptitudes>
-
-
             <movement>
-
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="20" />
-
+                <rate mode="Walker" normal="4" running="20" />
             </movement>
-
-
             <ware>
-
                 <item>Biomods</item>
                 <item>Cold Tolerance</item>
                 <item>Cortical Stack</item>
@@ -175,73 +93,34 @@
                 <item>Mesh Inserts</item>
                 <item>Oxygen Reserve</item>
                 <item>Vacuum Sealing</item>
-
             </ware>
-
-
             <commonExtras>
-
                 <item>Direction Sense</item>
                 <item>Radiation Sense</item>
-                <item>Respirocytes</item>
-
+                <item>Respirocytes. Many have the Planned Obsolescence trait.</item>
             </commonExtras>
-
         </morph>
-
-
-        <morph
-            id="aquanaut"
-            name="Aquanaut"
-            type="Biomorph">
-
+        <morph id="aquanaut" name="Aquanaut" type="Biomorph">
             <cost>3</cost>
-
             <availability base="20">
-
-                <habitat
-                    id="aquatic"
-                    value="90" />
-
+                <habitat id="aquatic" value="90" />
             </availability>
-
-
             <stats>
-
                 <wt>7</wt>
                 <dur>35</dur>
                 <dr>53</dr>
-
             </stats>
-
-
             <aptitudes>
-
                 <insight>0</insight>
                 <moxie>0</moxie>
                 <vigor>2</vigor>
                 <flex>2</flex>
-
             </aptitudes>
-
-
             <movement>
-
-                <rate
-                    mode="Swim"
-                    normal="4"
-                    running="12" />
-
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="20" />
-
+                <rate mode="Swim" normal="4" running="12" />
+                <rate mode="Walker" normal="4" running="20" />
             </movement>
-
-
             <ware>
-
                 <item>Biomods</item>
                 <item>Cold Tolerance</item>
                 <item>Cortical Stack</item>
@@ -250,177 +129,342 @@
                 <item>Mesh Inserts</item>
                 <item>Sonar</item>
                 <item>Swim Bladder</item>
-
             </ware>
-
-
             <morphTraits>
-
-                <item>
-                    Exotic Morphology (Level 1)
-                </item>
-
-                <item>
-                    Non-Human Biochemistry (Level 1)
-                </item>
-
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
             </morphTraits>
-
-
             <commonExtras>
-
                 <item>Cryogenic Protection</item>
                 <item>Oxygen Reserve</item>
                 <item>Respirocytes</item>
                 <item>Pressure Adaptation</item>
                 <item>Toxin Filters</item>
-
             </commonExtras>
-
         </morph>
-
-
-        <morph
-            id="exalt"
-            name="Exalt"
-            type="Biomorph">
-
-            <cost>2</cost>
-
-            <availability base="70" />
-
-
+        <morph id="ariel" name="Ariel" type="Biomorph">
+            <cost>4</cost>
+            <availability base="10">
+                <habitat id="titan" value="40" />
+            </availability>
             <stats>
-
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Bioweave</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Cryogenic Protection</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Long-Term Life Support</item>
+                <item>Mesh Inserts</item>
+                <item>Oxygen Reserve</item>
+                <item>Prehensile Feet</item>
+                <item>T-Ray Emitter</item>
+                <item>Vacuum Sealing</item>
+                <item>Wings</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Respirocytes</item>
+            </commonExtras>
+        </morph>
+        <morph id="bouncer" name="Bouncer" type="Biomorph">
+            <cost>4</cost>
+            <availability base="60">
+                <habitat id="micrograv" value="80" />
+            </availability>
+            <stats>
                 <wt>7</wt>
                 <dur>35</dur>
                 <dr>53</dr>
-
             </stats>
-
-
             <aptitudes>
-
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Grip Pads</item>
+                <item>Mesh Inserts</item>
+                <item>Oxygen Reserve</item>
+                <item>Prehensile Feet</item>
+            </ware>
+            <morphTraits>
+                <item>Limberness (Level 1)</item>
+            </morphTraits>
+        </morph>
+        <morph id="bruiser" name="Bruiser" type="Biomorph">
+            <cost>4</cost>
+            <availability base="30" />
+            <stats>
+                <wt>10</wt>
+                <dur>50</dur>
+                <dr>75</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>4</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Adrenal Surge</item>
+                <item>Claws</item>
+                <item>Hardened Skeleton</item>
+                <item>Medichines. Many also have the Unattractiveness (Level 1) trait.</item>
+            </commonExtras>
+            <notes>Large size</notes>
+        </morph>
+        <morph id="cloud-skate" name="Cloud Skate" type="Biomorph">
+            <cost>3</cost>
+            <availability base="10">
+                <habitat id="uranus" value="40" />
+                <habitat id="jupiter" value="40" />
+            </availability>
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="2" running="8" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Asymmetric Sleep</item>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Cryogenic Protection</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Hardened Skeleton</item>
+                <item>High-G Adaptation</item>
+                <item>Long-Term Life Support</item>
+                <item>Mesh Inserts</item>
+                <item>Pressure Adaptation</item>
+                <item>Radiation Sense</item>
+                <item>Swim Bladder</item>
+                <item>Wings</item>
+            </ware>
+            <morphTraits>
+                <item>Enhanced Behavior (Serenity, Level 2)</item>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Oxygen Reserve</item>
+                <item>T-Ray Emitter</item>
+            </commonExtras>
+            <notes>Bonus from Hardened Skeleton already incorporated</notes>
+        </morph>
+        <morph id="crasher" name="Crasher" type="Biomorph">
+            <cost>8</cost>
+            <availability base="30">
+                <habitat id="gate" value="50" />
+            </availability>
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>1</moxie>
+                <vigor>2</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Circadian Regulation</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Dermal Armor (+4/+5)</item>
+                <item>Direction Sense</item>
+                <item>Efficient Metabolism</item>
+                <item>Enhanced Respiration</item>
+                <item>Enhanced Vision</item>
+                <item>Grip Pads</item>
+                <item>Medichines</item>
+                <item>Mesh Inserts</item>
+                <item>Vacuum Sealing</item>
+            </ware>
+            <commonExtras>
+                <item>Clean Metabolism</item>
+                <item>Digestive Symbiotes</item>
+                <item>Long-Term Life Support</item>
+                <item>Oxygen Reserve</item>
+                <item>Respirocytes</item>
+                <item>Toxin Filters</item>
+            </commonExtras>
+        </morph>
+        <morph id="dvergr" name="Dvergr" type="Biomorph">
+            <cost>5</cost>
+            <availability base="20">
+                <habitat id="high-g" value="60" />
+            </availability>
+            <stats>
+                <wt>9</wt>
+                <dur>45</dur>
+                <dr>68</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Hardened Skeleton</item>
+                <item>High-G Adaptation</item>
+                <item>Mesh Inserts</item>
+                <item>Muscle Augmentation</item>
+            </ware>
+            <notes>Bonus from Hardened Skeleton already incorporated</notes>
+        </morph>
+        <morph id="exalt" name="Exalt" type="Biomorph">
+            <cost>2</cost>
+            <availability base="70" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
                 <insight>1</insight>
                 <moxie>1</moxie>
                 <vigor>1</vigor>
                 <flex>0</flex>
-
             </aptitudes>
-
-
             <movement>
-
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="20" />
-
+                <rate mode="Walker" normal="4" running="20" />
             </movement>
-
-
             <ware>
-
                 <item>Biomods</item>
                 <item>Cortical Stack</item>
                 <item>Mesh Inserts</item>
-
             </ware>
-
         </morph>
-
-
-        <morph
-            id="flat"
-            name="Flat"
-            type="Biomorph">
-
-            <cost>0</cost>
-
-            <availability base="30" />
-
-
+        <morph id="faust" name="Faust" type="Biomorph">
+            <cost>6</cost>
+            <availability base="5" />
             <stats>
-
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>3</insight>
+                <moxie>4</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Circadian Regulation</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Stress Control</item>
+            </ware>
+            <commonExtras>
+                <item>Popular add-ons include Drug Glands (Psike-Out, Nofux, TGS, Comfurt)</item>
+                <item>Endocrine Control</item>
+                <item>Neuromodulation. Many also have the Psi Camouflage and/or Psi Defense traits.</item>
+            </commonExtras>
+        </morph>
+        <morph id="flat" name="Flat" type="Biomorph">
+            <cost>0</cost>
+            <availability base="30" />
+            <stats>
                 <wt>6</wt>
                 <dur>30</dur>
                 <dr>45</dr>
-
             </stats>
-
-
             <aptitudes>
-
                 <insight>0</insight>
                 <moxie>0</moxie>
                 <vigor>0</vigor>
                 <flex>0</flex>
-
             </aptitudes>
-
-
             <movement>
-
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="20" />
-
+                <rate mode="Walker" normal="4" running="20" />
             </movement>
-
-
             <commonExtras>
-
-                <item>
-                    Genetic Defect
-                </item>
-
+                <item>Many have the Genetic Defect trait.</item>
             </commonExtras>
-
         </morph>
-
-
-        <morph
-            id="freeman"
-            name="Freeman"
-            type="Biomorph">
-
+        <morph id="freeman" name="Freeman" type="Biomorph">
             <cost>1</cost>
-
             <availability base="10" />
-
-
             <stats>
-
                 <wt>6</wt>
                 <dur>30</dur>
                 <dr>45</dr>
-
             </stats>
-
-
             <aptitudes>
-
                 <insight>0</insight>
                 <moxie>0</moxie>
                 <vigor>0</vigor>
                 <flex>1</flex>
-
             </aptitudes>
-
-
             <movement>
-
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="20" />
-
+                <rate mode="Walker" normal="4" running="20" />
             </movement>
-
-
             <ware>
-
                 <item>Biomods</item>
                 <item>Cortical Stack</item>
                 <item>Ghostrider Module</item>
@@ -429,144 +473,610 @@
                 <item>Monitor ALI</item>
                 <item>Optogenetics Module</item>
                 <item>Puppet Sock</item>
-
             </ware>
-
-
             <morphTraits>
-
-                <item>
-                    Enhanced Behavior (Obedience, Level 2)
-                </item>
-
-                <item>
-                    Restricted Behavior (Non-Conformity) 2
-                </item>
-
-                <item>
-                    Timidity (Level 2)
-                </item>
-
+                <item>Enhanced Behavior (Obedience, Level 2)</item>
+                <item>Restricted Behavior (Non-Conformity) 2</item>
+                <item>Timidity (Level 2)</item>
             </morphTraits>
-
-
             <commonExtras>
-
-                <item>Drug Glands (Retcon)</item>
-                <item>Neuromodulation</item>
-
+                <item>Popular add-ons include Drug Glands (Retcon) and Neuromodulation</item>
             </commonExtras>
-
         </morph>
-
-
-        <morph
-            id="olympian"
-            name="Olympian"
-            type="Biomorph">
-
-            <cost>4</cost>
-
-            <availability base="60" />
-
-
+        <morph id="fury" name="Fury" type="Biomorph">
+            <cost>6</cost>
+            <availability base="40" />
             <stats>
-
+                <wt>10</wt>
+                <dur>50</dur>
+                <dr>75</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>1</moxie>
+                <vigor>4</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Bioweave Armor (+2/+3)</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Vision</item>
+                <item>Mesh Inserts</item>
+            </ware>
+            <morphTraits>
+                <item>Enhanced Behavior (Aggressiveness, Level 2; Cooperation, Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Neurachem</item>
+                <item>Hardened Skeleton</item>
+                <item>Toxin Filters</item>
+            </commonExtras>
+        </morph>
+        <morph id="futura" name="Futura" type="Biomorph">
+            <cost>4</cost>
+            <availability base="25" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>4</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+            </ware>
+        </morph>
+        <morph id="garuda" name="Garuda" type="Biomorph">
+            <cost>3</cost>
+            <availability base="30">
+                <habitat id="luna" value="50" />
+            </availability>
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>1</moxie>
+                <vigor>2</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+                <item>Prehensile Feet</item>
+                <item>Wings</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+        </morph>
+        <morph id="ghost" name="Ghost" type="Biomorph">
+            <cost>6</cost>
+            <availability base="40" />
+            <stats>
+                <wt>9</wt>
+                <dur>45</dur>
+                <dr>68</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>1</moxie>
+                <vigor>3</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Grip Pads</item>
+                <item>Mesh Inserts</item>
+            </ware>
+            <morphTraits>
+                <item>Enhanced Behavior (Patience, Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Adrenal Surge</item>
+                <item>Skinflex</item>
+            </commonExtras>
+        </morph>
+        <morph id="glider" name="Glider" type="Biomorph">
+            <cost>3</cost>
+            <availability base="20" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+                <rate mode="Glider" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Respiration</item>
+                <item>Enhanced Vision</item>
+                <item>Gliding Membranes</item>
+                <item>Grip Pads</item>
+                <item>Mesh Inserts</item>
+                <item>Prehensile Feet</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Limberness (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Respirocytes</item>
+            </commonExtras>
+        </morph>
+        <morph id="grey" name="Grey" type="Biomorph">
+            <cost>2</cost>
+            <availability base="20" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Circadian Regulation</item>
+                <item>Clean Metabolism</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Unattractiveness (Level 1)</item>
+            </morphTraits>
+        </morph>
+        <morph id="hazer" name="Hazer" type="Biomorph">
+            <cost>3</cost>
+            <availability base="40">
+                <habitat id="titan" value="80" />
+            </availability>
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>2</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+            </ware>
+            <commonExtras>
+                <item>Enhanced Vision</item>
+                <item>T-Ray Emitter. Many have the Striking Looks trait.</item>
+            </commonExtras>
+        </morph>
+        <morph id="hibernoid" name="Hibernoid" type="Biomorph">
+            <cost>4</cost>
+            <availability base="70" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>1</moxie>
+                <vigor>0</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Circadian Regulation</item>
+                <item>Clean Metabolism</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Hibernation</item>
+                <item>Mesh Inserts</item>
+            </ware>
+        </morph>
+        <morph id="hulder" name="Hulder" type="Biomorph">
+            <cost>4</cost>
+            <availability base="10">
+                <habitat id="titan" value="30" />
+            </availability>
+            <stats>
                 <wt>8</wt>
                 <dur>40</dur>
                 <dr>60</dr>
-
             </stats>
-
-
             <aptitudes>
-
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Bioweave</item>
+                <item>Cortical Stack</item>
+                <item>Cryogenic Protection</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Long-Term Life Support</item>
+                <item>Mesh Inserts</item>
+                <item>Oxygen Reserve</item>
+                <item>Swim Bladder</item>
+                <item>T-Ray Emitter</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Chem Sniffer</item>
+                <item>Digging Claws</item>
+            </commonExtras>
+        </morph>
+        <morph id="hyperbright" name="Hyperbright" type="Biomorph">
+            <cost>4</cost>
+            <availability base="20" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>5</insight>
+                <moxie>1</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Circadian Regulation</item>
+                <item>Cortical Stack</item>
+                <item>Grip Pads</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Prehensile Feet</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Drug Glands (Comfurt)</item>
+                <item>Endocrine Control</item>
+                <item>Mind Amp</item>
+                <item>Multi-Tasking</item>
+                <item>Neuromodulation</item>
+                <item>Oracles. Many have the Acumen</item>
+                <item>Addiction</item>
+                <item>and/or Fast Metabolism traits.</item>
+            </commonExtras>
+        </morph>
+        <morph id="imp" name="Imp" type="Biomorph">
+            <cost>5</cost>
+            <availability base="40">
+                <habitat id="scum-swarms" value="80" />
+            </availability>
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>2</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Circadian Regulation</item>
+                <item>Clean Metabolism</item>
+                <item>Cortical Stack</item>
+                <item>Drug Glands (Moderate Complexity drug)</item>
+                <item>Enhanced Pheromones</item>
+                <item>Mesh Inserts</item>
+                <item>Scent Alteration</item>
+            </ware>
+            <commonExtras>
+                <item>Cyberbrain</item>
+                <item>Sex Switch</item>
+                <item>Toxin Filters</item>
+            </commonExtras>
+        </morph>
+        <morph id="menton" name="Menton" type="Biomorph">
+            <cost>4</cost>
+            <availability base="60" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>3</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+            </ware>
+        </morph>
+        <morph id="neotenic" name="Neotenic" type="Biomorph">
+            <cost>2</cost>
+            <availability base="50" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Circadian Regulation</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <notes>Small size</notes>
+        </morph>
+        <morph id="nishakara-variant" name="Nishakara Variant" type="Biomorph">
+            <cost>6</cost>
+            <availability base="5">
+                <habitat id="saturn" value="20" />
+            </availability>
+            <stats>
+                <wt>12</wt>
+                <dur>60</dur>
+                <dr>90</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Magnetic Generator" normal="8" running="40" />
+                <rate mode="Swim" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Cryogenic Protection</item>
+                <item>Enhanced Vision</item>
+                <item>Long-Term Life Support</item>
+                <item>Magnetic Generator</item>
+                <item>Medichines</item>
+                <item>Mesh Inserts</item>
+                <item>Oxygen Reserve</item>
+                <item>Vacuum Sealing</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Hibernation. Many have the Enhanced Behavior (Introversion, Level 2) trait.</item>
+            </commonExtras>
+            <notes>Very Large size</notes>
+        </morph>
+        <morph id="nomad" name="Nomad" type="Biomorph">
+            <cost>3</cost>
+            <availability base="20" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Direction Sense</item>
+                <item>Efficient Metabolism</item>
+                <item>Heat Tolerance</item>
+                <item>Mesh Inserts</item>
+            </ware>
+            <commonExtras>
+                <item>Bodysculpting (Hooves)</item>
+                <item>Respirocytes</item>
+                <item>Toxin Filters. Many have the Unattractiveness trait.</item>
+            </commonExtras>
+        </morph>
+        <morph id="observer" name="Observer" type="Biomorph">
+            <cost>4</cost>
+            <availability base="40" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>2</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Vision</item>
+                <item>Oracles</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+            </ware>
+            <commonExtras>
+                <item>Enhanced Hearing</item>
+                <item>Mind Amp</item>
+                <item>Multi-Tasking</item>
+                <item>T-Ray Emitter</item>
+            </commonExtras>
+        </morph>
+        <morph id="olympian" name="Olympian" type="Biomorph">
+            <cost>4</cost>
+            <availability base="60" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
                 <insight>1</insight>
                 <moxie>1</moxie>
                 <vigor>3</vigor>
                 <flex>1</flex>
-
             </aptitudes>
-
-
             <movement>
-
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="20" />
-
+                <rate mode="Walker" normal="4" running="20" />
             </movement>
-
-
             <ware>
-
                 <item>Biomods</item>
                 <item>Cortical Stack</item>
                 <item>Mesh Inserts</item>
-
             </ware>
-
         </morph>
-
-
-        <morph
-            id="ring-flyer"
-            name="Ring Flyer"
-            type="Biomorph">
-
-            <cost>5</cost>
-
-            <availability base="20">
-
-                <habitat
-                    id="saturn"
-                    value="40" />
-
-            </availability>
-
-
+        <morph id="remade" name="Remade" type="Biomorph">
+            <cost>7</cost>
+            <availability base="30" />
             <stats>
-
+                <wt>9</wt>
+                <dur>45</dur>
+                <dr>68</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>2</moxie>
+                <vigor>2</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Circadian Regulation</item>
+                <item>Clean Metabolism</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Respiration</item>
+                <item>Enhanced Vision</item>
+                <item>Mesh Inserts</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+        </morph>
+        <morph id="ring-flyer" name="Ring Flyer" type="Biomorph">
+            <cost>5</cost>
+            <availability base="20">
+                <habitat id="saturn" value="40" />
+            </availability>
+            <stats>
                 <wt>6</wt>
                 <dur>30</dur>
                 <dr>45</dr>
-
             </stats>
-
-
             <aptitudes>
-
                 <insight>1</insight>
                 <moxie>0</moxie>
                 <vigor>0</vigor>
                 <flex>2</flex>
-
             </aptitudes>
-
-
             <movement>
-
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="12" />
-
-                <rate
-                    mode="Plasma Sail"
-                    normal="8"
-                    running="40" />
-
-                <rate
-                    mode="Thrust Vector (Gas Jet)"
-                    normal="4"
-                    running="12" />
-
+                <rate mode="Walker" normal="4" running="12" />
+                <rate mode="Plasma Sail" normal="8" running="40" />
+                <rate mode="Thrust Vector (Gas Jet)" normal="4" running="12" />
             </movement>
-
-
             <ware>
-
                 <item>Asymmetric Sleep</item>
                 <item>Biomods</item>
                 <item>Cortical Stack</item>
@@ -583,89 +1093,106 @@
                 <item>Radiation Tolerance</item>
                 <item>T-Ray Emitter</item>
                 <item>Vacuum Sealing</item>
-
             </ware>
-
-
             <morphTraits>
-
-                <item>
-                    Enhanced Behavior (Introversion, Level 2)
-                </item>
-
-                <item>
-                    Exotic Morphology (Level 2)
-                </item>
-
-                <item>
-                    Non-Human Biochemistry (Level 1)
-                </item>
-
+                <item>Enhanced Behavior (Introversion, Level 2)</item>
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
             </morphTraits>
-
-
             <commonExtras>
-
-                <item>Respirocytes</item>
-                <item>Limberness</item>
-
+                <item>Respirocytes. Many have the Limberness trait.</item>
             </commonExtras>
-
         </morph>
-
-
-        <morph
-            id="selkie"
-            name="Selkie"
-            type="Biomorph">
-
+        <morph id="ruster" name="Ruster" type="Biomorph">
             <cost>3</cost>
-
-            <availability base="20">
-
-                <habitat
-                    id="aquatic"
-                    value="70" />
-
-            </availability>
-
-
+            <availability base="70" />
             <stats>
-
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Respiration</item>
+                <item>Mesh Inserts</item>
+                <item>Radiation Sense</item>
+            </ware>
+            <commonExtras>
+                <item>Many have the Planned Obsolescence trait.</item>
+            </commonExtras>
+        </morph>
+        <morph id="salamander" name="Salamander" type="Biomorph">
+            <cost>4</cost>
+            <availability base="10">
+                <habitat id="sol" value="50" />
+            </availability>
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+                <rate mode="Thrust Vector (Gas Jet)" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Anti-Glare</item>
+                <item>Biomods</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Vision</item>
+                <item>Gas-Jet System</item>
+                <item>Heat Tolerance</item>
+                <item>Medichines</item>
+                <item>Mesh Inserts</item>
+                <item>Oxygen Reserve</item>
+                <item>Prehensile Feet</item>
+                <item>Radiation Tolerance</item>
+                <item>Vacuum Sealing</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+        </morph>
+        <morph id="selkie" name="Selkie" type="Biomorph">
+            <cost>3</cost>
+            <availability base="20">
+                <habitat id="aquatic" value="70" />
+            </availability>
+            <stats>
                 <wt>8</wt>
                 <dur>40</dur>
                 <dr>60</dr>
-
             </stats>
-
-
             <aptitudes>
-
                 <insight>0</insight>
                 <moxie>0</moxie>
                 <vigor>2</vigor>
                 <flex>2</flex>
-
             </aptitudes>
-
-
             <movement>
-
-                <rate
-                    mode="Swim"
-                    normal="4"
-                    running="20" />
-
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="12" />
-
+                <rate mode="Swim" normal="4" running="20" />
+                <rate mode="Walker" normal="4" running="12" />
             </movement>
-
-
             <ware>
-
                 <item>Biomods</item>
                 <item>Cortical Stack</item>
                 <item>Cryogenic Protection</item>
@@ -675,85 +1202,3677 @@
                 <item>Pressure Adaptation</item>
                 <item>Sonar</item>
                 <item>Swim Bladder</item>
-
             </ware>
-
-
             <morphTraits>
-
-                <item>
-                    Exotic Morphology (Level 2)
-                </item>
-
-                <item>
-                    Non-Human Biochemistry (Level 2)
-                </item>
-
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
             </morphTraits>
-
-
             <commonExtras>
-
                 <item>Enhanced Hearing</item>
                 <item>Enhanced Vision</item>
                 <item>Oxygen Reserve</item>
                 <item>Toxin Filters</item>
-
             </commonExtras>
-
         </morph>
-
-
-        <morph
-            id="splicer"
-            name="Splicer"
-            type="Biomorph">
-
+        <morph id="splicer" name="Splicer" type="Biomorph">
             <cost>1</cost>
-
             <availability base="90" />
-
-
             <stats>
-
                 <wt>6</wt>
                 <dur>30</dur>
                 <dr>45</dr>
-
             </stats>
-
-
             <aptitudes>
-
                 <insight>0</insight>
                 <moxie>0</moxie>
                 <vigor>0</vigor>
                 <flex>1</flex>
-
             </aptitudes>
-
-
             <movement>
-
-                <rate
-                    mode="Walker"
-                    normal="4"
-                    running="20" />
-
+                <rate mode="Walker" normal="4" running="20" />
             </movement>
-
-
             <ware>
-
                 <item>Biomods</item>
                 <item>Cortical Stack</item>
                 <item>Mesh Inserts</item>
-
             </ware>
-
         </morph>
-
-
+        <morph id="surya" name="Surya" type="Biomorph">
+            <cost>9</cost>
+            <availability base="5">
+                <habitat id="sol" value="30" />
+            </availability>
+            <stats>
+                <wt>12</wt>
+                <dur>60</dur>
+                <dr>90</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>3</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Magnetic Generator" normal="8" running="40" />
+                <rate mode="Swim" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Anti-Glare</item>
+                <item>Asymmetric Sleep</item>
+                <item>Biomods</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Heat Tolerance</item>
+                <item>Laser Link (Medium)</item>
+                <item>Long-Term Life Support</item>
+                <item>Magnetic Generator</item>
+                <item>Medichines</item>
+                <item>Mesh Inserts</item>
+                <item>Oxygen Reserve</item>
+                <item>Refractive Coating</item>
+                <item>Vacuum Sealing</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <notes>Very Large size</notes>
+        </morph>
+        <morph id="sylph" name="Sylph" type="Biomorph">
+            <cost>4</cost>
+            <availability base="60" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>3</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Clean Metabolism</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Pheromones</item>
+                <item>Mesh Inserts</item>
+            </ware>
+            <commonExtras>
+                <item>Many have the Striking Looks trait.</item>
+            </commonExtras>
+        </morph>
+        <morph id="theseus" name="Theseus" type="Biomorph">
+            <cost>7</cost>
+            <availability base="20">
+                <habitat id="gate" value="40" />
+            </availability>
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>3</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Emergency Farcaster</item>
+                <item>Medichines</item>
+                <item>Mesh Inserts</item>
+                <item>Nanophages</item>
+                <item>Oxygen Reserve</item>
+                <item>Stress Control</item>
+                <item>Toxin Filters</item>
+                <item>Vacuum Sealing</item>
+            </ware>
+            <commonExtras>
+                <item>Bioweave</item>
+                <item>Cold Tolerance</item>
+                <item>Enhanced Vision</item>
+                <item>Failsafe</item>
+                <item>Radiation Sense</item>
+                <item>Respirocytes</item>
+                <item>T-Ray Emitter</item>
+            </commonExtras>
+        </morph>
+        <morph id="venusian-glider-variant" name="Venusian Glider Variant" type="Biomorph">
+            <cost>3</cost>
+            <availability base="20">
+                <habitat id="venus" value="50" />
+            </availability>
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+                <rate mode="Glider" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Respiration</item>
+                <item>Enhanced Vision</item>
+                <item>SGliding Membranes</item>
+                <item>Mesh Inserts</item>
+                <item>Oxygen Reserve</item>
+                <item>Vacuum Sealing</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Limberness (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Respirocytes</item>
+            </commonExtras>
+        </morph>
+        <morph id="overmind" name="Overmind" type="Core Morph">
+            <cost>20</cost>
+            <availability base="0" />
+            <stats>
+                <wt>16</wt>
+                <dur>80</dur>
+                <dr>160</dr>
+            </stats>
+            <aptitudes>
+                <insight>8</insight>
+                <moxie>2</moxie>
+                <vigor>0</vigor>
+                <flex>4</flex>
+            </aptitudes>
+            <ware>
+                <item>Access Jacks</item>
+                <item>App-Lock</item>
+                <item>Asymmetric Sleep</item>
+                <item>Auto Backup</item>
+                <item>Circadian Regulation</item>
+                <item>Copylock</item>
+                <item>Core System</item>
+                <item>Cortical Stack</item>
+                <item>Drone Rig</item>
+                <item>Energy Efficiency</item>
+                <item>Enhanced Security</item>
+                <item>Fault Tolerance</item>
+                <item>Ghostrider Modules (5+)</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Multi-Ego Controls</item>
+                <item>Multi-Focus (7)</item>
+                <item>Multi-Tasking</item>
+                <item>Oracles</item>
+                <item>Puppet Sock</item>
+                <item>Skillware</item>
+                <item>Stress Control</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Enhanced Behavior (Helpful, Level 2)</item>
+                <item>Enhanced Behavior (Protective, Level 2)</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Overminds follow the core systems rules . Bonus from Multi-Tasking already incorporated.</notes>
+        </morph>
+        <morph id="sexton" name="Sexton" type="Core Morph">
+            <cost>15</cost>
+            <availability base="0" />
+            <stats>
+                <wt>14</wt>
+                <dur>70</dur>
+                <dr>140</dr>
+            </stats>
+            <aptitudes>
+                <insight>6</insight>
+                <moxie>2</moxie>
+                <vigor>0</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <ware>
+                <item>Access Jacks</item>
+                <item>App-Lock</item>
+                <item>Asymmetric Sleep</item>
+                <item>Auto Backup</item>
+                <item>Circadian Regulation</item>
+                <item>Copylock</item>
+                <item>Core System</item>
+                <item>Cortical Stack</item>
+                <item>Drone Rig</item>
+                <item>Enhanced Security</item>
+                <item>Ghostrider Modules (5+)</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Multi-Ego Controls</item>
+                <item>Multi-Focus (4)</item>
+                <item>Multi-Tasking</item>
+                <item>Oracles</item>
+                <item>Puppet Sock</item>
+                <item>Skillware</item>
+                <item>Stress Control</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Enhanced Behavior (Helpful, Level 2)</item>
+                <item>Enhanced Behavior (Protective, Level 2)</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Sextons follow the core systems rules . Multi-Tasking bonus already incorporated.</notes>
+        </morph>
+        <morph id="warden" name="Warden" type="Core Morph">
+            <cost>7</cost>
+            <availability base="0" />
+            <stats>
+                <wt>12</wt>
+                <dur>60</dur>
+                <dr>120</dr>
+            </stats>
+            <aptitudes>
+                <insight>5</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Asymmetric Sleep</item>
+                <item>Auto Backup</item>
+                <item>Circadian Regulation</item>
+                <item>Copylock</item>
+                <item>Core System</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Multi-Focus (2)</item>
+                <item>Multi-Tasking</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Enhanced Behavior (Helpful, Level 2)</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Wardens follow the core systems rules . Bonus from multi-tasking already incorporated.</notes>
+        </morph>
+        <morph id="quadruped-variant" name="Quadruped Variant" type="Exomorph Biomorph">
+            <cost>2</cost>
+            <availability base="30">
+                <habitat id="gate" value="40" />
+            </availability>
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>38</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>2</moxie>
+                <vigor>2</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Hearing</item>
+                <item>Gliding Membrane</item>
+                <item>Grip Pads</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Prehensile Tail</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <notes>Small size</notes>
+        </morph>
+        <morph id="scurrier" name="Scurrier" type="Exomorph Biomorph">
+            <cost>2</cost>
+            <availability base="30">
+                <habitat id="gate" value="40" />
+            </availability>
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>38</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>2</moxie>
+                <vigor>2</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Hearing</item>
+                <item>Extra Limbs (1 pair)</item>
+                <item>Gliding Membrane</item>
+                <item>Grip Pads</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Prehensile Tail</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Limberness (Level 1)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Claws</item>
+                <item>Enhanced Smell</item>
+                <item>Enhanced Vision</item>
+                <item>Prehensile Feet</item>
+            </commonExtras>
+            <notes>6 limbs, Small size</notes>
+        </morph>
+        <morph id="whiplash" name="Whiplash" type="Exomorph Biomorph">
+            <cost>2</cost>
+            <availability base="10">
+                <habitat id="gate" value="30" />
+            </availability>
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Grasping Tendril</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <notes>Beak/Claw Attack (DV 2d6)</notes>
+        </morph>
+        <morph id="agent" name="Agent" type="Infomorph">
+            <cost>2</cost>
+            <availability base="100" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>4</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Enhanced Security</item>
+                <item>E-Veil</item>
+                <item>Mnemonics</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+        </morph>
+        <morph id="digimorph" name="Digimorph" type="Infomorph">
+            <cost>0</cost>
+            <availability base="100" />
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>50</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Mnemonics</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+        </morph>
+        <morph id="djinn" name="Djinn" type="Infomorph">
+            <cost>5</cost>
+            <availability base="70" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>4</insight>
+                <moxie>2</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Auto Backup</item>
+                <item>Defrag</item>
+                <item>Mnemonics</item>
+                <item>Oracles</item>
+                <item>Stress Control</item>
+                <item>Stabilizer</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+        </morph>
+        <morph id="echo" name="Echo" type="Infomorph">
+            <cost>5</cost>
+            <availability base="30" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>70</dr>
+            </stats>
+            <aptitudes>
+                <insight>3</insight>
+                <moxie>3</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Circadian Regulation</item>
+                <item>Copylock</item>
+                <item>E-Veil</item>
+                <item>Fake Brainprint</item>
+                <item>Mimicry Module</item>
+                <item>Mnemonics</item>
+                <item>Skillware</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+        </morph>
+        <morph id="ikon" name="Ikon" type="Infomorph">
+            <cost>1</cost>
+            <availability base="100" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>3</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Copylock</item>
+                <item>Memory Lock</item>
+                <item>Mnemonics</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+        </morph>
+        <morph id="neo" name="Neo" type="Infomorph">
+            <cost>2</cost>
+            <availability base="100" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>1</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <ware>
+                <item>Copylock</item>
+                <item>Memory Lock</item>
+                <item>Mnemonics</item>
+                <item>Skillsoft (2, any)</item>
+                <item>Skillware</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+        </morph>
+        <morph id="operator" name="Operator" type="Infomorph">
+            <cost>2</cost>
+            <availability base="100" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>70</dr>
+            </stats>
+            <aptitudes>
+                <insight>3</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <ware>
+                <item>Drone Rig</item>
+                <item>Mnemonics</item>
+                <item>Oracles</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+        </morph>
+        <morph id="sage" name="Sage" type="Infomorph">
+            <cost>1</cost>
+            <availability base="100" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <ware>
+                <item>Mnemonics</item>
+                <item>Oracles</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+        </morph>
+        <morph id="spectre" name="Spectre" type="Infomorph">
+            <cost>6</cost>
+            <availability base="60" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>6</insight>
+                <moxie>2</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Copylock</item>
+                <item>Defrag</item>
+                <item>Drone Rig</item>
+                <item>E-Veil</item>
+                <item>Enhanced Security</item>
+                <item>Fault Tolerance</item>
+                <item>Mnemonics</item>
+            </ware>
+            <morphTraits>
+                <item>Digital Speed</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+        </morph>
+        <morph id="augur" name="Augur" type="Pod Biomorph">
+            <cost>3</cost>
+            <availability base="60" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>3</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+        </morph>
+        <morph id="ayah" name="Ayah" type="Pod Biomorph">
+            <cost>3</cost>
+            <availability base="70" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>2</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Clean Metabolism</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Smell</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Oxygen Reserve</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Enhanced Behavior (Attentive, Level 2)</item>
+                <item>Enhanced Behavior (Protective, Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Heat Tolerance</item>
+                <item>Utilimod</item>
+                <item>Vacuum Sealing. Many have the Composure and/or Empathy traits.</item>
+            </commonExtras>
+        </morph>
+        <morph id="basic-pod" name="Basic Pod" type="Pod Biomorph">
+            <cost>1</cost>
+            <availability base="80" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Planned Obsolescence</item>
+            </morphTraits>
+        </morph>
+        <morph id="chickcharnie" name="Chickcharnie" type="Pod Biomorph">
+            <cost>2</cost>
+            <availability base="20" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Polarization Vision</item>
+                <item>Prehensile Feet</item>
+                <item>Puppet Sock</item>
+                <item>Wings</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <notes>Beak/Claw Attack (DV 2d6)</notes>
+        </morph>
+        <morph id="critter" name="Critter" type="Pod Biomorph">
+            <cost>3</cost>
+            <availability base="60" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Chameleon Skin</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Smell</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Prehensile Tail</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Bodysculpting</item>
+                <item>Prehensile Feet</item>
+                <item>Skin Pocket</item>
+                <item>Scent Alteration</item>
+            </commonExtras>
+            <notes>Depending on the morph’s design and genetics, different levels of the Exotic Morphology and Non-Human Biochemistry traits and different Movement Rates may apply.</notes>
+        </morph>
+        <morph id="defender-variant" name="Defender Variant" type="Pod Biomorph">
+            <cost>6</cost>
+            <availability base="30" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>2</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Adrenal Surge</item>
+                <item>Biomods</item>
+                <item>Bioweave</item>
+                <item>Clean Metabolism</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Eelware</item>
+                <item>Enhanced Smell</item>
+                <item>Hardened Skeleton</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Oxygen Reserve</item>
+                <item>Pain Regulator</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Enhanced Behavior (Attentive, Level 2)</item>
+                <item>Enhanced Behavior (Protective, Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Hand Laser</item>
+                <item>Muscle Augmentation</item>
+                <item>Vacuum Sealing</item>
+            </commonExtras>
+            <notes>Bonuses from hardened skeleton already incorporated.</notes>
+        </morph>
+        <morph id="digger" name="Digger" type="Pod Biomorph">
+            <cost>4</cost>
+            <availability base="20">
+                <habitat id="gate" value="40" />
+            </availability>
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Digging Claws</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Muscle Augmentation</item>
+                <item>Puppet Sock</item>
+                <item>Utilimod</item>
+            </ware>
+            <commonExtras>
+                <item>Cold Tolerance</item>
+                <item>Enhanced Respiration</item>
+                <item>Enhanced Vision</item>
+                <item>Vacuum Sealing</item>
+            </commonExtras>
+        </morph>
+        <morph id="flying-squid" name="Flying Squid" type="Pod Biomorph">
+            <cost>5</cost>
+            <availability base="30" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Swim" normal="8" running="32" />
+                <rate mode="Thrust Vector (Gas Jet)" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Cryogenic Protection</item>
+                <item>Cyberbrain</item>
+                <item>Gills</item>
+                <item>Grip Pads</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Polarization Vision</item>
+                <item>Pressure Adaptation</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Limberness (Level 2)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>8 prehensile arms</item>
+                <item>2 prehensile tentacles</item>
+                <item>Beak Attack (DV 1d10)</item>
+                <item>Ink Attack (use Athletics; blinding, 5-meter uniform area-effect in water and micrograv)</item>
+            </commonExtras>
+        </morph>
+        <morph id="hypergibbon" name="Hypergibbon" type="Pod Biomorph">
+            <cost>2</cost>
+            <availability base="40" />
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>38</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>2</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Brachiate" normal="8" running="32" />
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Brachiating Adaptation</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Grip Pads</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Prehensile Feet</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Limberness (Level 2)</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+            <notes>Small size</notes>
+        </morph>
+        <morph id="novacrab" name="Novacrab" type="Pod Biomorph">
+            <cost>4</cost>
+            <availability base="50" />
+            <stats>
+                <wt>9</wt>
+                <dur>45</dur>
+                <dr>68</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Carapace Armor (+6/+7)</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Respiration</item>
+                <item>Gills</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Oxygen Reserve</item>
+                <item>Puppet Sock</item>
+                <item>Vacuum Sealing</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <notes>Claw Attack (DV 2d10)</notes>
+        </morph>
+        <morph id="pleasure-pod" name="Pleasure Pod" type="Pod Biomorph">
+            <cost>4</cost>
+            <availability base="70" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>3</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Clean Metabolism</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Pheromones</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Scent Alteration</item>
+                <item>Sex Switch</item>
+            </ware>
+            <commonExtras>
+                <item>Many have the Striking Looks or Addiction traits.</item>
+            </commonExtras>
+        </morph>
+        <morph id="ripwing" name="Ripwing" type="Pod Biomorph">
+            <cost>4</cost>
+            <availability base="20">
+                <habitat id="gate" value="30" />
+            </availability>
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Claws</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Polarization Vision</item>
+                <item>Prehensile Feet</item>
+                <item>Puppet Sock</item>
+                <item>Wings</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <notes>Beak/Claw Attack (DV 2d6)</notes>
+        </morph>
+        <morph id="samsa" name="Samsa" type="Pod Biomorph">
+            <cost>5</cost>
+            <availability base="20">
+                <habitat id="the-outer-rim" value="30" />
+            </availability>
+            <stats>
+                <wt>9</wt>
+                <dur>45</dur>
+                <dr>68</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Carapace Armor</item>
+                <item>Claws</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Grip Pads</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Hardened Skeleton</item>
+                <item>Muscle Augmentation</item>
+                <item>Neurachem. Many have the Unattractiveness trait.</item>
+            </commonExtras>
+            <notes>4 arms, 4 legs</notes>
+        </morph>
+        <morph id="security-pod" name="Security Pod" type="Pod Biomorph">
+            <cost>5</cost>
+            <availability base="60" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Bioweave Armor (+2/+3)</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Eelware</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <commonExtras>
+                <item>Adrenal Surge</item>
+                <item>T-Ray Emitter</item>
+            </commonExtras>
+        </morph>
+        <morph id="shaper" name="Shaper" type="Pod Biomorph">
+            <cost>5</cost>
+            <availability base="40" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>2</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Nanotat ID Flux</item>
+                <item>Puppet Sock</item>
+                <item>Sex Switch</item>
+                <item>Skinflex</item>
+            </ware>
+        </morph>
+        <morph id="space-marine-variant" name="Space Marine Variant" type="Pod Biomorph">
+            <cost>6</cost>
+            <availability base="50" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Bioweave Armor (+2/+3)</item>
+                <item>Claws</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Eelware</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Oxygen Reserve</item>
+                <item>Prehensile Feet</item>
+                <item>Puppet Sock</item>
+                <item>Vacuum Sealing</item>
+            </ware>
+        </morph>
+        <morph id="traceur" name="Traceur" type="Pod Biomorph">
+            <cost>3</cost>
+            <availability base="50" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <commonExtras>
+                <item>Adrenal Surge</item>
+                <item>Grip Pads</item>
+                <item>Muscle Augmentation. Many have the Limberness trait.</item>
+            </commonExtras>
+        </morph>
+        <morph id="vac-pod" name="Vac Pod" type="Pod Biomorph">
+            <cost>4</cost>
+            <availability base="50" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Cryogenic Protection</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Oxygen Reserve</item>
+                <item>Prehensile Feet</item>
+                <item>Puppet Sock</item>
+                <item>Vacuum Sealing</item>
+            </ware>
+            <morphTraits>
+                <item>Limberness (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Grip Pads</item>
+                <item>Magnetic System</item>
+                <item>Utilimod</item>
+            </commonExtras>
+        </morph>
+        <morph id="worker-pod" name="Worker Pod" type="Pod Biomorph">
+            <cost>3</cost>
+            <availability base="70" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+        </morph>
+        <morph id="apiary-module" name="Apiary Module" type="Synthmorph">
+            <cost>3</cost>
+            <availability base="0" />
+            <stats>
+                <wt>4</wt>
+                <dur>20</dur>
+                <dr>40</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Cleaner Swarm Hive</item>
+                <item>Fixer Swarm Hive</item>
+                <item>Guardian Swarm Hive</item>
+                <item>Engineer Swarm Hive</item>
+                <item>Nanoscopic Vision</item>
+            </ware>
+            <notes>Hives may be switched for others of equivalent GP.</notes>
+        </morph>
+        <morph id="arachnikoma-variant" name="Arachnikoma Variant" type="Synthmorph">
+            <cost>9</cost>
+            <availability base="30" />
+            <stats>
+                <wt>13</wt>
+                <dur>65</dur>
+                <dr>130</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>4</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Hopper" normal="4" running="12" />
+                <rate mode="Thrust Vector (Gas Jet)" normal="8" running="40" />
+                <rate mode="Walker" normal="4" running="20" />
+                <rate mode="Wheeled" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Magnetic System</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Pneumatics</item>
+                <item>Puppet Sock</item>
+                <item>Retracting Limbs</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Heavy Frame (Armor 12/10), Large size</notes>
+        </morph>
+        <morph id="arachnoid" name="Arachnoid" type="Synthmorph">
+            <cost>6</cost>
+            <availability base="40" />
+            <stats>
+                <wt>11</wt>
+                <dur>55</dur>
+                <dr>110</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Hopper" normal="4" running="12" />
+                <rate mode="Thrust Vector (Gas Jet)" normal="8" running="40" />
+                <rate mode="Walker" normal="4" running="20" />
+                <rate mode="Wheeled" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Magnetic System</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Pneumatics</item>
+                <item>Puppet Sock</item>
+                <item>Retracting Limbs</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Medium Frame (Armor 8/6)</notes>
+        </morph>
+        <morph id="aviary-module" name="Aviary Module" type="Synthmorph">
+            <cost>2</cost>
+            <availability base="0" />
+            <stats>
+                <wt>4</wt>
+                <dur>20</dur>
+                <dr>40</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <ware>
+                <item>Drone Rig</item>
+                <item>Fixer Swarm Hive</item>
+            </ware>
+        </morph>
+        <morph id="bard-module" name="Bard Module" type="Synthmorph">
+            <cost>3</cost>
+            <availability base="0" />
+            <stats>
+                <wt>4</wt>
+                <dur>20</dur>
+                <dr>40</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Laser Link (Small)</item>
+                <item>Miniature Radio Farcaster</item>
+                <item>Radio Booster</item>
+                <item>QE Comm</item>
+                <item>Qubit Reservoir</item>
+            </ware>
+        </morph>
+        <morph id="biocore" name="Biocore" type="Synthmorph">
+            <cost>3</cost>
+            <availability base="30" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>70</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Brain Box</item>
+                <item>Cortical Stack</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4)</notes>
+        </morph>
+        <morph id="blackbird-variant" name="Blackbird Variant" type="Synthmorph">
+            <cost>5</cost>
+            <availability base="25" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="2" running="8" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Prehensile Feet</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Stealth Coating</item>
+                <item>Wings</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4), Small size</notes>
+        </morph>
+        <morph id="case" name="Case" type="Synthmorph">
+            <cost>0</cost>
+            <availability base="100" />
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>50</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Inherent Flaws</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4)</notes>
+        </morph>
+        <morph id="cetus" name="Cetus" type="Synthmorph">
+            <cost>6</cost>
+            <availability base="20">
+                <habitat id="aquatic" value="70" />
+            </availability>
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Submarine" normal="8" running="32" />
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>360° Vision</item>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cryogenic Protection</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Extra Limbs (1 pair)</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Pressure Adaptation</item>
+                <item>Sonar</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Medium Frame (Armor 8/6), 4 arms, 4 legs</notes>
+        </morph>
+        <morph id="cleric-module" name="Cleric Module" type="Synthmorph">
+            <cost>2</cost>
+            <availability base="0" />
+            <stats>
+                <wt>4</wt>
+                <dur>20</dur>
+                <dr>40</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <ware>
+                <item>Ego Bridge</item>
+                <item>Healing Spray Hive</item>
+                <item>Med Scanner</item>
+            </ware>
+            <notes>The hive can fabricate another dose of healing spray every 2 hours.</notes>
+        </morph>
+        <morph id="cloud-skimmer" name="Cloud Skimmer" type="Synthmorph">
+            <cost>7</cost>
+            <availability base="20">
+                <habitat id="the-outer-system" value="40" />
+            </availability>
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Microlight" normal="8" running="32" />
+                <rate mode="Thrust Vector (Rocket)" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cryogenic Protection</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Extra Limbs (1 pair)</item>
+                <item>Laser Link (Medium)</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Pressure Adaptation</item>
+                <item>Radar</item>
+                <item>Retracting Limbs</item>
+                <item>Thermogenic Protection</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Heavy Frame (Armor 12/10), 4 arms</notes>
+        </morph>
+        <morph id="combat-mech-variant" name="Combat Mech Variant" type="Synthmorph">
+            <cost>21</cost>
+            <availability base="5" />
+            <stats>
+                <wt>16</wt>
+                <dur>80</dur>
+                <dr>160</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>3</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Anti-Glare</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Freezer (mounted)</item>
+                <item>Heavy Combat Armor (+16/+14)</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Muscle Augmentation</item>
+                <item>Particle Beam Bolter</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Radar Absorbent</item>
+                <item>Railgun Machine Gun (mounted)</item>
+                <item>Structural Enhancement</item>
+                <item>Stunner (mounted)</item>
+                <item>Weapon Mounts (2 static, 2 articulated)</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Heavy Frame (Armor 12/10; 28/24 with heavy combat armor), Large size. Bonuses from Structural Enhancement already incorporated.</notes>
+        </morph>
+        <morph id="conjurer-module" name="Conjurer Module" type="Synthmorph">
+            <cost>1</cost>
+            <availability base="0" />
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Hopper" normal="4" running="12" />
+                <rate mode="Rotor" normal="4" running="20" />
+                <rate mode="Walker" normal="2" running="8" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Modular Design</item>
+                <item>Puppet Sock</item>
+                <item>Skinlink</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Swarm attack (DV 1d6, ignores armor, blinding), comes with specialized conjurer hive, follows rules for swarms . Conjurer swarms do not affect a flexbot’s gestalt Movement Rate; when not disconnected they ride along on other modules.</notes>
+        </morph>
+        <morph id="courier" name="Courier" type="Synthmorph">
+            <cost>7</cost>
+            <availability base="30">
+                <habitat id="the-outer-system" value="60" />
+            </availability>
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>70</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Plasma Sail" normal="8" running="40" />
+                <rate mode="Thrust Vector (Rocket)" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cryogenic Protection</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Extra Limbs (1 pair)</item>
+                <item>Laser Link (Medium)</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Plasma Sail</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Retracting Limbs</item>
+            </ware>
+            <commonExtras>
+                <item>Radiation Tolerance</item>
+                <item>Thermogenic Protection</item>
+            </commonExtras>
+            <notes>Medium Frame (Armor 8/6), 4 arms</notes>
+        </morph>
+        <morph id="crafter-module" name="Crafter Module" type="Synthmorph">
+            <cost>2</cost>
+            <availability base="0" />
+            <stats>
+                <wt>4</wt>
+                <dur>20</dur>
+                <dr>40</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Engineer Swarm Hive</item>
+                <item>Fixer Swarm Hive</item>
+            </ware>
+        </morph>
+        <morph id="daitya" name="Daitya" type="Synthmorph">
+            <cost>13</cost>
+            <availability base="30" />
+            <stats>
+                <wt>15</wt>
+                <dur>75</dur>
+                <dr>150</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>3</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Digging Claws</item>
+                <item>Disassembly Tools (mounted)</item>
+                <item>Hardened Skeleton</item>
+                <item>Industrial Armor (+6/+4)</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Muscle Augmentation</item>
+                <item>Pneumatics</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Utilimod</item>
+                <item>Weapon Mounts (2 static, 2 articulated)</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Heavy Frame (Armor 12/10; 18/14 with industrial armor), Large size. Bonuses from Hardened Skeleton already incorporated.</notes>
+        </morph>
+        <morph id="dragonfly" name="Dragonfly" type="Synthmorph">
+            <cost>1</cost>
+            <availability base="70" />
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>50</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="2" running="8" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Prehensile Tail</item>
+                <item>Radar</item>
+                <item>Wings</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4), Small size</notes>
+        </morph>
+        <morph id="fenrir" name="Fenrir" type="Synthmorph">
+            <cost>20</cost>
+            <availability base="1">
+                <habitat id="callisto" value="5" />
+            </availability>
+            <stats>
+                <wt>20</wt>
+                <dur>100</dur>
+                <dr>200</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>4</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Thrust Vector (Gas Jet)" normal="4" running="12" />
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Anti-Glare</item>
+                <item>Battle Laser (mounted)</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Vision</item>
+                <item>Freezer (mounted)</item>
+                <item>Ghostrider Modules (5)</item>
+                <item>Heavy Combat Armor (+16/+14)</item>
+                <item>Mesh Inserts</item>
+                <item>Microwave Agonizer (mounted)</item>
+                <item>Mnemonics</item>
+                <item>Multi-Ego Controls</item>
+                <item>Radar</item>
+                <item>Railgun Sniper Rifle (mounted)</item>
+                <item>Seeker Rifle (mounted)</item>
+                <item>Structural Enhancement</item>
+                <item>Torch (mounted)</item>
+                <item>T-Ray Emitter</item>
+                <item>Weapon Mounts (3 Articulated, 3 Internal Articulated)</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Heavy Frame (Armor 12/10; 28/24 with Heavy Combat Armor), Large size. Bonuses from Structural Enhancement already incorporated.</notes>
+        </morph>
+        <morph id="fierce-kite-variant" name="Fierce Kite Variant" type="Synthmorph">
+            <cost>4</cost>
+            <availability base="30">
+                <habitat id="gate" value="60" />
+            </availability>
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>50</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker 4/12; Choose One: Ionic" normal="8" running="40" />
+                <rate mode="Microlight" normal="8" running="32" />
+                <rate mode="Thrust Vector (Turbofan)" normal="8" running="40" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Vision</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Shape Adjusting</item>
+                <item>Stealth Coating</item>
+                <item>T-Ray Emitter</item>
+                <item>Weapon Mounts (2, Internal and Articulated)</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4), Small size. Changing mobility systems takes 1d6 minutes.</notes>
+        </morph>
+        <morph id="fighter-module" name="Fighter Module" type="Synthmorph">
+            <cost>3</cost>
+            <availability base="0" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Pneumatics</item>
+                <item>Weapon Mount (2)</item>
+            </ware>
+        </morph>
+        <morph id="flexbot" name="Flexbot" type="Synthmorph">
+            <cost>0</cost>
+            <availability base="0" />
+            <movement>
+                <rate mode="Thrust Vector (Gas Jet)" normal="8" running="40" />
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Modular Design</item>
+                <item>Puppet Sock</item>
+                <item>Shape Adjusting</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Modular flexbot system. Light Frame (Armor 6/4), Small size. Use the module rules and module-specific characteristics from the guide.</notes>
+        </morph>
+        <morph id="galatea" name="Galatea" type="Synthmorph">
+            <cost>5</cost>
+            <availability base="50" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>2</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Chameleon Skin</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Hearing</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4)</notes>
+        </morph>
+        <morph id="gargoyle" name="Gargoyle" type="Synthmorph">
+            <cost>5</cost>
+            <availability base="60" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Anti-Glare</item>
+                <item>Chem Sniffer</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Smell</item>
+                <item>Enhanced Vision</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Oracles</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>T-Ray Emitter</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4)</notes>
+        </morph>
+        <morph id="golem-variant" name="Golem Variant" type="Synthmorph">
+            <cost>6</cost>
+            <availability base="40" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>3</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Hearing</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Synthetic Mask</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <notes>Medium Frame (Armor 8/6)</notes>
+        </morph>
+        <morph id="griefer" name="Griefer" type="Synthmorph">
+            <cost>0</cost>
+            <availability base="70" />
+            <stats>
+                <wt>4</wt>
+                <dur>20</dur>
+                <dr>40</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Auto-Erase</item>
+                <item>Cyberbrain</item>
+                <item>Holographic Projector</item>
+                <item>Lidar</item>
+                <item>Magnetic System</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Inherent Flaws</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4)</notes>
+        </morph>
+        <morph id="guard" name="Guard" type="Synthmorph">
+            <cost>8</cost>
+            <availability base="50" />
+            <stats>
+                <wt>9</wt>
+                <dur>45</dur>
+                <dr>90</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Chem Sniffer</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Vision</item>
+                <item>Hand Laser</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Synthetic Mask</item>
+                <item>T-Ray Emitter</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <notes>Medium Frame (Armor 8/6)</notes>
+        </morph>
+        <morph id="kite" name="Kite" type="Synthmorph">
+            <cost>2</cost>
+            <availability base="40">
+                <habitat id="gate" value="70" />
+            </availability>
+            <stats>
+                <wt>4</wt>
+                <dur>20</dur>
+                <dr>40</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker 4/12; Choose One: Ionic" normal="8" running="40" />
+                <rate mode="Microlight" normal="8" running="32" />
+                <rate mode="Thrust Vector (Turbofan)" normal="8" running="40" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Shape Adjusting</item>
+                <item>T-Ray Emitter</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4), Small size. Changing mobility systems takes 1d6 mins.</notes>
+        </morph>
+        <morph id="liquid-silver-variant" name="Liquid Silver Variant" type="Synthmorph">
+            <cost>7</cost>
+            <availability base="25" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>2</moxie>
+                <vigor>3</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Hidden Compartment</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Shape Adjusting</item>
+                <item>Skinflex</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <notes>Medium Frame (Armor 8/6)</notes>
+        </morph>
+        <morph id="mimic" name="Mimic" type="Synthmorph">
+            <cost>4</cost>
+            <availability base="30" />
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>50</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>0</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Vision</item>
+                <item>Grip Pads</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Shape Adjusting</item>
+                <item>Retracting Limbs</item>
+                <item>Skinflex</item>
+                <item>Telescoping Limbs</item>
+                <item>T-Ray Emitter</item>
+            </ware>
+            <morphTraits>
+                <item>Enhanced Behavior (Patience, Level 2)</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4), Small size</notes>
+        </morph>
+        <morph id="nautiloid" name="Nautiloid" type="Synthmorph">
+            <cost>25</cost>
+            <availability base="20">
+                <habitat id="the-main-belt" value="40" />
+            </availability>
+            <stats>
+                <wt>40</wt>
+                <dur>200</dur>
+                <dr>400</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Submarine" normal="8" running="40" />
+                <rate mode="Thrust Vector (Rocket)" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Autocook</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Cryogenic Protection</item>
+                <item>Disassembly Tools</item>
+                <item>Emergency Bubble</item>
+                <item>Extra Limbs (2 pairs)</item>
+                <item>Industrial Armor (+6/+4)</item>
+                <item>Large Fabber</item>
+                <item>Life Support</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Pressure Adaptation</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Radiation Tolerance</item>
+                <item>Sleds (2)</item>
+                <item>Sonar</item>
+                <item>Retracting Limbs</item>
+                <item>T-Ray Emitter</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Healing Vat</item>
+                <item>Vacsuits</item>
+            </commonExtras>
+            <notes>Heavy Frame (Armor 12/10, 18/14 with industrial armor), Very Large size, 6 limbs</notes>
+        </morph>
+        <morph id="oobleck" name="Oobleck" type="Synthmorph">
+            <cost>1</cost>
+            <availability base="30" />
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>50</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement />
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Lidar</item>
+                <item>Modular Design</item>
+                <item>Oozeware</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Armor 4/0, Small size</notes>
+        </morph>
+        <morph id="opteryx" name="Opteryx" type="Synthmorph">
+            <cost>4</cost>
+            <availability base="30">
+                <habitat id="gate-uplift-habs" value="50" />
+            </availability>
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>50</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="8" running="32" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Vision</item>
+                <item>Grip Pads</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Pneumatics</item>
+                <item>Puppet Sock</item>
+                <item>Prehensile Tail</item>
+                <item>Wings</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4), Small size</notes>
+        </morph>
+        <morph id="ornithope" name="Ornithope" type="Synthmorph">
+            <cost>4</cost>
+            <availability base="40" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>1</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="2" running="8" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Prehensile Feet</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Wings</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4), Small size</notes>
+        </morph>
+        <morph id="prime-variant" name="Prime Variant" type="Synthmorph">
+            <cost>10</cost>
+            <availability base="30" />
+            <stats>
+                <wt>9</wt>
+                <dur>45</dur>
+                <dr>90</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Chem Sniffer</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Vision</item>
+                <item>Guardian Nanoswarm Hive</item>
+                <item>Hand Laser</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Microwave Agonizer (mounted)</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Synthetic Mask</item>
+                <item>T-Ray Emitter</item>
+                <item>Weapon Mount (Internal, Static)</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <notes>Heavy Frame (Armor 12/10)</notes>
+        </morph>
+        <morph id="q-morph" name="Q-Morph" type="Synthmorph">
+            <cost>13</cost>
+            <availability base="10">
+                <habitat id="venus" value="40" />
+            </availability>
+            <stats>
+                <wt>20</wt>
+                <dur>100</dur>
+                <dr>200</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="2" running="8" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Disassembly Tools (on weapon mounts)</item>
+                <item>Enhanced Hearing</item>
+                <item>Extra Limbs (1 pair)</item>
+                <item>Hardened Skeleton</item>
+                <item>Industrial Armor (+6/+4)</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Muscle Augmentation</item>
+                <item>Pressure Adaptation</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Sonar</item>
+                <item>Thermogenic Protection</item>
+                <item>Weapon Mounts (2, Static)</item>
+            </ware>
+            <morphTraits>
+                <item>Enhanced Behavior (Complacency, Level 2)</item>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Heavy Frame (Armor 12/10, 18/14 with industrial armor), Large size, 8 limbs. Bonus from Hardened Skeleton already incorporated.</notes>
+        </morph>
+        <morph id="raptor" name="Raptor" type="Synthmorph">
+            <cost>8</cost>
+            <availability base="10" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Roller" normal="8" running="40" />
+                <rate mode="Thrust Vector (Rocket)" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cryogenic Protection</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Light Combat Armor (+10/+8)</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Radar Absorbent</item>
+                <item>Railgun Machine Gun (mounted)</item>
+                <item>Seeker Missile Launchers (2, mounted)</item>
+                <item>Weapon Mount (2 Static, 1 Articulated)</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Medium Frame (Armor 8/6), Large size</notes>
+        </morph>
+        <morph id="reaper" name="Reaper" type="Synthmorph">
+            <cost>12</cost>
+            <availability base="10" />
+            <stats>
+                <wt>12</wt>
+                <dur>60</dur>
+                <dr>120</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>6</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Hopper" normal="4" running="20" />
+                <rate mode="Ionic" normal="8" running="40" />
+                <rate mode="Thrust Vector (Gas Jet)" normal="8" running="40" />
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Anti-Glare</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Vision</item>
+                <item>Magnetic System</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Pneumatics</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Retracting Limbs</item>
+                <item>T-Ray Emitter</item>
+                <item>Weapon Mount (4, Articulated)</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Heavy Frame (Armor 12/10)</notes>
+        </morph>
+        <morph id="rogue-module" name="Rogue Module" type="Synthmorph">
+            <cost>2</cost>
+            <availability base="0" />
+            <stats>
+                <wt>4</wt>
+                <dur>20</dur>
+                <dr>40</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Chameleon Skin</item>
+                <item>Radar Absorbent</item>
+            </ware>
+        </morph>
+        <morph id="rover" name="Rover" type="Synthmorph">
+            <cost>5</cost>
+            <availability base="60" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>2</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Roller" normal="8" running="40" />
+                <rate mode="Thrust Vector (Gas Jet)" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Chameleon Skin</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Medium Pistol (mounted)</item>
+                <item>Mesh Inserts</item>
+                <item>Microwave Agonizer (mounted)</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Radar Absorbent</item>
+                <item>Retracting Limbs</item>
+                <item>Weapon Mount (2, Internal, Articulated)</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Eelware</item>
+                <item>Enhanced Vision</item>
+                <item>T-Ray Emitter</item>
+            </commonExtras>
+            <notes>Medium Frame (Armor 8/6), Small size</notes>
+        </morph>
+        <morph id="savant" name="Savant" type="Synthmorph">
+            <cost>4</cost>
+            <availability base="50" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>70</dr>
+            </stats>
+            <aptitudes>
+                <insight>3</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4)</notes>
+        </morph>
+        <morph id="skulker-variant" name="Skulker Variant" type="Synthmorph">
+            <cost>4</cost>
+            <availability base="30" />
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Hopper" normal="4" running="12" />
+                <rate mode="Rotor" normal="4" running="20" />
+                <rate mode="Walker" normal="2" running="8" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Radar Absorbent</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Swarm Attack (DV 1d6, ignores armor, blinding), comes with specialized skulker hive . Swarms follow rules for nanoswarm/microswarms .</notes>
+        </morph>
+        <morph id="slitheroid" name="Slitheroid" type="Synthmorph">
+            <cost>5</cost>
+            <availability base="50" />
+            <stats>
+                <wt>9</wt>
+                <dur>45</dur>
+                <dr>90</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>3</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Roller" normal="8" running="32" />
+                <rate mode="Snake" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Vision</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Retracting Limbs</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+            </morphTraits>
+            <notes>Medium Frame (Armor 8/6)</notes>
+        </morph>
+        <morph id="smart-swarm" name="Smart Swarm" type="Synthmorph">
+            <cost>5</cost>
+            <availability base="50" />
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Hopper" normal="4" running="12" />
+                <rate mode="Rotor" normal="4" running="20" />
+                <rate mode="Walker" normal="2" running="8" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Swarm Shape</item>
+                <item>Utilimod</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Swarm Attack (DV 1d6, ignores armor, blinding), comes with specialized smart swarm hive . Swarms follow rules for nanoswarm/microswarms .</notes>
+        </morph>
+        <morph id="spare" name="Spare" type="Synthmorph">
+            <cost>0</cost>
+            <availability base="80" />
+            <stats>
+                <wt>3</wt>
+                <dur>15</dur>
+                <dr>30</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack (optional)</item>
+                <item>Cyberbrain</item>
+                <item>Grip Pads</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Skinlink</item>
+                <item>Stress Control</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4), Small size</notes>
+        </morph>
+        <morph id="sphere" name="Sphere" type="Synthmorph">
+            <cost>5</cost>
+            <availability base="60" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>2</moxie>
+                <vigor>0</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Roller" normal="8" running="40" />
+                <rate mode="Thrust Vector (Gas Jet)" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Extra Limbs (1 pair)</item>
+                <item>Lidar</item>
+                <item>Magnetic System</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Retracting Limbs</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4), 4 limbs</notes>
+        </morph>
+        <morph id="steel-morph" name="Steel Morph" type="Synthmorph">
+            <cost>5</cost>
+            <availability base="50" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>3</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <notes>Medium Frame (Armor 8/6)</notes>
+        </morph>
+        <morph id="sundiver" name="Sundiver" type="Synthmorph">
+            <cost>10</cost>
+            <availability base="10">
+                <habitat id="sol" value="40" />
+            </availability>
+            <stats>
+                <wt>12</wt>
+                <dur>60</dur>
+                <dr>120</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>3</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Magnetic Generator" normal="8" running="40" />
+                <rate mode="Thrust Vector (Rocket)" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Anti-Glare</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Enhanced Vision</item>
+                <item>Laser Link (Medium)</item>
+                <item>Magnetic Generator</item>
+                <item>Medichines</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Refractive Coating</item>
+                <item>Retracting Limbs</item>
+                <item>Thermogenic Protection</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Heavy Frame (Armor 12/10), Large size</notes>
+        </morph>
+        <morph id="swarmanoid" name="Swarmanoid" type="Synthmorph">
+            <cost>3</cost>
+            <availability base="60" />
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Hopper" normal="4" running="12" />
+                <rate mode="Rotor" normal="4" running="20" />
+                <rate mode="Walker" normal="2" running="8" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Swarm Attack (DV 1d6, ignores armor, blinding), comes with specialized swarmanoid hive . Swarms follow rules for nanoswarm/microswarms .</notes>
+        </morph>
+        <morph id="synth" name="Synth" type="Synthmorph">
+            <cost>3</cost>
+            <availability base="80" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4)</notes>
+        </morph>
+        <morph id="synthtaur" name="Synthtaur" type="Synthmorph">
+            <cost>6</cost>
+            <availability base="40">
+                <habitat id="gate" value="60" />
+            </availability>
+            <stats>
+                <wt>10</wt>
+                <dur>50</dur>
+                <dr>100</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement />
+            <ware>
+                <item>Access Jacks</item>
+                <item>Convertible Form</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Extra Limbs (1 pair)</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Pneumatics</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+            </morphTraits>
+            <notes>Medium Frame (Armor 8/6), Large size</notes>
+        </morph>
+        <morph id="takko" name="Takko" type="Synthmorph">
+            <cost>6</cost>
+            <availability base="25" />
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Thrust Vector (Gas Jet)" normal="8" running="40" />
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Extra Limbs (3 pair)</item>
+                <item>Grip Pads</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Polarization Vision</item>
+                <item>Puppet Sock</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Limberness (Level 2)</item>
+            </morphTraits>
+            <notes>Light Frame (Armor 6/4)</notes>
+        </morph>
+        <morph id="ultra-kite-variant" name="Ultra Kite Variant" type="Synthmorph">
+            <cost>4</cost>
+            <availability base="30">
+                <habitat id="gate" value="40" />
+            </availability>
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>70</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker 4/12; Choose One: Ionic" normal="8" running="40" />
+                <rate mode="Microlight" normal="8" running="32" />
+                <rate mode="Thrust Vector (Turbofan)" normal="8" running="40" />
+                <rate mode="Winged" normal="8" running="32" />
+            </movement>
+            <ware>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Shape Adjusting</item>
+                <item>T-Ray Emitter</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <notes>Medium Frame (Armor 8/6), Changing mobility systems takes 1d6 minutes.</notes>
+        </morph>
+        <morph id="wizard-module" name="Wizard Module" type="Synthmorph">
+            <cost>2</cost>
+            <availability base="0" />
+            <stats>
+                <wt>4</wt>
+                <dur>20</dur>
+                <dr>40</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <ware>
+                <item>Radio Booster</item>
+                <item>Sniffer App</item>
+                <item>Tracker App</item>
+            </ware>
+        </morph>
+        <morph id="xu-fu" name="Xu Fu" type="Synthmorph">
+            <cost>5</cost>
+            <availability base="50">
+                <habitat id="gate" value="80" />
+            </availability>
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>80</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>0</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+                <rate mode="Wheeled" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Access Jacks</item>
+                <item>Cortical Stack</item>
+                <item>Cyberbrain</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Extra Limbs (1 pair)</item>
+                <item>Lidar</item>
+                <item>Mesh Inserts</item>
+                <item>Mnemonics</item>
+                <item>Puppet Sock</item>
+                <item>Radar</item>
+                <item>Retracting Limbs</item>
+                <item>Telescoping Limbs</item>
+                <item>T-Ray Emitter</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Electrical Sense</item>
+                <item>Enhanced Hearing</item>
+                <item>Radiation Sense</item>
+                <item>Sonar</item>
+            </commonExtras>
+            <notes>Light Frame (Armor 6/4)</notes>
+        </morph>
+        <morph id="neo-avian" name="Neo-Avian" type="Uplift Biomorph">
+            <cost>0</cost>
+            <availability base="50" />
+            <stats>
+                <wt>5</wt>
+                <dur>25</dur>
+                <dr>38</dr>
+            </stats>
+            <aptitudes>
+                <insight>2</insight>
+                <moxie>1</moxie>
+                <vigor>0</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="2" running="8" />
+                <rate mode="Winged" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Claws</item>
+                <item>Cortical Stack</item>
+                <item>Direction Sense</item>
+                <item>Enhanced Vision</item>
+                <item>Mesh Inserts</item>
+                <item>Prehensile Feet</item>
+                <item>Wings</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <notes>Beak/Claw Attack (DV 2d6), Small size</notes>
+        </morph>
+        <morph id="neo-beluga" name="Neo-Beluga" type="Uplift Biomorph">
+            <cost>3</cost>
+            <availability base="10">
+                <habitat id="aquatic" value="30" />
+            </availability>
+            <stats>
+                <wt>9</wt>
+                <dur>45</dur>
+                <dr>68</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Swim" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Asymmetric Sleep</item>
+                <item>Biomods</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Respiration</item>
+                <item>Gills</item>
+                <item>Mesh Inserts</item>
+                <item>Sonar</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Lack of Manipulators</item>
+                <item>Lack of Smell</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Cyberarms</item>
+                <item>Extra Limbs</item>
+            </commonExtras>
+            <notes>Large size</notes>
+        </morph>
+        <morph id="neo-bonobo-neo-chimp" name="Neo-Bonobo/Neo-Chimp" type="Uplift Biomorph">
+            <cost>1</cost>
+            <availability base="50" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>2</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Smell</item>
+                <item>Mesh Inserts</item>
+                <item>Prehensile Feet</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1) Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+        </morph>
+        <morph id="neo-dolphin" name="Neo-Dolphin" type="Uplift Biomorph">
+            <cost>2</cost>
+            <availability base="10">
+                <habitat id="aquatic" value="50" />
+            </availability>
+            <stats>
+                <wt>8</wt>
+                <dur>40</dur>
+                <dr>60</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Swim" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Asymmetric Sleep</item>
+                <item>Biomods</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Respiration</item>
+                <item>Gills</item>
+                <item>Mesh Inserts</item>
+                <item>Sonar</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Lack of Manipulators</item>
+                <item>Lack of Smell</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Cyberarms</item>
+                <item>Extra Limbs</item>
+            </commonExtras>
+            <notes>Large size</notes>
+        </morph>
+        <morph id="neo-gorilla" name="Neo-Gorilla" type="Uplift Biomorph">
+            <cost>3</cost>
+            <availability base="40" />
+            <stats>
+                <wt>9</wt>
+                <dur>45</dur>
+                <dr>68</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Smell</item>
+                <item>Mesh Inserts</item>
+                <item>Prehensile Feet</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+        </morph>
+        <morph id="neo-neanderthal" name="Neo-Neanderthal" type="Uplift Biomorph">
+            <cost>2</cost>
+            <availability base="35" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>2</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+            </ware>
+            <morphTraits>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+        </morph>
+        <morph id="neo-octopus" name="Neo-Octopus" type="Uplift Biomorph">
+            <cost>3</cost>
+            <availability base="35" />
+            <stats>
+                <wt>6</wt>
+                <dur>30</dur>
+                <dr>45</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Swim" normal="4" running="20" />
+                <rate mode="Thrust Vector (Gas Jet)" normal="4" running="12" />
+                <rate mode="Walker" normal="2" running="8" />
+            </movement>
+            <ware>
+                <item>360-Degree Vision</item>
+                <item>Biomods</item>
+                <item>Chameleon Skin</item>
+                <item>Cortical Stack</item>
+                <item>Gills</item>
+                <item>Mesh Inserts</item>
+                <item>Polarization Vision</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Limberness (Level 2)</item>
+                <item>Non-Human Biochemistry (Level 2)</item>
+            </morphTraits>
+            <notes>8 prehensile arms, Beak Attack (DV 1d10), Ink Attack (use Athletics, blinding, 5-meter uniform area-effect in water and micrograv)</notes>
+        </morph>
+        <morph id="neo-orangutan" name="Neo-Orangutan" type="Uplift Biomorph">
+            <cost>3</cost>
+            <availability base="35" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>1</moxie>
+                <vigor>2</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="12" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Smell</item>
+                <item>Mesh Inserts</item>
+                <item>Prehensile Feet</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Limberness (Level 1)</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+            <notes>Reach (+10)</notes>
+        </morph>
+        <morph id="neo-orca" name="Neo-Orca" type="Uplift Biomorph">
+            <cost>4</cost>
+            <availability base="10">
+                <habitat id="aquatic" value="30" />
+            </availability>
+            <stats>
+                <wt>10</wt>
+                <dur>50</dur>
+                <dr>75</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>0</moxie>
+                <vigor>3</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Swim" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Asymmetric Sleep</item>
+                <item>Biomods</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Respiration</item>
+                <item>Gills</item>
+                <item>Mesh Inserts</item>
+                <item>Sonar</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Lack of Manipulators</item>
+                <item>Lack of Smell</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Cyberarms</item>
+                <item>Extra Limbs</item>
+            </commonExtras>
+            <notes>Very Large size, Bite Attack (DV 3d10 +5)</notes>
+        </morph>
+        <morph id="neo-pig" name="Neo-Pig" type="Uplift Biomorph">
+            <cost>1</cost>
+            <availability base="30" />
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>1</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Walker" normal="4" running="20" />
+            </movement>
+            <ware>
+                <item>Biomods</item>
+                <item>Cortical Stack</item>
+                <item>Mesh Inserts</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 1)</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Many have the Impaired Balance trait.</item>
+            </commonExtras>
+        </morph>
+        <morph id="neo-porpoise" name="Neo-Porpoise" type="Uplift Biomorph">
+            <cost>1</cost>
+            <availability base="10">
+                <habitat id="aquatic" value="50" />
+            </availability>
+            <stats>
+                <wt>7</wt>
+                <dur>35</dur>
+                <dr>53</dr>
+            </stats>
+            <aptitudes>
+                <insight>0</insight>
+                <moxie>1</moxie>
+                <vigor>1</vigor>
+                <flex>0</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Swim" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Asymmetric Sleep</item>
+                <item>Biomods</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Respiration</item>
+                <item>Gills</item>
+                <item>Mesh Inserts</item>
+                <item>Sonar</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 2)</item>
+                <item>Lack of Manipulators</item>
+                <item>Lack of Smell</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Cyberarms</item>
+                <item>Extra Limbs</item>
+            </commonExtras>
+            <notes>Some are Large size</notes>
+        </morph>
+        <morph id="neo-whale" name="Neo-Whale" type="Uplift Biomorph">
+            <cost>5</cost>
+            <availability base="5">
+                <habitat id="aquatic" value="10" />
+            </availability>
+            <stats>
+                <wt>12</wt>
+                <dur>60</dur>
+                <dr>90</dr>
+            </stats>
+            <aptitudes>
+                <insight>1</insight>
+                <moxie>2</moxie>
+                <vigor>2</vigor>
+                <flex>2</flex>
+            </aptitudes>
+            <movement>
+                <rate mode="Swim" normal="8" running="40" />
+            </movement>
+            <ware>
+                <item>Asymmetric Sleep</item>
+                <item>Biomods</item>
+                <item>Cold Tolerance</item>
+                <item>Cortical Stack</item>
+                <item>Enhanced Hearing</item>
+                <item>Enhanced Respiration</item>
+                <item>Gills</item>
+                <item>Mesh Inserts</item>
+                <item>Sonar</item>
+            </ware>
+            <morphTraits>
+                <item>Exotic Morphology (Level 3)</item>
+                <item>Lack of Manipulators</item>
+                <item>Lack of Smell</item>
+                <item>Non-Human Biochemistry (Level 1)</item>
+            </morphTraits>
+            <commonExtras>
+                <item>Cyberarms</item>
+                <item>Extra Limbs</item>
+            </commonExtras>
+            <notes>Very Large size, Bite Attack (DV 4d10 +5)</notes>
+        </morph>
     </morphs>
-
 </bodybank>
