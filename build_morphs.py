@@ -86,7 +86,6 @@ def parse_availability(text):
 
 def parse_entry(heading):
     for node in heading.find_all_next():
-        # Ignore the h3 that appears inside the stat-block blockquote.
         if node is not heading and getattr(node, "name", None) in ("h2", "h3"):
             if node.find_parent("blockquote") is None:
                 return None
@@ -128,8 +127,6 @@ def main():
         response = session.get(url, timeout=60)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
-        # Main entries and variants are h2/h3 outside blockquotes. The h3 inside
-        # each blockquote is the duplicate display heading and is ignored.
         headings = [h for h in soup.find_all(["h2", "h3"]) if h.find_parent("blockquote") is None]
         for heading in headings:
             name = clean(heading.get_text(" ", strip=True)).replace(" / ", "/")
@@ -156,6 +153,11 @@ def main():
     if missing or unexpected or len(found) != 139:
         print("FOUND", len(found)); print("MISSING", missing); print("UNEXPECTED", unexpected)
         raise RuntimeError("Morph guide verification failed")
+
+    # Habitat definitions are retained only when referenced by at least one
+    # morph availability modifier. Base availability is not a habitat reference.
+    used_habitats = {hid for e in morphs.values() for hid, _hn, _value in e["conditions"]}
+    habitats = {hid: name for hid, name in habitats.items() if hid in used_habitats}
 
     root = ET.Element("bodybank")
     hs = ET.SubElement(root, "habitats")
@@ -186,7 +188,7 @@ def main():
 
     ET.indent(root, space="    ")
     Path("morphs.xml").write_text(ET.tostring(root, encoding="unicode") + "\n", encoding="utf-8")
-    print("Imported and verified 139 guide entries")
+    print(f"Imported 139 morph entries; retained {len(habitats)} used habitats")
 
 
 if __name__ == "__main__":
