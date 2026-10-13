@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sky Wi-Fi Coverage Estimator</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f3f5f9;line-height:1.5}
+*{box-sizing:border-box}body{margin:0}header{background:#142b55;color:white;padding:1.5rem 1rem}header .wrap,main{max-width:900px;margin:auto}header a{color:#d9e6ff}header h1{margin:.4rem 0;font-size:clamp(1.5rem,4vw,2.2rem)}main{padding:1.25rem 1rem 3rem}.panel{background:white;border:1px solid #dce2ec;border-radius:14px;padding:1.2rem;margin:0 0 1rem;box-shadow:0 2px 8px #1720330a}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}label{display:block;font-weight:650;margin-bottom:.35rem}input,select{width:100%;font:inherit;padding:.65rem;border:1px solid #aeb9cb;border-radius:8px;background:white;color:inherit}small,.muted{color:#56647a}.result{border-left:5px solid #b7791f}.result h2{margin:.1rem 0 .5rem}.result strong{font-size:1.1rem}.band{padding:.8rem;background:#f5f7fb;border-radius:8px;margin:.5rem 0}.notice{background:#fff6df;border:1px solid #eed59a;border-radius:10px;padding:1rem}.btn{font:inherit;font-weight:650;border:0;border-radius:8px;padding:.75rem 1rem;background:#174a9b;color:white;cursor:pointer}.btn:hover{background:#103b7e}footer{font-size:.9rem;color:#56647a}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:.55rem;border-bottom:1px solid #e2e7ef}code{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="../">← Back to homepage</a><h1>Sky Wi-Fi Coverage Estimator</h1><div>Early prototype · indoor coverage planning</div></div></header>
+<main>
+<section class="panel">
+<p>Estimate how walls and distance may affect a Wi-Fi connection. This version uses configurable illustrative assumptions, not measured Sky hub performance.</p>
+<div class="grid">
+<div><label for="hub">Hub model</label><select id="hub"><option>Sky Broadband Hub (Wi-Fi 5)</option><option>Sky Max Hub (Wi-Fi 6)</option><option>Sky Gigafast+ Hub (Wi-Fi 7)</option></select><small>Hub selection is recorded for context; model-specific radio data is not yet calibrated.</small></div>
+<div><label for="distance">Distance to room (metres)</label><input id="distance" type="number" min="1" max="100" value="21" step="1"></div>
+<div><label for="brick">Brick walls</label><input id="brick" type="number" min="0" max="10" value="2" step="1"></div>
+<div><label for="plaster">Plasterboard walls</label><input id="plaster" type="number" min="0" max="10" value="1" step="1"></div>
+<div><label for="floors">Floors between hub and room</label><input id="floors" type="number" min="0" max="5" value="0" step="1"></div>
+<div><label for="quality">Target signal threshold</label><select id="quality"><option value="-67">Moderate (−67 dBm, provisional)</option><option value="-70">More tolerant (−70 dBm, provisional)</option><option value="-65">Stricter (−65 dBm, provisional)</option></select></div>
+</div>
+<p style="margin-top:1rem"><button class="btn" id="calculate">Estimate coverage</button></p>
+</section>
+<section class="panel result" aria-live="polite">
+<h2 id="summary">Illustrative estimate</h2>
+<p id="explain">Change the inputs and calculate to see a result.</p>
+<div id="bands"></div>
+</section>
+<section class="panel">
+<h2>Assumptions used</h2>
+<p class="muted">These defaults are deliberately visible so they can be replaced with evidence as field measurements become available.</p>
+<table><thead><tr><th>Parameter</th><th>2.4 GHz</th><th>5 GHz</th></tr></thead><tbody>
+<tr><td>Reference signal at 1 m</td><td>−35 dBm</td><td>−40 dBm</td></tr>
+<tr><td>Indoor distance-loss exponent</td><td>3.0</td><td>3.0</td></tr>
+<tr><td>Each brick wall</td><td>6–8 dB</td><td>8–12 dB</td></tr>
+<tr><td>Each plasterboard wall</td><td>3–4 dB</td><td>3–5 dB</td></tr>
+<tr><td>Each floor</td><td>10–18 dB</td><td>14–24 dB</td></tr>
+</tbody></table>
+<p><small>The reference signals, distance-loss exponent, wall losses, floor losses and quality thresholds are unvalidated placeholders. They are not Sky specifications or guaranteed predictions.</small></p>
+</section>
+<div class="notice"><strong>Important limitation</strong><p>This simple model cannot account properly for wall thickness and angle, insulation, furniture, interference, antenna orientation, client device, channel width, or the hub's band-steering behaviour. It estimates a broad signal range; it does not guarantee speed or reliability. Use measurements from real homes to calibrate it before relying on the result for customer advice.</p></div>
+<footer><p>Prototype for internal exploration. Not an official Sky tool and not affiliated with Sky.</p></footer>
+</main>
+<script>
+const fields = ["distance","brick","plaster","floors"];
+function numberValue(id,min,max){const v=Number(document.getElementById(id).value);return Number.isFinite(v)?Math.min(max,Math.max(min,v)):min}
+function estimate(band,distance,brick,plaster,floors){
+ const cfg=band==="2.4"?{reference:-35,exponent:3,brick:[6,8],plaster:[3,4],floor:[10,18]}:{reference:-40,exponent:3,brick:[8,12],plaster:[3,5],floor:[14,24]};
+ const distanceLoss=10*cfg.exponent*Math.log10(Math.max(1,distance));
+ const lowLoss=distanceLoss+brick*cfg.brick[0]+plaster*cfg.plaster[0]+floors*cfg.floor[0];
+ const highLoss=distanceLoss+brick*cfg.brick[1]+plaster*cfg.plaster[1]+floors*cfg.floor[1];
+ return {low:cfg.reference-highLoss,high:cfg.reference-lowLoss,lossLow:lowLoss,lossHigh:highLoss};
+}
+function category(best,worst,threshold){
+ if(best>=threshold)return ["Likely adequate under these assumptions","adequate"];
+ if(worst<threshold)return ["Likely below the chosen threshold","poor"];
+ return ["Borderline — estimate overlaps threshold","borderline"];
+}
+function render(){
+ const distance=numberValue("distance",1,100),brick=numberValue("brick",0,10),plaster=numberValue("plaster",0,10),floors=numberValue("floors",0,5),threshold=Number(document.getElementById("quality").value);
+ const a=estimate("2.4",distance,brick,plaster,floors),b=estimate("5",distance,brick,plaster,floors);
+ const ca=category(a.high,a.low,threshold),cb=category(b.high,b.low,threshold);
+ document.getElementById("summary").textContent="Illustrative result: "+(ca[1]==="adequate"||cb[1]==="adequate"?"at least one band meets the threshold in this model":ca[1]==="poor"&&cb[1]==="poor"?"both bands fall below the threshold in this model":"coverage is uncertain in this model");
+ document.getElementById("explain").textContent=distance+" m, "+brick+" brick wall(s), "+plaster+" plasterboard wall(s), "+floors+" floor(s). Target: "+threshold+" dBm. These are model outputs, not measured predictions.";
+ document.getElementById("bands").innerHTML=[["2.4 GHz",a,ca],["5 GHz",b,cb]].map(([name,x,c])=>'<div class="band"><strong>'+name+'</strong><br>Estimated signal range: '+x.low.toFixed(1)+' to '+x.high.toFixed(1)+' dBm<br><span>'+c[0]+'</span><br><small>Estimated total path loss: '+x.lossLow.toFixed(1)+'–'+x.lossHigh.toFixed(1)+' dB</small></div>').join("");
+}
+document.getElementById("calculate").addEventListener("click",render);
+fields.forEach(id=>document.getElementById(id).addEventListener("change",render));
+document.getElementById("quality").addEventListener("change",render);
+render();
+</script>
+</body>
+</html>
