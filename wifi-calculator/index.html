@@ -27,7 +27,7 @@
 <p id="speedCalculation">The calculation will appear here.</p>
 <small>Formula: (10 Mbps household baseline + 10 Mbps per worker + 3 Mbps per gamer + streaming allowance) × 1.3 headroom, rounded up.</small>
 </div>
-<p class="muted"><small>For this simple estimate, count each person under their main activity so they are not counted twice. Streaming is counted by the number of simultaneous streams. People not listed under those activities are covered by the household baseline.</small></p>
+<p class="muted"><small>For this simple estimate, count each person as working or gaming, not both. Count every simultaneous stream separately; a person may watch more than one stream. People not listed under work or gaming are covered by the household baseline.</small></p>
 </section>
 <section class="panel">
 <p>Estimate how walls and distance may affect a Wi-Fi connection. This version uses configurable illustrative assumptions, not measured Sky hub performance.</p>
@@ -72,7 +72,7 @@ function updateSpeedEstimate(){
  const calculation=document.getElementById("speedCalculation");
  if(workers+gamers+streams>household){
   result.textContent="Check the activity counts";
-  calculation.textContent="Working people + gamers + simultaneous streams should not exceed the household size. Count each person under one main activity.";
+  calculation.textContent="Working people + gamers should not exceed the household size. Streams are counted separately because one person can watch more than one stream.";
   return;
  }
  const baseline=10,workTotal=workers*10,gameTotal=gamers*3,streamTotal=streams*perStream;
