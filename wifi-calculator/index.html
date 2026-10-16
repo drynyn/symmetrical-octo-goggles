@@ -20,13 +20,26 @@
 <div><label for="workers">People working online</label><input id="workers" type="number" min="0" max="20" value="1" step="1"></div>
 <div><label for="gamers">People gaming online</label><input id="gamers" type="number" min="0" max="20" value="1" step="1"></div>
 <div><label for="streams">Simultaneous video streams</label><input id="streams" type="number" min="0" max="20" value="2" step="1"></div>
-<div><label for="streamQuality">Streaming quality</label><select id="streamQuality"><option value="15">HD (15 Mbps per stream)</option><option value="30">4K (30 Mbps per stream)</option></select></div>
+<div><label for="streamQuality">Streaming quality</label><select id="streamQuality"><option value="5">HD (5 Mbps per stream)</option><option value="15">4K (15 Mbps per stream)</option></select></div>
 </div>
 <div class="band" aria-live="polite">
 <strong id="speedResult">Estimated download requirement: — Mbps</strong>
 <p id="speedCalculation">The calculation will appear here.</p>
-<small>Formula: (10 Mbps household baseline + 10 Mbps per worker + 3 Mbps per gamer + streaming allowance) × 1.3 headroom, rounded up.</small>
+<ul id="speedBreakdown"></ul>
+<small>Formula: (household baseline + work allowance + gaming allowance + streaming allowance) × 1.3 headroom, rounded up.</small>
 </div>
+<details class="panel">
+<summary><strong>Sources and assumptions for the speed estimate</strong></summary>
+<ul>
+<li><strong>Working online — 10 Mbps per person:</strong> a planning allowance for work that may include video calls, not a universal requirement. <a href="https://www.ofcom.org.uk/phones-and-broadband/saving-money/choosing-broadband" target="_blank" rel="noopener">Ofcom broadband guidance</a> and <a href="https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0058323" target="_blank" rel="noopener">Zoom bandwidth requirements</a> provide context for video-call bandwidth.</li>
+<li><strong>Gaming — 3 Mbps per person:</strong> a rough planning assumption for online gameplay. Requirements vary by game; large downloads and updates are not included.</li>
+<li><strong>HD streaming — 5 Mbps per stream:</strong> based on <a href="https://help.netflix.com/en/node/306" target="_blank" rel="noopener">Netflix's recommended internet speeds</a> for 1080p Full HD.</li>
+<li><strong>4K streaming — 15 Mbps per stream:</strong> based on <a href="https://help.netflix.com/en/node/306" target="_blank" rel="noopener">Netflix's recommended internet speeds</a> for 4K/UHD. Ofcom's guidance may use a more conservative allowance for UHD.</li>
+<li><strong>Household baseline — 10 Mbps:</strong> an illustrative allowance for general background use, not an official minimum.</li>
+<li><strong>Headroom — 30%:</strong> an extra margin for variation and overlapping activity; a design choice, not an official standard.</li>
+</ul>
+<p class="muted">Published recommendations are context, not guarantees. Actual demand depends on the applications, settings, upload needs and other simultaneous use.</p>
+</details>
 <p class="muted"><small>For this simple estimate, count each person as working or gaming, not both. Count every simultaneous stream separately; a person may watch more than one stream. People not listed under work or gaming are covered by the household baseline.</small></p>
 </section>
 <section class="panel">
@@ -70,16 +83,28 @@ function updateSpeedEstimate(){
  const perStream=Number(document.getElementById("streamQuality").value);
  const result=document.getElementById("speedResult");
  const calculation=document.getElementById("speedCalculation");
- if(workers+gamers+streams>household){
+ if(workers+gamers>household){
   result.textContent="Check the activity counts";
-  calculation.textContent="Working people + gamers should not exceed the household size. Streams are counted separately because one person can watch more than one stream.";
+  calculation.textContent="Working people + gamers should not exceed the household size. Video streams are counted separately and may exceed the number of people if someone watches more than one stream.";
+  document.getElementById("speedBreakdown").innerHTML="";
   return;
  }
  const baseline=10,workTotal=workers*10,gameTotal=gamers*3,streamTotal=streams*perStream;
  const beforeMargin=baseline+workTotal+gameTotal+streamTotal;
- const required=Math.ceil(beforeMargin*1.3);
+ const margin=beforeMargin*0.3;
+ const required=Math.ceil(beforeMargin+margin);
  result.textContent="Estimated download requirement: "+required+" Mbps";
- calculation.textContent="10 baseline + ("+workers+" × 10 work) + ("+gamers+" × 3 gaming) + ("+streams+" × "+perStream+" streaming) = "+beforeMargin+" Mbps; × 1.3 headroom = "+(beforeMargin*1.3).toFixed(1)+" Mbps; rounded up = "+required+" Mbps.";
+ calculation.textContent="Step-by-step breakdown:";
+ document.getElementById("speedBreakdown").innerHTML=[
+  "<li>Household baseline: 10 Mbps</li>",
+  "<li>Work: "+workers+" × 10 Mbps = "+workTotal+" Mbps</li>",
+  "<li>Gaming: "+gamers+" × 3 Mbps = "+gameTotal+" Mbps</li>",
+  "<li>Streaming: "+streams+" × "+perStream+" Mbps = "+streamTotal+" Mbps</li>",
+  "<li>Subtotal: "+beforeMargin+" Mbps</li>",
+  "<li>30% headroom: "+margin.toFixed(1)+" Mbps</li>",
+  "<li>Total before rounding: "+(beforeMargin+margin).toFixed(1)+" Mbps</li>",
+  "<li><strong>Rounded up: "+required+" Mbps</strong></li>"
+ ].join("");
 }
 ["people","workers","gamers","streams","streamQuality"].forEach(id=>document.getElementById(id).addEventListener("input",updateSpeedEstimate));
 updateSpeedEstimate();
