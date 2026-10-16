@@ -32,7 +32,7 @@
 <summary><strong>Sources and assumptions for the speed estimate</strong></summary>
 <ul>
 <li><strong>Working online — 10 Mbps per person:</strong> a planning allowance for work that may include video calls, not a universal requirement. <a href="https://www.ofcom.org.uk/phones-and-broadband/saving-money/choosing-broadband" target="_blank" rel="noopener">Ofcom broadband guidance</a> and <a href="https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0058323" target="_blank" rel="noopener">Zoom bandwidth requirements</a> provide context for video-call bandwidth.</li>
-<li><strong>Gaming — 3 Mbps per person:</strong> a rough planning assumption for online gameplay. Requirements vary by game; large downloads and updates are not included.</li>
+<li><strong>Gaming — 15 Mbps per person:</strong> a conservative planning allowance for gaming-related use. Gameplay alone often needs less; large downloads and updates can need substantially more and are not modelled separately.</li>
 <li><strong>HD streaming — 5 Mbps per stream:</strong> based on <a href="https://help.netflix.com/en/node/306" target="_blank" rel="noopener">Netflix's recommended internet speeds</a> for 1080p Full HD.</li>
 <li><strong>4K streaming — 15 Mbps per stream:</strong> based on <a href="https://help.netflix.com/en/node/306" target="_blank" rel="noopener">Netflix's recommended internet speeds</a> for 4K/UHD. Ofcom's guidance may use a more conservative allowance for UHD.</li>
 <li><strong>Household baseline — 10 Mbps:</strong> an illustrative allowance for general background use, not an official minimum.</li>
@@ -89,7 +89,7 @@ function updateSpeedEstimate(){
   document.getElementById("speedBreakdown").innerHTML="";
   return;
  }
- const baseline=10,workTotal=workers*10,gameTotal=gamers*3,streamTotal=streams*perStream;
+ const baseline=10,workTotal=workers*10,gameTotal=gamers*15,streamTotal=streams*perStream;
  const beforeMargin=baseline+workTotal+gameTotal+streamTotal;
  const margin=beforeMargin*0.3;
  const required=Math.ceil(beforeMargin+margin);
@@ -98,7 +98,7 @@ function updateSpeedEstimate(){
  document.getElementById("speedBreakdown").innerHTML=[
   "<li>Household baseline: 10 Mbps</li>",
   "<li>Work: "+workers+" × 10 Mbps = "+workTotal+" Mbps</li>",
-  "<li>Gaming: "+gamers+" × 3 Mbps = "+gameTotal+" Mbps</li>",
+  "<li>Gaming: "+gamers+" × 15 Mbps = "+gameTotal+" Mbps</li>",
   "<li>Streaming: "+streams+" × "+perStream+" Mbps = "+streamTotal+" Mbps</li>",
   "<li>Subtotal: "+beforeMargin+" Mbps</li>",
   "<li>30% headroom: "+margin.toFixed(1)+" Mbps</li>",
