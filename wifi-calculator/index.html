@@ -14,35 +14,38 @@
 <main>
 <section class="panel">
 <h2>Household speed estimator</h2>
-<p>Estimate the download speed a household may need from the activities happening at the same time. This is a planning estimate, not a guaranteed speed requirement.</p>
+<p>Estimate the download speed needed during the household’s busiest period, assuming the selected activities overlap. This is a peak-use planning estimate, not an average over the day or a guaranteed speed requirement.</p>
 <div class="grid">
 <div><label for="people">People in household</label><input id="people" type="number" min="1" max="20" value="4" step="1"></div>
 <div><label for="workers">People working online</label><input id="workers" type="number" min="0" max="20" value="1" step="1"></div>
 <div><label for="gamers">People gaming online</label><input id="gamers" type="number" min="0" max="20" value="1" step="1"></div>
 <div><label for="streams">Simultaneous video streams</label><input id="streams" type="number" min="0" max="20" value="2" step="1"></div>
+<div><label for="downloads">Large downloads or updates happening at once</label><input id="downloads" type="number" min="0" max="10" value="0" step="1"><small>Each is modelled as 50 Mbps of peak demand. Real downloads may use more or less, up to the available connection speed.</small></div>
 <div><label for="streamQuality">Streaming quality</label><select id="streamQuality"><option value="5">HD (5 Mbps per stream)</option><option value="15">4K (15 Mbps per stream)</option></select></div>
 </div>
-<div class="device-options"><strong>Other connected devices (optional)</strong><p class="muted">Select any that apply. These are representative estimates.</p><label><input id="smartHome" type="checkbox" style="width:auto"> Smart home (assumes 4 devices; +0.1 Mbps download)</label><label><input id="videoFeed" type="checkbox" style="width:auto"> Video feed (camera, etc.; assumes 1 camera, +2 Mbps upload)</label><div><label for="additionalDevices">Additional active devices</label><input id="additionalDevices" type="number" min="0" max="100" value="3" step="1"><small>Estimated at 1 Mbps download per additional active device. Do not count devices already represented by work, gaming or streaming.</small></div></div>
+<div class="device-options"><strong>Other connected devices (optional)</strong><p class="muted">Select the devices and activities likely to be active during the busiest period. These are planning allowances, not universal device averages.</p><label><input id="smartHome" type="checkbox" style="width:auto"> Smart home (assumes 4 devices; +0.1 Mbps download)</label><label><input id="videoFeed" type="checkbox" style="width:auto"> Video feed (camera, etc.; assumes 1 camera, +2 Mbps upload)</label><div><label for="additionalDevices">Additional active devices</label><input id="additionalDevices" type="number" min="0" max="100" value="3" step="1"><small>Estimated at 3 Mbps download per additional active device during peak use. Do not count devices already represented by work, gaming or streaming.</small></div></div>
 <div class="band" aria-live="polite">
 <strong id="speedResult">Estimated download requirement: — Mbps</strong>
 <p id="speedCalculation">The calculation will appear here.</p>
 <ul id="speedBreakdown"></ul>
-<small>Formula: baseline + work + gaming + streaming + selected download allowances, plus 30% headroom. Video-feed upload is shown separately.</small>
+<small>Peak-use formula: baseline + simultaneous work, gaming, streaming, large transfers and other selected device demand, plus 30% headroom. Video-feed upload is shown separately.</small>
 <p id="uploadResult"><strong>Estimated additional upload: 0 Mbps</strong></p>
 </div>
 <details class="panel">
 <summary><strong>Sources and assumptions for the speed estimate</strong></summary>
 <ul>
-<li><strong>Working online — 10 Mbps per person:</strong> a planning allowance for work that may include video calls, not a universal requirement. <a href="https://www.ofcom.org.uk/phones-and-broadband/saving-money/choosing-broadband" target="_blank" rel="noopener">Ofcom broadband guidance</a> and <a href="https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0058323" target="_blank" rel="noopener">Zoom bandwidth requirements</a> provide context for video-call bandwidth.</li>
-<li><strong>Gaming — 15 Mbps per person:</strong> a conservative planning allowance for gaming-related use. Gameplay alone often needs less; large downloads and updates can need substantially more and are not modelled separately.</li>
+<li><strong>Working online — 15 Mbps per person:</strong> a peak-use planning allowance for work that may include HD video calls, screen sharing and other concurrent traffic, not a universal requirement. <a href="https://www.ofcom.org.uk/phones-and-broadband/saving-money/choosing-broadband" target="_blank" rel="noopener">Ofcom broadband guidance</a> and <a href="https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0058323" target="_blank" rel="noopener">Zoom bandwidth requirements</a> provide context for video-call bandwidth.</li>
+<li><strong>Gaming — 15 Mbps per person:</strong> a planning allowance for online play and related traffic. Gameplay alone often needs less; large downloads and updates are counted separately below.</li>
+<li><strong>Large downloads or updates — 50 Mbps per active transfer:</strong> a provisional peak-use allowance. Actual transfers can use substantially more bandwidth if the connection allows it, so this is not a maximum.</li>
 <li><strong>HD streaming — 5 Mbps per stream:</strong> based on <a href="https://help.netflix.com/en/node/306" target="_blank" rel="noopener">Netflix's recommended internet speeds</a> for 1080p Full HD.</li>
 <li><strong>4K streaming — 15 Mbps per stream:</strong> based on <a href="https://help.netflix.com/en/node/306" target="_blank" rel="noopener">Netflix's recommended internet speeds</a> for 4K/UHD. Ofcom's guidance may use a more conservative allowance for UHD.</li>
-<li><strong>Household baseline — 10 Mbps:</strong> an illustrative allowance for general background use, not an official minimum.</li>
+<li><strong>Household baseline — 15 Mbps:</strong> an illustrative allowance for other concurrent background activity, not an official minimum.</li>
+<li><strong>Additional active devices — 3 Mbps per device:</strong> a planning allowance for devices actively using the connection during peak time. Idle devices generally use far less.</li>
 <li><strong>Headroom — 30%:</strong> an extra margin for variation and overlapping activity; a design choice, not an official standard.</li>
 </ul>
 <p class="muted">Published recommendations are context, not guarantees. Actual demand depends on the applications, settings, upload needs and other simultaneous use.</p>
 </details>
-<p class="muted"><small>For this simple estimate, count each person as working or gaming, not both. Count every simultaneous stream separately; a person may watch more than one stream. People not listed under work or gaming are covered by the household baseline.</small></p>
+<p class="muted"><small>For this simple estimate, count each person as working or gaming, not both. Count every simultaneous stream separately; a person may watch more than one stream. People not listed under work or gaming are covered by the household baseline. Include large downloads or updates if they are likely to happen during the busiest period.</small></p>
 </section>
 <section class="panel">
 <p>Estimate how walls and distance may affect a Wi-Fi connection. This version uses configurable illustrative assumptions, not measured Sky hub performance.</p>
@@ -82,6 +85,7 @@ function updateSpeedEstimate(){
  const workers=Math.round(numberValue("workers",0,20));
  const gamers=Math.round(numberValue("gamers",0,20));
  const streams=Math.round(numberValue("streams",0,20));
+ const downloads=Math.round(numberValue("downloads",0,10));
  const perStream=Number(document.getElementById("streamQuality").value);
  const smartHome=document.getElementById("smartHome").checked;
  const videoFeed=document.getElementById("videoFeed").checked;
@@ -94,22 +98,23 @@ function updateSpeedEstimate(){
   document.getElementById("speedBreakdown").innerHTML="";
   return;
  }
- const baseline=10,workTotal=workers*10,gameTotal=gamers*15,streamTotal=streams*perStream;
+ const baseline=15,workTotal=workers*15,gameTotal=gamers*15,streamTotal=streams*perStream,downloadTotal=downloads*50;
  const smartHomeTotal=smartHome?0.1:0;
- const additionalDevicesTotal=additionalDevices*1;
+ const additionalDevicesTotal=additionalDevices*3;
  const cameraUpload=videoFeed?2:0;
- const beforeMargin=baseline+workTotal+gameTotal+streamTotal+smartHomeTotal+additionalDevicesTotal;
+ const beforeMargin=baseline+workTotal+gameTotal+streamTotal+downloadTotal+smartHomeTotal+additionalDevicesTotal;
  const margin=beforeMargin*0.3;
  const required=Math.ceil(beforeMargin+margin);
  result.textContent="Estimated download requirement: "+required+" Mbps";
  calculation.textContent="Step-by-step breakdown:";
  document.getElementById("speedBreakdown").innerHTML=[
-  "<li>Household baseline: 10 Mbps</li>",
-  "<li>Work: "+workers+" × 10 Mbps = "+workTotal+" Mbps</li>",
+  "<li>Household background allowance: 15 Mbps</li>",
+  "<li>Work: "+workers+" × 15 Mbps = "+workTotal+" Mbps</li>",
   "<li>Gaming: "+gamers+" × 15 Mbps = "+gameTotal+" Mbps</li>",
   "<li>Streaming: "+streams+" × "+perStream+" Mbps = "+streamTotal+" Mbps</li>",
+  "<li>Large downloads or updates: "+downloads+" × 50 Mbps = "+downloadTotal+" Mbps</li>",
   "<li>Smart home: "+(smartHome?"4 devices, 0.1 Mbps":"not selected, 0 Mbps")+"</li>",
-  "<li>Additional devices: "+additionalDevices+" × 1 Mbps = "+additionalDevicesTotal+" Mbps</li>",
+  "<li>Additional active devices: "+additionalDevices+" × 3 Mbps = "+additionalDevicesTotal+" Mbps</li>",
   "<li>Subtotal: "+beforeMargin.toFixed(1)+" Mbps</li>",
   "<li>30% headroom: "+margin.toFixed(1)+" Mbps</li>",
   "<li>Total before rounding: "+(beforeMargin+margin).toFixed(1)+" Mbps</li>",
@@ -117,7 +122,7 @@ function updateSpeedEstimate(){
  ].join("");
  document.getElementById("uploadResult").innerHTML="<strong>Estimated additional upload: "+cameraUpload+" Mbps</strong>"+(videoFeed?" (assumes one camera; actual use varies by device and settings).":"");
 }
-["people","workers","gamers","streams","streamQuality"].forEach(id=>document.getElementById(id).addEventListener("input",updateSpeedEstimate));
+["people","workers","gamers","streams","downloads","streamQuality"].forEach(id=>document.getElementById(id).addEventListener("input",updateSpeedEstimate));
 ["smartHome","videoFeed","additionalDevices"].forEach(id=>document.getElementById(id).addEventListener("change",updateSpeedEstimate));
 document.getElementById("additionalDevices").addEventListener("input",updateSpeedEstimate);
 updateSpeedEstimate();
