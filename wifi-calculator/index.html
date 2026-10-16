@@ -13,6 +13,23 @@
 <header><div class="wrap"><a href="../">← Back to homepage</a><h1>Sky Wi-Fi Coverage Estimator</h1><div>Early prototype · indoor coverage planning</div></div></header>
 <main>
 <section class="panel">
+<h2>Household speed estimator</h2>
+<p>Estimate the download speed a household may need from the activities happening at the same time. This is a planning estimate, not a guaranteed speed requirement.</p>
+<div class="grid">
+<div><label for="people">People in household</label><input id="people" type="number" min="1" max="20" value="4" step="1"></div>
+<div><label for="workers">People working online</label><input id="workers" type="number" min="0" max="20" value="1" step="1"></div>
+<div><label for="gamers">People gaming online</label><input id="gamers" type="number" min="0" max="20" value="1" step="1"></div>
+<div><label for="streams">Simultaneous video streams</label><input id="streams" type="number" min="0" max="20" value="2" step="1"></div>
+<div><label for="streamQuality">Streaming quality</label><select id="streamQuality"><option value="15">HD (15 Mbps per stream)</option><option value="30">4K (30 Mbps per stream)</option></select></div>
+</div>
+<div class="band" aria-live="polite">
+<strong id="speedResult">Estimated download requirement: — Mbps</strong>
+<p id="speedCalculation">The calculation will appear here.</p>
+<small>Formula: (10 Mbps household baseline + 10 Mbps per worker + 3 Mbps per gamer + streaming allowance) × 1.3 headroom, rounded up.</small>
+</div>
+<p class="muted"><small>For this simple estimate, count each person under their main activity so they are not counted twice. Streaming is counted by the number of simultaneous streams. People not listed under those activities are covered by the household baseline.</small></p>
+</section>
+<section class="panel">
 <p>Estimate how walls and distance may affect a Wi-Fi connection. This version uses configurable illustrative assumptions, not measured Sky hub performance.</p>
 <div class="grid">
 <div><label for="hub">Hub model</label><select id="hub"><option>Sky Broadband Hub (Wi-Fi 5)</option><option>Sky Max Hub (Wi-Fi 6)</option><option>Sky Gigafast+ Hub (Wi-Fi 7)</option></select><small>Hub selection is recorded for context; model-specific radio data is not yet calibrated.</small></div>
@@ -45,6 +62,28 @@
 <footer><p>Prototype for internal exploration. Not an official Sky tool and not affiliated with Sky.</p></footer>
 </main>
 <script>
+function updateSpeedEstimate(){
+ const household=Math.round(numberValue("people",1,20));
+ const workers=Math.round(numberValue("workers",0,20));
+ const gamers=Math.round(numberValue("gamers",0,20));
+ const streams=Math.round(numberValue("streams",0,20));
+ const perStream=Number(document.getElementById("streamQuality").value);
+ const result=document.getElementById("speedResult");
+ const calculation=document.getElementById("speedCalculation");
+ if(workers+gamers+streams>household){
+  result.textContent="Check the activity counts";
+  calculation.textContent="Working people + gamers + simultaneous streams should not exceed the household size. Count each person under one main activity.";
+  return;
+ }
+ const baseline=10,workTotal=workers*10,gameTotal=gamers*3,streamTotal=streams*perStream;
+ const beforeMargin=baseline+workTotal+gameTotal+streamTotal;
+ const required=Math.ceil(beforeMargin*1.3);
+ result.textContent="Estimated download requirement: "+required+" Mbps";
+ calculation.textContent="10 baseline + ("+workers+" × 10 work) + ("+gamers+" × 3 gaming) + ("+streams+" × "+perStream+" streaming) = "+beforeMargin+" Mbps; × 1.3 headroom = "+(beforeMargin*1.3).toFixed(1)+" Mbps; rounded up = "+required+" Mbps.";
+}
+["people","workers","gamers","streams","streamQuality"].forEach(id=>document.getElementById(id).addEventListener("input",updateSpeedEstimate));
+updateSpeedEstimate();
+
 const fields = ["distance","brick","plaster","floors"];
 function numberValue(id,min,max){const v=Number(document.getElementById(id).value);return Number.isFinite(v)?Math.min(max,Math.max(min,v)):min}
 function estimate(band,distance,brick,plaster,floors){
