@@ -6,12 +6,17 @@
 <title>Sky Wi-Fi Coverage Estimator</title>
 <style>
 :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f3f5f9;line-height:1.5}
-*{box-sizing:border-box}body{margin:0}header{background:#142b55;color:white;padding:1.5rem 1rem}header .wrap,main{max-width:900px;margin:auto}header a{color:#d9e6ff}header h1{margin:.4rem 0;font-size:clamp(1.5rem,4vw,2.2rem)}main{padding:1.25rem 1rem 3rem}.panel{background:white;border:1px solid #dce2ec;border-radius:14px;padding:1.2rem;margin:0 0 1rem;box-shadow:0 2px 8px #1720330a}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}label{display:block;font-weight:650;margin-bottom:.35rem}input,select{width:100%;font:inherit;padding:.65rem;border:1px solid #aeb9cb;border-radius:8px;background:white;color:inherit}small,.muted{color:#56647a}.result{border-left:5px solid #b7791f}.result h2{margin:.1rem 0 .5rem}.result strong{font-size:1.1rem}.band{padding:.8rem;background:#f5f7fb;border-radius:8px;margin:.5rem 0}.notice{background:#fff6df;border:1px solid #eed59a;border-radius:10px;padding:1rem}.btn{font:inherit;font-weight:650;border:0;border-radius:8px;padding:.75rem 1rem;background:#174a9b;color:white;cursor:pointer}.btn:hover{background:#103b7e}footer{font-size:.9rem;color:#56647a}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:.55rem;border-bottom:1px solid #e2e7ef}code{overflow-wrap:anywhere}
+*{box-sizing:border-box}body{margin:0}header{background:#142b55;color:white;padding:1.5rem 1rem}header .wrap,main{max-width:900px;margin:auto}header a{color:#d9e6ff}header h1{margin:.4rem 0;font-size:clamp(1.5rem,4vw,2.2rem)}main{padding:1.25rem 1rem 3rem}.panel{background:white;border:1px solid #dce2ec;border-radius:14px;padding:1.2rem;margin:0 0 1rem;box-shadow:0 2px 8px #1720330a}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}label{display:block;font-weight:650;margin-bottom:.35rem}input,select{width:100%;font:inherit;padding:.65rem;border:1px solid #aeb9cb;border-radius:8px;background:white;color:inherit}small,.muted{color:#56647a}.result{border-left:5px solid #b7791f}.result h2{margin:.1rem 0 .5rem}.result strong{font-size:1.1rem}.band{padding:.8rem;background:#f5f7fb;border-radius:8px;margin:.5rem 0}.notice{background:#fff6df;border:1px solid #eed59a;border-radius:10px;padding:1rem}.tabs{display:flex;gap:.5rem;margin:0 0 1rem}.tab-button{flex:1;font:inherit;font-weight:650;padding:.8rem;border:1px solid #aeb9cb;border-radius:8px;background:#e8edf5;color:#172033;cursor:pointer}.tab-button[aria-selected="true"]{background:#174a9b;color:#fff;border-color:#174a9b}.tab-panel[hidden]{display:none}.btn{font:inherit;font-weight:650;border:0;border-radius:8px;padding:.75rem 1rem;background:#174a9b;color:white;cursor:pointer}.btn:hover{background:#103b7e}footer{font-size:.9rem;color:#56647a}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:.55rem;border-bottom:1px solid #e2e7ef}code{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
 <header><div class="wrap"><a href="../">← Back to homepage</a><h1>Sky Wi-Fi Coverage Estimator</h1><div>Early prototype · indoor coverage planning</div></div></header>
 <main>
+<div class="tabs" role="tablist" aria-label="Calculator type">
+<button class="tab-button" id="speedTabButton" type="button" role="tab" aria-controls="speedTab" aria-selected="true">Broadband speed estimator</button>
+<button class="tab-button" id="coverageTabButton" type="button" role="tab" aria-controls="coverageTab" aria-selected="false">Wi-Fi coverage calculator</button>
+</div>
+<div id="speedTab" class="tab-panel" role="tabpanel" aria-labelledby="speedTabButton">
 <section class="panel">
 <h2>Household speed estimator</h2>
 <p>Estimate the download speed needed during the household’s busiest period, assuming the selected activities overlap. This is a peak-use planning estimate, not an average over the day or a guaranteed speed requirement.</p>
@@ -47,6 +52,8 @@
 </details>
 <p class="muted"><small>For this simple estimate, count each person as working or gaming, not both. Count every simultaneous stream separately; a person may watch more than one stream. People not listed under work or gaming are covered by the household baseline. Include large downloads or updates if they are likely to happen during the busiest period.</small></p>
 </section>
+</div>
+<div id="coverageTab" class="tab-panel" role="tabpanel" aria-labelledby="coverageTabButton" hidden>
 <section class="panel">
 <p>Estimate how walls and distance may affect a Wi-Fi connection. This version uses configurable illustrative assumptions, not measured Sky hub performance.</p>
 <div class="grid">
@@ -77,6 +84,7 @@
 <p><small>The reference signals, distance-loss exponent, wall losses, floor losses and quality thresholds are unvalidated placeholders. They are not Sky specifications or guaranteed predictions.</small></p>
 </section>
 <div class="notice"><strong>Important limitation</strong><p>This simple model cannot account properly for wall thickness and angle, insulation, furniture, interference, antenna orientation, client device, channel width, or the hub's band-steering behaviour. It estimates a broad signal range; it does not guarantee speed or reliability. Use measurements from real homes to calibrate it before relying on the result for customer advice.</p></div>
+</div>
 <footer><p>Prototype for internal exploration. Not an official Sky tool and not affiliated with Sky.</p></footer>
 </main>
 <script>
@@ -105,7 +113,7 @@ function updateSpeedEstimate(){
  const beforeMargin=baseline+workTotal+gameTotal+streamTotal+downloadTotal+smartHomeTotal+additionalDevicesTotal;
  const margin=beforeMargin*0.3;
  const required=Math.ceil(beforeMargin+margin);
- result.textContent="Estimated download requirement: "+required+" Mbps";
+ result.textContent="Estimated download requirement (including additional devices): "+required+" Mbps";
  calculation.textContent="Step-by-step breakdown:";
  document.getElementById("speedBreakdown").innerHTML=[
   "<li>Household background allowance: 15 Mbps</li>",
@@ -126,6 +134,16 @@ function updateSpeedEstimate(){
 ["smartHome","videoFeed","additionalDevices"].forEach(id=>document.getElementById(id).addEventListener("change",updateSpeedEstimate));
 document.getElementById("additionalDevices").addEventListener("input",updateSpeedEstimate);
 updateSpeedEstimate();
+
+function selectTab(tab){
+ const speed=tab==="speed";
+ document.getElementById("speedTab").hidden=!speed;
+ document.getElementById("coverageTab").hidden=speed;
+ document.getElementById("speedTabButton").setAttribute("aria-selected",String(speed));
+ document.getElementById("coverageTabButton").setAttribute("aria-selected",String(!speed));
+}
+document.getElementById("speedTabButton").addEventListener("click",()=>selectTab("speed"));
+document.getElementById("coverageTabButton").addEventListener("click",()=>selectTab("coverage"));
 
 const fields = ["distance","brick","plaster","floors"];
 function numberValue(id,min,max){const v=Number(document.getElementById(id).value);return Number.isFinite(v)?Math.min(max,Math.max(min,v)):min}
