@@ -55,34 +55,30 @@
 </div>
 <div id="coverageTab" class="tab-panel" role="tabpanel" aria-labelledby="coverageTabButton" hidden>
 <section class="panel">
-<h2>Home connectivity survey</h2>
-<p class="section-intro">Collect a few details about the home, then assess the rooms where the customer needs Wi-Fi. The result identifies risk factors to investigate; it is not a measured signal prediction.</p>
-<h3>1. About the property</h3>
+<h2>Home Wi-Fi check</h2>
+<p class="section-intro">Answer a few questions about the home and the customer's experience to identify likely coverage issues.</p>
 <div class="grid">
 <div><label for="propertyType">Property type</label><select id="propertyType"><option value="flat">Flat / apartment</option><option value="terraced">Terraced house</option><option value="semi" selected>Semi-detached house</option><option value="detached">Detached house</option><option value="bungalow">Bungalow</option><option value="other">Other / not sure</option></select></div>
 <div><label for="homeSize">Approximate size</label><select id="homeSize"><option value="small">Small — up to 2 bedrooms</option><option value="medium" selected>Medium — 3 bedrooms</option><option value="large">Large — 4+ bedrooms / spread out</option><option value="unknown">Not sure</option></select></div>
-<div><label for="homeFloors">Number of floors in home</label><select id="homeFloors"><option value="1">1</option><option value="2" selected>2</option><option value="3">3 or more</option></select></div>
-<div><label for="hubFloor">Which floor is the hub on?</label><select id="hubFloor"><option value="ground" selected>Ground / lowest floor</option><option value="middle">Middle floor</option><option value="top">Top floor</option><option value="unknown">Not sure</option></select></div>
-<div><label for="hubPosition">Where is the hub located?</label><select id="hubPosition"><option value="central" selected>Near the centre of the home</option><option value="edge">At one end / against an outside wall</option><option value="corner">In a corner</option><option value="unknown">Not sure</option></select></div>
+<div><label for="homeFloors">Number of floors</label><select id="homeFloors"><option value="1">One</option><option value="2" selected>Two</option><option value="3">Three or more</option></select></div>
+<div><label for="hubPosition">Where is the hub?</label><select id="hubPosition"><option value="central" selected>Near the centre of the home</option><option value="edge">At one end / against an outside wall</option><option value="corner">In a corner</option><option value="unknown">Not sure</option></select></div>
+<div><label for="wallType">Most walls between the hub and problem areas</label><select id="wallType"><option value="light">Mostly plasterboard / lightweight</option><option value="brick" selected>Mostly brick</option><option value="stone">Stone or concrete</option><option value="mixed">A mixture / not sure</option></select></div>
+<div><label for="problemArea">Where does the problem happen?</label><select id="problemArea"><option value="none">No known problem — checking proactively</option><option value="far" selected>Rooms far from the hub</option><option value="floor">Rooms on another floor</option><option value="some">Some rooms, not necessarily far away</option><option value="everywhere">Most or all of the home</option><option value="oneDevice">Only one device</option></select></div>
+<div><label for="symptom">What does the customer notice?</label><select id="symptom"><option value="weak">Weak or no Wi-Fi signal</option><option value="slow" selected>Slow speeds</option><option value="dropouts">Dropouts / unstable connection</option><option value="lag">Lag / high latency</option><option value="unknown">Not sure</option></select></div>
+<div><label for="affectedDevices">How many devices are affected?</label><select id="affectedDevices"><option value="one">One device</option><option value="multiple" selected>Several devices</option><option value="all">Most devices, including near the hub</option><option value="unknown">Not sure</option></select></div>
 </div>
-<div class="grid" style="margin-top:1rem">
-<div><label class="check-row"><input id="hubEnclosed" type="checkbox"> Hub is inside a cupboard, cabinet or enclosed space</label></div>
-<div><label class="check-row"><input id="hubObstructed" type="checkbox"> Hub is close to a TV, lots of electronics, or thick masonry</label></div>
+<div style="margin-top:1rem">
+<label class="check-row"><input id="hubEnclosed" type="checkbox"> Hub is inside a cupboard, cabinet or enclosed space</label>
+<label class="check-row"><input id="hubObstructed" type="checkbox"> Hub is behind a TV, near lots of electronics, or beside thick masonry</label>
 </div>
-<p class="muted">Property size and layout are context. Room distance, construction and observed symptoms carry more weight in the assessment.</p>
-</section>
-<section class="panel">
-<div class="room-heading"><h2>2. Rooms to assess</h2><button class="btn" type="button" id="addRoom">+ Add room</button></div>
-<p>Add the rooms where the customer uses Wi-Fi or reports a problem. You can assess more than one room.</p>
-<div id="rooms"></div>
-<p><button class="btn" type="button" id="assessHome">Assess home connectivity</button></p>
+<p><button class="btn" type="button" id="assessHome">Assess likely connectivity issues</button></p>
 </section>
 <section class="panel result" id="homeResult" aria-live="polite">
 <h2 id="homeSummary">Assessment not run yet</h2>
-<p id="homeExplanation">Enter the home details and add at least one room, then select “Assess home connectivity”.</p>
+<p id="homeExplanation">Complete the questions and select “Assess likely connectivity issues”.</p>
 <div id="roomResults"></div>
 </section>
-<div class="notice"><strong>How to use the result</strong><p>A high coverage-risk result means the layout and symptoms make weak Wi-Fi plausible, not proven. If problems affect the whole home, multiple devices, or occur even near the hub, also check broadband service, hub status and interference. If only one device is affected, check that device before recommending a coverage solution.</p></div>
+<div class="notice"><strong>How to interpret this</strong><p>This is a first-pass screening tool, not a measured signal test. If problems affect most of the home or devices near the hub, check the broadband service and hub as well as Wi-Fi coverage. If only one device is affected, investigate that device first.</p></div>
 </div>
 <footer><p>Prototype for internal exploration. Not an official Sky tool and not affiliated with Sky.</p></footer>
 </main>
@@ -134,103 +130,53 @@ document.getElementById("speedTabButton").addEventListener("click",()=>selectTab
 document.getElementById("coverageTabButton").addEventListener("click",()=>selectTab("coverage"));
 function numberValue(id,min,max){const v=Number(document.getElementById(id).value);return Number.isFinite(v)?Math.min(max,Math.max(min,v)):min}
 
-let roomCounter=0;
-const roomDefaults=[
- {name:"Living room",distance:"medium",floor:"same",brick:0,plaster:1,stone:0,symptom:"none",devices:"multiple"},
- {name:"Bedroom",distance:"far",floor:"above",brick:1,plaster:1,stone:0,symptom:"none",devices:"multiple"}
-];
-function roomTemplate(room){
- const id=++roomCounter;
- const wrap=document.createElement("section");
- wrap.className="room-card";wrap.dataset.roomId=String(id);
- wrap.innerHTML='<div class="room-heading"><h3>Room '+id+'</h3><button type="button" class="btn remove remove-room">Remove</button></div>'+
- '<div class="grid">'+
- '<div><label for="roomName'+id+'">Room name</label><input id="roomName'+id+'" class="room-name" value="'+escapeHtml(room.name||"Room "+id)+'" maxlength="60"></div>'+
- '<div><label for="roomDistance'+id+'">Distance from hub</label><select id="roomDistance'+id+'" class="room-distance"><option value="near">Near — up to 5 m</option><option value="medium">Medium — 5–10 m</option><option value="far">Far — 10–20 m</option><option value="veryfar">Very far — over 20 m</option><option value="unknown">Not sure</option></select></div>'+
- '<div><label for="roomFloor'+id+'">Room compared with hub</label><select id="roomFloor'+id+'" class="room-floor"><option value="same">Same floor</option><option value="above">One floor above</option><option value="below">One floor below</option><option value="two">Two or more floors away</option><option value="unknown">Not sure</option></select></div>'+
- '<div><label for="roomBrick'+id+'">Brick / dense masonry walls in between</label><input id="roomBrick'+id+'" class="room-brick" type="number" min="0" max="10" value="0"></div>'+
- '<div><label for="roomPlaster'+id+'">Plasterboard walls in between</label><input id="roomPlaster'+id+'" class="room-plaster" type="number" min="0" max="10" value="1"></div>'+
- '<div><label for="roomStone'+id+'">Stone / concrete walls in between</label><input id="roomStone'+id+'" class="room-stone" type="number" min="0" max="10" value="0"></div>'+
- '<div><label for="roomSymptom'+id+'">What does the customer notice here?</label><select id="roomSymptom'+id+'" class="room-symptom"><option value="none">No known problem / checking proactively</option><option value="weak">Weak or no Wi-Fi signal</option><option value="slow">Slow speeds</option><option value="dropouts">Dropouts / unstable connection</option><option value="latency">Lag / high latency</option></select></div>'+
- '<div><label for="roomDevices'+id+'">Devices affected</label><select id="roomDevices'+id+'" class="room-devices"><option value="multiple">Several devices</option><option value="one">One device only</option><option value="unknown">Not sure</option></select></div>'+
- '</div>';
- wrap.querySelector(".room-distance").value=room.distance||"medium";
- wrap.querySelector(".room-floor").value=room.floor||"same";
- wrap.querySelector(".room-brick").value=room.brick??0;
- wrap.querySelector(".room-plaster").value=room.plaster??1;
- wrap.querySelector(".room-stone").value=room.stone??0;
- wrap.querySelector(".room-symptom").value=room.symptom||"none";
- wrap.querySelector(".room-devices").value=room.devices||"multiple";
- wrap.querySelector(".remove-room").addEventListener("click",()=>{wrap.remove();renumberRooms();});
- return wrap;
-}
-function escapeHtml(value){return String(value).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
-function renumberRooms(){document.querySelectorAll("#rooms .room-card").forEach((card,index)=>{card.querySelector("h3").textContent="Room "+(index+1);});}
-function addRoom(room={}){document.getElementById("rooms").appendChild(roomTemplate(room));}
-roomDefaults.forEach(addRoom);
-document.getElementById("addRoom").addEventListener("click",()=>addRoom({name:"",distance:"medium",floor:"same",brick:0,plaster:1,stone:0,symptom:"none",devices:"multiple"}));
 
-function assessRoom(card){
- const name=card.querySelector(".room-name").value.trim()||"Unnamed room";
- const distance=card.querySelector(".room-distance").value;
- const floor=card.querySelector(".room-floor").value;
- const brick=numberValueFrom(card.querySelector(".room-brick"),0,10);
- const plaster=numberValueFrom(card.querySelector(".room-plaster"),0,10);
- const stone=numberValueFrom(card.querySelector(".room-stone"),0,10);
- const symptom=card.querySelector(".room-symptom").value;
- const devices=card.querySelector(".room-devices").value;
- let score=0,reasons=[],checks=[];
- const distancePoints={near:0,medium:1,far:2,veryfar:3,unknown:1};
- score+=distancePoints[distance];
- if(distance==="far"||distance==="veryfar")reasons.push(distance==="far"?"Room is a considerable distance from the hub":"Room is over 20 m from the hub");
- if(distance==="unknown")checks.push("Confirm the approximate distance");
- score+=brick*1.5+plaster*.5+stone*2;
- if(brick>0)reasons.push(brick+" brick / dense masonry wall(s) may weaken the signal");
- if(plaster>1)reasons.push(plaster+" plasterboard walls add some obstruction");
- if(stone>0)reasons.push(stone+" stone / concrete wall(s) may cause substantial signal loss");
- const floorPoints={same:0,above:2,below:2,two:3,unknown:1};
- score+=floorPoints[floor];
- if(floor==="above"||floor==="below")reasons.push("The signal must travel between floors");
- if(floor==="two")reasons.push("Two or more floors separate the room and hub");
- if(floor==="unknown")checks.push("Confirm which floor the room is on");
- if(symptom==="weak"){score+=2.5;reasons.push("Customer reports weak or no Wi-Fi signal");}
- if(symptom==="dropouts"){score+=2;reasons.push("Customer reports connection dropouts");}
- if(symptom==="slow"){score+=1.5;reasons.push("Customer reports slow speeds; this can have causes other than coverage");}
- if(symptom==="latency"){score+=1;reasons.push("Customer reports lag / latency, which is not specific to Wi-Fi coverage");}
- if(devices==="one"&&symptom!=="none"){score-=1.5;checks.push("Only one device is affected: check that device and its Wi-Fi capability");}
- if(devices==="unknown")checks.push("Confirm whether other devices have the same problem");
- if(score>=5.5) return {name,level:"High",score,reasons,checks};
- if(score>=2.5) return {name,level:"Moderate",score,reasons,checks};
- return {name,level:"Low",score,reasons,checks};
-}
-function numberValueFrom(input,min,max){const v=Number(input.value);return Number.isFinite(v)?Math.min(max,Math.max(min,v)):min;}
+function escapeHtml(value){return String(value).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
 function assessHome(){
- const cards=[...document.querySelectorAll("#rooms .room-card")];
- if(!cards.length){document.getElementById("homeSummary").textContent="Add a room to assess";document.getElementById("homeExplanation").textContent="Add at least one room, then run the assessment.";document.getElementById("roomResults").innerHTML="";return;}
- const results=cards.map(assessRoom);
  const size=document.getElementById("homeSize").value;
- const hubPosition=document.getElementById("hubPosition").value;
- const hubEnclosed=document.getElementById("hubEnclosed").checked;
- const hubObstructed=document.getElementById("hubObstructed").checked;
- const homeFloors=Number(document.getElementById("homeFloors").value);
- const homeFactors=[];
- if(hubPosition==="edge"||hubPosition==="corner")homeFactors.push("Hub is at an edge or corner, which may leave distant rooms with weaker coverage");
- if(hubEnclosed)homeFactors.push("Hub is enclosed in furniture or a cupboard; placing it in the open may help");
- if(hubObstructed)homeFactors.push("Nearby electronics or dense materials may obstruct or interfere with Wi-Fi");
- if(size==="large")homeFactors.push("Large or spread-out home may be harder to cover from one hub");
- if(homeFloors>=2&&results.some(r=>r.score>=2))homeFactors.push("Multi-floor layout can make consistent coverage harder");
- const high=results.filter(r=>r.level==="High").length,moderate=results.filter(r=>r.level==="Moderate").length;
- let overall=high>0?"High":moderate>0||homeFactors.length>0?"Moderate":"Low";
- const broadIssues=results.filter(r=>r.level!=="Low"&&r.reasons.some(x=>x.includes("reports"))).length;
- if(results.every(r=>r.level==="Low")&&homeFactors.length===0)overall="Low";
- document.getElementById("homeSummary").textContent=overall+" likelihood of Wi-Fi coverage issues";
- document.getElementById("homeResult").className="panel result risk-"+overall.toLowerCase();
- let explanation=results.length+" room(s) assessed. "+high+" high-risk and "+moderate+" moderate-risk room(s). This is a qualitative screening result, not a measured signal test.";
- if(broadIssues>=2)explanation+=" Problems are reported in multiple rooms; also check the hub and broadband service rather than assuming coverage is the only cause.";
+ const floors=Number(document.getElementById("homeFloors").value);
+ const position=document.getElementById("hubPosition").value;
+ const walls=document.getElementById("wallType").value;
+ const problem=document.getElementById("problemArea").value;
+ const symptom=document.getElementById("symptom").value;
+ const devices=document.getElementById("affectedDevices").value;
+ const enclosed=document.getElementById("hubEnclosed").checked;
+ const obstructed=document.getElementById("hubObstructed").checked;
+ let score=0,reasons=[],checks=[];
+ if(size==="large"){score+=2;reasons.push("A large or spread-out home can be harder to cover from one hub");}
+ if(floors>=2){score+=1;reasons.push("The home has multiple floors");}
+ if(position==="edge"||position==="corner"){score+=2;reasons.push("The hub is at an edge or corner, so signal may not reach the whole home evenly");}
+ if(position==="unknown")checks.push("Confirm where the hub is positioned");
+ if(walls==="brick"){score+=1.5;reasons.push("Brick walls can reduce Wi-Fi signal");}
+ if(walls==="stone"){score+=2.5;reasons.push("Stone or concrete walls can cause substantial signal loss");}
+ if(walls==="mixed")checks.push("Check the construction between the hub and the affected areas");
+ if(enclosed){score+=2;reasons.push("The hub is enclosed; moving it into the open may improve coverage");}
+ if(obstructed){score+=1;reasons.push("Nearby electronics or dense materials may obstruct or interfere with Wi-Fi");}
+ if(problem==="far"){score+=2;reasons.push("Problems are in rooms far from the hub");}
+ if(problem==="floor"){score+=2;reasons.push("Problems are in rooms on another floor");}
+ if(problem==="some"){score+=1;reasons.push("Problems are limited to some rooms, which may indicate a coverage gap");}
+ if(problem==="everywhere"){reasons.push("Problems across most of the home may indicate a hub, broadband or interference issue as well as coverage");}
+ if(problem==="oneDevice"){reasons.push("A single affected device is less likely to indicate a whole-home coverage problem");}
+ if(symptom==="weak"){score+=2;reasons.push("Weak or missing Wi-Fi signal is consistent with a coverage issue");}
+ if(symptom==="dropouts"){score+=1.5;reasons.push("Dropouts can be caused by weak coverage, interference or device issues");}
+ if(symptom==="slow"){score+=1;reasons.push("Slow speeds alone do not prove a coverage problem");}
+ if(symptom==="lag"){score+=.5;reasons.push("Lag can be caused by latency or congestion even when Wi-Fi signal is adequate");}
+ if(devices==="one"){score-=1.5;checks.push("Only one device is affected: test another device in the same location and check the affected device");}
+ if(devices==="all"){score-=2;checks.push("Problems also occur near the hub: check broadband service, hub status and wired performance before blaming coverage");}
+ if(devices==="unknown")checks.push("Ask whether another device has the same problem in the same room");
+ if(problem==="everywhere"&&devices==="all")score-=1.5;
+ let level=score>=7?"High":score>=3?"Moderate":"Low";
+ if(problem==="oneDevice"&&devices==="one")level="Low";
+ const summary=document.getElementById("homeSummary");
+ summary.textContent=level+" likelihood of Wi-Fi coverage issues";
+ document.getElementById("homeResult").className="panel result risk-"+level.toLowerCase();
+ let explanation="Based on the answers, this home has a "+level.toLowerCase()+" likelihood of coverage issues. Treat this as a guide for the next troubleshooting step, not a guaranteed diagnosis.";
+ if(problem==="everywhere"||devices==="all")explanation+=" Because problems are widespread or occur near the hub, investigate the broadband connection and hub as well.";
+ if(problem==="oneDevice"||devices==="one")explanation+=" A device-specific issue is plausible; check the device before recommending a coverage solution.";
  document.getElementById("homeExplanation").textContent=explanation;
- const roomHtml=results.map(r=>'<div class="band"><strong>'+escapeHtml(r.name)+': '+r.level+' coverage risk</strong><ul class="risk-list">'+(r.reasons.length?r.reasons.map(x=>"<li>"+escapeHtml(x)+"</li>").join(""):"<li>No major coverage risk factors were entered for this room.</li>")+(r.checks.length?r.checks.map(x=>"<li><strong>Check:</strong> "+escapeHtml(x)+"</li>").join(""):"")+'</ul></div>').join("");
- const homeHtml=homeFactors.length?'<div class="band"><strong>Whole-home factors</strong><ul class="risk-list">'+homeFactors.map(x=>"<li>"+escapeHtml(x)+"</li>").join("")+"</ul></div>":"";
- document.getElementById("roomResults").innerHTML=homeHtml+roomHtml;
+ const outputReasons=reasons.length?reasons.map(x=>"<li>"+escapeHtml(x)+"</li>").join(""):"<li>No strong coverage risk factors were identified from the answers.</li>";
+ const outputChecks=checks.length?"<p><strong>Useful follow-up checks</strong></p><ul>"+checks.map(x=>"<li>"+escapeHtml(x)+"</li>").join("")+"</ul>":"";
+ document.getElementById("roomResults").innerHTML="<div class='band'><strong>What influenced the result</strong><ul>"+outputReasons+"</ul>"+outputChecks+"</div>";
 }
 document.getElementById("assessHome").addEventListener("click",assessHome);
 </script>
