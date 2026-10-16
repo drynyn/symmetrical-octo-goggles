@@ -6,7 +6,7 @@
 <title>Sky Wi-Fi Coverage Estimator</title>
 <style>
 :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f3f5f9;line-height:1.5}
-*{box-sizing:border-box}body{margin:0}header{background:#142b55;color:white;padding:1.5rem 1rem}header .wrap,main{max-width:900px;margin:auto}header a{color:#d9e6ff}header h1{margin:.4rem 0;font-size:clamp(1.5rem,4vw,2.2rem)}main{padding:1.25rem 1rem 3rem}.panel{background:white;border:1px solid #dce2ec;border-radius:14px;padding:1.2rem;margin:0 0 1rem;box-shadow:0 2px 8px #1720330a}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}label{display:block;font-weight:650;margin-bottom:.35rem}input,select{width:100%;font:inherit;padding:.65rem;border:1px solid #aeb9cb;border-radius:8px;background:white;color:inherit}small,.muted{color:#56647a}.result{border-left:5px solid #b7791f}.result h2{margin:.1rem 0 .5rem}.result strong{font-size:1.1rem}.band{padding:.8rem;background:#f5f7fb;border-radius:8px;margin:.5rem 0}.notice{background:#fff6df;border:1px solid #eed59a;border-radius:10px;padding:1rem}.tabs{display:flex;gap:.5rem;margin:0 0 1rem}.tab-button{flex:1;font:inherit;font-weight:650;padding:.8rem;border:1px solid #aeb9cb;border-radius:8px;background:#e8edf5;color:#172033;cursor:pointer}.tab-button[aria-selected="true"]{background:#174a9b;color:#fff;border-color:#174a9b}.tab-panel[hidden]{display:none}.btn{font:inherit;font-weight:650;border:0;border-radius:8px;padding:.75rem 1rem;background:#174a9b;color:white;cursor:pointer}.btn:hover{background:#103b7e}footer{font-size:.9rem;color:#56647a}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:.55rem;border-bottom:1px solid #e2e7ef}code{overflow-wrap:anywhere}
+*{box-sizing:border-box}body{margin:0}header{background:#142b55;color:white;padding:1.5rem 1rem}header .wrap,main{max-width:900px;margin:auto}header a{color:#d9e6ff}header h1{margin:.4rem 0;font-size:clamp(1.5rem,4vw,2.2rem)}main{padding:1.25rem 1rem 3rem}.panel{background:white;border:1px solid #dce2ec;border-radius:14px;padding:1.2rem;margin:0 0 1rem;box-shadow:0 2px 8px #1720330a}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}label{display:block;font-weight:650;margin-bottom:.35rem}input,select{width:100%;font:inherit;padding:.65rem;border:1px solid #aeb9cb;border-radius:8px;background:white;color:inherit}small,.muted{color:#56647a}.result{border-left:5px solid #b7791f}.result h2{margin:.1rem 0 .5rem}.result strong{font-size:1.1rem}.band{padding:.8rem;background:#f5f7fb;border-radius:8px;margin:.5rem 0}.notice{background:#fff6df;border:1px solid #eed59a;border-radius:10px;padding:1rem}.tabs{display:flex;gap:.5rem;margin:0 0 1rem}.tab-button{flex:1;font:inherit;font-weight:650;padding:.8rem;border:1px solid #aeb9cb;border-radius:8px;background:#e8edf5;color:#172033;cursor:pointer}.tab-button[aria-selected="true"]{background:#174a9b;color:#fff;border-color:#174a9b}.tab-panel[hidden]{display:none}.btn{font:inherit;font-weight:650;border:0;border-radius:8px;padding:.75rem 1rem;background:#174a9b;color:white;cursor:pointer}.btn:hover{background:#103b7e}footer{font-size:.9rem;color:#56647a}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:.55rem;border-bottom:1px solid #e2e7ef}code{overflow-wrap:anywhere}.room-card{border:1px solid #dce2ec;border-radius:10px;padding:1rem;margin:1rem 0;background:#fbfcfe}.room-heading{display:flex;justify-content:space-between;align-items:center;gap:1rem}.room-heading h3{margin:.1rem 0 .7rem}.room-card .grid{margin-top:.5rem}.btn.secondary{background:#e8edf5;color:#172033;border:1px solid #aeb9cb}.btn.remove{background:#8b2635;padding:.45rem .7rem}.check-row{display:flex;align-items:flex-start;gap:.5rem;margin:.55rem 0}.check-row input{width:auto;margin-top:.35rem}.risk-low{border-left-color:#27834a}.risk-moderate{border-left-color:#b7791f}.risk-high{border-left-color:#b42332}.risk-list li{margin:.35rem 0}.section-intro{margin-top:0}
 </style>
 </head>
 <body>
@@ -55,35 +55,34 @@
 </div>
 <div id="coverageTab" class="tab-panel" role="tabpanel" aria-labelledby="coverageTabButton" hidden>
 <section class="panel">
-<p>Estimate how walls and distance may affect a Wi-Fi connection. This version uses configurable illustrative assumptions, not measured Sky hub performance.</p>
+<h2>Home connectivity survey</h2>
+<p class="section-intro">Collect a few details about the home, then assess the rooms where the customer needs Wi-Fi. The result identifies risk factors to investigate; it is not a measured signal prediction.</p>
+<h3>1. About the property</h3>
 <div class="grid">
-<div><label for="hub">Hub model</label><select id="hub"><option>Sky Broadband Hub (Wi-Fi 5)</option><option>Sky Max Hub (Wi-Fi 6)</option><option>Sky Gigafast+ Hub (Wi-Fi 7)</option></select><small>Hub selection is recorded for context; model-specific radio data is not yet calibrated.</small></div>
-<div><label for="distance">Distance to room (metres)</label><input id="distance" type="number" min="1" max="100" value="21" step="1"></div>
-<div><label for="brick">Brick walls</label><input id="brick" type="number" min="0" max="10" value="2" step="1"></div>
-<div><label for="plaster">Plasterboard walls</label><input id="plaster" type="number" min="0" max="10" value="1" step="1"></div>
-<div><label for="floors">Floors between hub and room</label><input id="floors" type="number" min="0" max="5" value="0" step="1"></div>
-<div><label for="quality">Target signal threshold</label><select id="quality"><option value="-67">Moderate (−67 dBm, provisional)</option><option value="-70">More tolerant (−70 dBm, provisional)</option><option value="-65">Stricter (−65 dBm, provisional)</option></select></div>
+<div><label for="propertyType">Property type</label><select id="propertyType"><option value="flat">Flat / apartment</option><option value="terraced">Terraced house</option><option value="semi" selected>Semi-detached house</option><option value="detached">Detached house</option><option value="bungalow">Bungalow</option><option value="other">Other / not sure</option></select></div>
+<div><label for="homeSize">Approximate size</label><select id="homeSize"><option value="small">Small — up to 2 bedrooms</option><option value="medium" selected>Medium — 3 bedrooms</option><option value="large">Large — 4+ bedrooms / spread out</option><option value="unknown">Not sure</option></select></div>
+<div><label for="homeFloors">Number of floors in home</label><select id="homeFloors"><option value="1">1</option><option value="2" selected>2</option><option value="3">3 or more</option></select></div>
+<div><label for="hubFloor">Which floor is the hub on?</label><select id="hubFloor"><option value="ground" selected>Ground / lowest floor</option><option value="middle">Middle floor</option><option value="top">Top floor</option><option value="unknown">Not sure</option></select></div>
+<div><label for="hubPosition">Where is the hub located?</label><select id="hubPosition"><option value="central" selected>Near the centre of the home</option><option value="edge">At one end / against an outside wall</option><option value="corner">In a corner</option><option value="unknown">Not sure</option></select></div>
 </div>
-<p style="margin-top:1rem"><button class="btn" id="calculate">Estimate coverage</button></p>
-</section>
-<section class="panel result" aria-live="polite">
-<h2 id="summary">Illustrative estimate</h2>
-<p id="explain">Change the inputs and calculate to see a result.</p>
-<div id="bands"></div>
+<div class="grid" style="margin-top:1rem">
+<div><label class="check-row"><input id="hubEnclosed" type="checkbox"> Hub is inside a cupboard, cabinet or enclosed space</label></div>
+<div><label class="check-row"><input id="hubObstructed" type="checkbox"> Hub is close to a TV, lots of electronics, or thick masonry</label></div>
+</div>
+<p class="muted">Property size and layout are context. Room distance, construction and observed symptoms carry more weight in the assessment.</p>
 </section>
 <section class="panel">
-<h2>Assumptions used</h2>
-<p class="muted">These defaults are deliberately visible so they can be replaced with evidence as field measurements become available.</p>
-<table><thead><tr><th>Parameter</th><th>2.4 GHz</th><th>5 GHz</th></tr></thead><tbody>
-<tr><td>Reference signal at 1 m</td><td>−35 dBm</td><td>−40 dBm</td></tr>
-<tr><td>Indoor distance-loss exponent</td><td>3.0</td><td>3.0</td></tr>
-<tr><td>Each brick wall</td><td>6–8 dB</td><td>8–12 dB</td></tr>
-<tr><td>Each plasterboard wall</td><td>3–4 dB</td><td>3–5 dB</td></tr>
-<tr><td>Each floor</td><td>10–18 dB</td><td>14–24 dB</td></tr>
-</tbody></table>
-<p><small>The reference signals, distance-loss exponent, wall losses, floor losses and quality thresholds are unvalidated placeholders. They are not Sky specifications or guaranteed predictions.</small></p>
+<div class="room-heading"><h2>2. Rooms to assess</h2><button class="btn" type="button" id="addRoom">+ Add room</button></div>
+<p>Add the rooms where the customer uses Wi-Fi or reports a problem. You can assess more than one room.</p>
+<div id="rooms"></div>
+<p><button class="btn" type="button" id="assessHome">Assess home connectivity</button></p>
 </section>
-<div class="notice"><strong>Important limitation</strong><p>This simple model cannot account properly for wall thickness and angle, insulation, furniture, interference, antenna orientation, client device, channel width, or the hub's band-steering behaviour. It estimates a broad signal range; it does not guarantee speed or reliability. Use measurements from real homes to calibrate it before relying on the result for customer advice.</p></div>
+<section class="panel result" id="homeResult" aria-live="polite">
+<h2 id="homeSummary">Assessment not run yet</h2>
+<p id="homeExplanation">Enter the home details and add at least one room, then select “Assess home connectivity”.</p>
+<div id="roomResults"></div>
+</section>
+<div class="notice"><strong>How to use the result</strong><p>A high coverage-risk result means the layout and symptoms make weak Wi-Fi plausible, not proven. If problems affect the whole home, multiple devices, or occur even near the hub, also check broadband service, hub status and interference. If only one device is affected, check that device before recommending a coverage solution.</p></div>
 </div>
 <footer><p>Prototype for internal exploration. Not an official Sky tool and not affiliated with Sky.</p></footer>
 </main>
@@ -107,26 +106,16 @@ function updateSpeedEstimate(){
   return;
  }
  const baseline=15,workTotal=workers*15,gameTotal=gamers*15,streamTotal=streams*perStream,downloadTotal=downloads*50;
- const smartHomeTotal=smartHome?0.1:0;
- const additionalDevicesTotal=additionalDevices*3;
- const cameraUpload=videoFeed?2:0;
- const beforeMargin=baseline+workTotal+gameTotal+streamTotal+downloadTotal+smartHomeTotal+additionalDevicesTotal;
- const margin=beforeMargin*0.3;
- const required=Math.ceil(beforeMargin+margin);
+ const smartHomeTotal=smartHome?0.1:0,additionalDevicesTotal=additionalDevices*3,cameraUpload=videoFeed?2:0;
+ const beforeMargin=baseline+workTotal+gameTotal+streamTotal+downloadTotal+smartHomeTotal+additionalDevicesTotal,margin=beforeMargin*0.3,required=Math.ceil(beforeMargin+margin);
  result.textContent="Estimated download requirement (including additional devices): "+required+" Mbps";
  calculation.textContent="Step-by-step breakdown:";
  document.getElementById("speedBreakdown").innerHTML=[
-  "<li>Household background allowance: 15 Mbps</li>",
-  "<li>Work: "+workers+" × 15 Mbps = "+workTotal+" Mbps</li>",
-  "<li>Gaming: "+gamers+" × 15 Mbps = "+gameTotal+" Mbps</li>",
-  "<li>Streaming: "+streams+" × "+perStream+" Mbps = "+streamTotal+" Mbps</li>",
-  "<li>Large downloads or updates: "+downloads+" × 50 Mbps = "+downloadTotal+" Mbps</li>",
-  "<li>Smart home: "+(smartHome?"4 devices, 0.1 Mbps":"not selected, 0 Mbps")+"</li>",
-  "<li>Additional active devices: "+additionalDevices+" × 3 Mbps = "+additionalDevicesTotal+" Mbps</li>",
-  "<li>Subtotal: "+beforeMargin.toFixed(1)+" Mbps</li>",
-  "<li>30% headroom: "+margin.toFixed(1)+" Mbps</li>",
-  "<li>Total before rounding: "+(beforeMargin+margin).toFixed(1)+" Mbps</li>",
-  "<li><strong>Rounded up: "+required+" Mbps</strong></li>"
+  "<li>Household background allowance: 15 Mbps</li>","<li>Work: "+workers+" × 15 Mbps = "+workTotal+" Mbps</li>",
+  "<li>Gaming: "+gamers+" × 15 Mbps = "+gameTotal+" Mbps</li>","<li>Streaming: "+streams+" × "+perStream+" Mbps = "+streamTotal+" Mbps</li>",
+  "<li>Large downloads or updates: "+downloads+" × 50 Mbps = "+downloadTotal+" Mbps</li>","<li>Smart home: "+(smartHome?"4 devices, 0.1 Mbps":"not selected, 0 Mbps")+"</li>",
+  "<li>Additional active devices: "+additionalDevices+" × 3 Mbps = "+additionalDevicesTotal+" Mbps</li>","<li>Subtotal: "+beforeMargin.toFixed(1)+" Mbps</li>",
+  "<li>30% headroom: "+margin.toFixed(1)+" Mbps</li>","<li>Total before rounding: "+(beforeMargin+margin).toFixed(1)+" Mbps</li>","<li><strong>Rounded up: "+required+" Mbps</strong></li>"
  ].join("");
  document.getElementById("uploadResult").innerHTML="<strong>Estimated additional upload: "+cameraUpload+" Mbps</strong>"+(videoFeed?" (assumes one camera; actual use varies by device and settings).":"");
 }
@@ -134,7 +123,6 @@ function updateSpeedEstimate(){
 ["smartHome","videoFeed","additionalDevices"].forEach(id=>document.getElementById(id).addEventListener("change",updateSpeedEstimate));
 document.getElementById("additionalDevices").addEventListener("input",updateSpeedEstimate);
 updateSpeedEstimate();
-
 function selectTab(tab){
  const speed=tab==="speed";
  document.getElementById("speedTab").hidden=!speed;
@@ -144,33 +132,107 @@ function selectTab(tab){
 }
 document.getElementById("speedTabButton").addEventListener("click",()=>selectTab("speed"));
 document.getElementById("coverageTabButton").addEventListener("click",()=>selectTab("coverage"));
-
-const fields = ["distance","brick","plaster","floors"];
 function numberValue(id,min,max){const v=Number(document.getElementById(id).value);return Number.isFinite(v)?Math.min(max,Math.max(min,v)):min}
-function estimate(band,distance,brick,plaster,floors){
- const cfg=band==="2.4"?{reference:-35,exponent:3,brick:[6,8],plaster:[3,4],floor:[10,18]}:{reference:-40,exponent:3,brick:[8,12],plaster:[3,5],floor:[14,24]};
- const distanceLoss=10*cfg.exponent*Math.log10(Math.max(1,distance));
- const lowLoss=distanceLoss+brick*cfg.brick[0]+plaster*cfg.plaster[0]+floors*cfg.floor[0];
- const highLoss=distanceLoss+brick*cfg.brick[1]+plaster*cfg.plaster[1]+floors*cfg.floor[1];
- return {low:cfg.reference-highLoss,high:cfg.reference-lowLoss,lossLow:lowLoss,lossHigh:highLoss};
+
+let roomCounter=0;
+const roomDefaults=[
+ {name:"Living room",distance:"medium",floor:"same",brick:0,plaster:1,stone:0,symptom:"none",devices:"multiple"},
+ {name:"Bedroom",distance:"far",floor:"above",brick:1,plaster:1,stone:0,symptom:"none",devices:"multiple"}
+];
+function roomTemplate(room){
+ const id=++roomCounter;
+ const wrap=document.createElement("section");
+ wrap.className="room-card";wrap.dataset.roomId=String(id);
+ wrap.innerHTML='<div class="room-heading"><h3>Room '+id+'</h3><button type="button" class="btn remove remove-room">Remove</button></div>'+
+ '<div class="grid">'+
+ '<div><label for="roomName'+id+'">Room name</label><input id="roomName'+id+'" class="room-name" value="'+escapeHtml(room.name||"Room "+id)+'" maxlength="60"></div>'+
+ '<div><label for="roomDistance'+id+'">Distance from hub</label><select id="roomDistance'+id+'" class="room-distance"><option value="near">Near — up to 5 m</option><option value="medium">Medium — 5–10 m</option><option value="far">Far — 10–20 m</option><option value="veryfar">Very far — over 20 m</option><option value="unknown">Not sure</option></select></div>'+
+ '<div><label for="roomFloor'+id+'">Room compared with hub</label><select id="roomFloor'+id+'" class="room-floor"><option value="same">Same floor</option><option value="above">One floor above</option><option value="below">One floor below</option><option value="two">Two or more floors away</option><option value="unknown">Not sure</option></select></div>'+
+ '<div><label for="roomBrick'+id+'">Brick / dense masonry walls in between</label><input id="roomBrick'+id+'" class="room-brick" type="number" min="0" max="10" value="0"></div>'+
+ '<div><label for="roomPlaster'+id+'">Plasterboard walls in between</label><input id="roomPlaster'+id+'" class="room-plaster" type="number" min="0" max="10" value="1"></div>'+
+ '<div><label for="roomStone'+id+'">Stone / concrete walls in between</label><input id="roomStone'+id+'" class="room-stone" type="number" min="0" max="10" value="0"></div>'+
+ '<div><label for="roomSymptom'+id+'">What does the customer notice here?</label><select id="roomSymptom'+id+'" class="room-symptom"><option value="none">No known problem / checking proactively</option><option value="weak">Weak or no Wi-Fi signal</option><option value="slow">Slow speeds</option><option value="dropouts">Dropouts / unstable connection</option><option value="latency">Lag / high latency</option></select></div>'+
+ '<div><label for="roomDevices'+id+'">Devices affected</label><select id="roomDevices'+id+'" class="room-devices"><option value="multiple">Several devices</option><option value="one">One device only</option><option value="unknown">Not sure</option></select></div>'+
+ '</div>';
+ wrap.querySelector(".room-distance").value=room.distance||"medium";
+ wrap.querySelector(".room-floor").value=room.floor||"same";
+ wrap.querySelector(".room-brick").value=room.brick??0;
+ wrap.querySelector(".room-plaster").value=room.plaster??1;
+ wrap.querySelector(".room-stone").value=room.stone??0;
+ wrap.querySelector(".room-symptom").value=room.symptom||"none";
+ wrap.querySelector(".room-devices").value=room.devices||"multiple";
+ wrap.querySelector(".remove-room").addEventListener("click",()=>{wrap.remove();renumberRooms();});
+ return wrap;
 }
-function category(best,worst,threshold){
- if(best>=threshold)return ["Likely adequate under these assumptions","adequate"];
- if(worst<threshold)return ["Likely below the chosen threshold","poor"];
- return ["Borderline — estimate overlaps threshold","borderline"];
+function escapeHtml(value){return String(value).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
+function renumberRooms(){document.querySelectorAll("#rooms .room-card").forEach((card,index)=>{card.querySelector("h3").textContent="Room "+(index+1);});}
+function addRoom(room={}){document.getElementById("rooms").appendChild(roomTemplate(room));}
+roomDefaults.forEach(addRoom);
+document.getElementById("addRoom").addEventListener("click",()=>addRoom({name:"",distance:"medium",floor:"same",brick:0,plaster:1,stone:0,symptom:"none",devices:"multiple"}));
+
+function assessRoom(card){
+ const name=card.querySelector(".room-name").value.trim()||"Unnamed room";
+ const distance=card.querySelector(".room-distance").value;
+ const floor=card.querySelector(".room-floor").value;
+ const brick=numberValueFrom(card.querySelector(".room-brick"),0,10);
+ const plaster=numberValueFrom(card.querySelector(".room-plaster"),0,10);
+ const stone=numberValueFrom(card.querySelector(".room-stone"),0,10);
+ const symptom=card.querySelector(".room-symptom").value;
+ const devices=card.querySelector(".room-devices").value;
+ let score=0,reasons=[],checks=[];
+ const distancePoints={near:0,medium:1,far:2,veryfar:3,unknown:1};
+ score+=distancePoints[distance];
+ if(distance==="far"||distance==="veryfar")reasons.push(distance==="far"?"Room is a considerable distance from the hub":"Room is over 20 m from the hub");
+ if(distance==="unknown")checks.push("Confirm the approximate distance");
+ score+=brick*1.5+plaster*.5+stone*2;
+ if(brick>0)reasons.push(brick+" brick / dense masonry wall(s) may weaken the signal");
+ if(plaster>1)reasons.push(plaster+" plasterboard walls add some obstruction");
+ if(stone>0)reasons.push(stone+" stone / concrete wall(s) may cause substantial signal loss");
+ const floorPoints={same:0,above:2,below:2,two:3,unknown:1};
+ score+=floorPoints[floor];
+ if(floor==="above"||floor==="below")reasons.push("The signal must travel between floors");
+ if(floor==="two")reasons.push("Two or more floors separate the room and hub");
+ if(floor==="unknown")checks.push("Confirm which floor the room is on");
+ if(symptom==="weak"){score+=2.5;reasons.push("Customer reports weak or no Wi-Fi signal");}
+ if(symptom==="dropouts"){score+=2;reasons.push("Customer reports connection dropouts");}
+ if(symptom==="slow"){score+=1.5;reasons.push("Customer reports slow speeds; this can have causes other than coverage");}
+ if(symptom==="latency"){score+=1;reasons.push("Customer reports lag / latency, which is not specific to Wi-Fi coverage");}
+ if(devices==="one"&&symptom!=="none"){score-=1.5;checks.push("Only one device is affected: check that device and its Wi-Fi capability");}
+ if(devices==="unknown")checks.push("Confirm whether other devices have the same problem");
+ if(score>=5.5) return {name,level:"High",score,reasons,checks};
+ if(score>=2.5) return {name,level:"Moderate",score,reasons,checks};
+ return {name,level:"Low",score,reasons,checks};
 }
-function render(){
- const distance=numberValue("distance",1,100),brick=numberValue("brick",0,10),plaster=numberValue("plaster",0,10),floors=numberValue("floors",0,5),threshold=Number(document.getElementById("quality").value);
- const a=estimate("2.4",distance,brick,plaster,floors),b=estimate("5",distance,brick,plaster,floors);
- const ca=category(a.high,a.low,threshold),cb=category(b.high,b.low,threshold);
- document.getElementById("summary").textContent="Illustrative result: "+(ca[1]==="adequate"||cb[1]==="adequate"?"at least one band meets the threshold in this model":ca[1]==="poor"&&cb[1]==="poor"?"both bands fall below the threshold in this model":"coverage is uncertain in this model");
- document.getElementById("explain").textContent=distance+" m, "+brick+" brick wall(s), "+plaster+" plasterboard wall(s), "+floors+" floor(s). Target: "+threshold+" dBm. These are model outputs, not measured predictions.";
- document.getElementById("bands").innerHTML=[["2.4 GHz",a,ca],["5 GHz",b,cb]].map(([name,x,c])=>'<div class="band"><strong>'+name+'</strong><br>Estimated signal range: '+x.low.toFixed(1)+' to '+x.high.toFixed(1)+' dBm<br><span>'+c[0]+'</span><br><small>Estimated total path loss: '+x.lossLow.toFixed(1)+'–'+x.lossHigh.toFixed(1)+' dB</small></div>').join("");
+function numberValueFrom(input,min,max){const v=Number(input.value);return Number.isFinite(v)?Math.min(max,Math.max(min,v)):min;}
+function assessHome(){
+ const cards=[...document.querySelectorAll("#rooms .room-card")];
+ if(!cards.length){document.getElementById("homeSummary").textContent="Add a room to assess";document.getElementById("homeExplanation").textContent="Add at least one room, then run the assessment.";document.getElementById("roomResults").innerHTML="";return;}
+ const results=cards.map(assessRoom);
+ const size=document.getElementById("homeSize").value;
+ const hubPosition=document.getElementById("hubPosition").value;
+ const hubEnclosed=document.getElementById("hubEnclosed").checked;
+ const hubObstructed=document.getElementById("hubObstructed").checked;
+ const homeFloors=Number(document.getElementById("homeFloors").value);
+ const homeFactors=[];
+ if(hubPosition==="edge"||hubPosition==="corner")homeFactors.push("Hub is at an edge or corner, which may leave distant rooms with weaker coverage");
+ if(hubEnclosed)homeFactors.push("Hub is enclosed in furniture or a cupboard; placing it in the open may help");
+ if(hubObstructed)homeFactors.push("Nearby electronics or dense materials may obstruct or interfere with Wi-Fi");
+ if(size==="large")homeFactors.push("Large or spread-out home may be harder to cover from one hub");
+ if(homeFloors>=2&&results.some(r=>r.score>=2))homeFactors.push("Multi-floor layout can make consistent coverage harder");
+ const high=results.filter(r=>r.level==="High").length,moderate=results.filter(r=>r.level==="Moderate").length;
+ let overall=high>0?"High":moderate>0||homeFactors.length>0?"Moderate":"Low";
+ const broadIssues=results.filter(r=>r.level!=="Low"&&r.reasons.some(x=>x.includes("reports"))).length;
+ if(results.every(r=>r.level==="Low")&&homeFactors.length===0)overall="Low";
+ document.getElementById("homeSummary").textContent=overall+" likelihood of Wi-Fi coverage issues";
+ document.getElementById("homeResult").className="panel result risk-"+overall.toLowerCase();
+ let explanation=results.length+" room(s) assessed. "+high+" high-risk and "+moderate+" moderate-risk room(s). This is a qualitative screening result, not a measured signal test.";
+ if(broadIssues>=2)explanation+=" Problems are reported in multiple rooms; also check the hub and broadband service rather than assuming coverage is the only cause.";
+ document.getElementById("homeExplanation").textContent=explanation;
+ const roomHtml=results.map(r=>'<div class="band"><strong>'+escapeHtml(r.name)+': '+r.level+' coverage risk</strong><ul class="risk-list">'+(r.reasons.length?r.reasons.map(x=>"<li>"+escapeHtml(x)+"</li>").join(""):"<li>No major coverage risk factors were entered for this room.</li>")+(r.checks.length?r.checks.map(x=>"<li><strong>Check:</strong> "+escapeHtml(x)+"</li>").join(""):"")+'</ul></div>').join("");
+ const homeHtml=homeFactors.length?'<div class="band"><strong>Whole-home factors</strong><ul class="risk-list">'+homeFactors.map(x=>"<li>"+escapeHtml(x)+"</li>").join("")+"</ul></div>":"";
+ document.getElementById("roomResults").innerHTML=homeHtml+roomHtml;
 }
-document.getElementById("calculate").addEventListener("click",render);
-fields.forEach(id=>document.getElementById(id).addEventListener("change",render));
-document.getElementById("quality").addEventListener("change",render);
-render();
+document.getElementById("assessHome").addEventListener("click",assessHome);
 </script>
 </body>
 </html>
