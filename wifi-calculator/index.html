@@ -22,6 +22,7 @@
 <div><label for="streams">Simultaneous video streams</label><input id="streams" type="number" min="0" max="20" value="2" step="1"></div>
 <div><label for="streamQuality">Streaming quality</label><select id="streamQuality"><option value="5">HD (5 Mbps per stream)</option><option value="15">4K (15 Mbps per stream)</option></select></div>
 </div>
+<div class="device-options"><strong>Other connected devices (optional)</strong><p class="muted">Select any that apply. These are representative estimates.</p><label><input id="smartHome" type="checkbox"> Smart home (assumes 4 devices; +0.1 Mbps download)</label><label><input id="videoFeed" type="checkbox"> Video feed (camera, etc.; assumes 1 camera, +2 Mbps upload)</label><label><input id="additionalDevices" type="checkbox"> Additional devices (assumes 3 active devices; +3 Mbps download)</label></div>
 <div class="band" aria-live="polite">
 <strong id="speedResult">Estimated download requirement: — Mbps</strong>
 <p id="speedCalculation">The calculation will appear here.</p>
