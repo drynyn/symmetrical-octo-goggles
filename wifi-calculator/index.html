@@ -22,7 +22,7 @@
 <div><label for="streams">Simultaneous video streams</label><input id="streams" type="number" min="0" max="20" value="2" step="1"></div>
 <div><label for="streamQuality">Streaming quality</label><select id="streamQuality"><option value="5">HD (5 Mbps per stream)</option><option value="15">4K (15 Mbps per stream)</option></select></div>
 </div>
-<div class="device-options"><strong>Other connected devices (optional)</strong><p class="muted">Select any that apply. These are representative estimates.</p><label><input id="smartHome" type="checkbox" style="width:auto"> Smart home (assumes 4 devices; +0.1 Mbps download)</label><label><input id="videoFeed" type="checkbox" style="width:auto"> Video feed (camera, etc.; assumes 1 camera, +2 Mbps upload)</label><label><input id="additionalDevices" type="checkbox" style="width:auto"> Additional devices (assumes 3 active devices; +3 Mbps download)</label></div>
+<div class="device-options"><strong>Other connected devices (optional)</strong><p class="muted">Select any that apply. These are representative estimates.</p><label><input id="smartHome" type="checkbox" style="width:auto"> Smart home (assumes 4 devices; +0.1 Mbps download)</label><label><input id="videoFeed" type="checkbox" style="width:auto"> Video feed (camera, etc.; assumes 1 camera, +2 Mbps upload)</label><div><label for="additionalDevices">Additional active devices</label><input id="additionalDevices" type="number" min="0" max="100" value="3" step="1"><small>Estimated at 1 Mbps download per additional active device. Do not count devices already represented by work, gaming or streaming.</small></div></div>
 <div class="band" aria-live="polite">
 <strong id="speedResult">Estimated download requirement: — Mbps</strong>
 <p id="speedCalculation">The calculation will appear here.</p>
@@ -85,7 +85,7 @@ function updateSpeedEstimate(){
  const perStream=Number(document.getElementById("streamQuality").value);
  const smartHome=document.getElementById("smartHome").checked;
  const videoFeed=document.getElementById("videoFeed").checked;
- const additionalDevices=document.getElementById("additionalDevices").checked;
+ const additionalDevices=Math.round(numberValue("additionalDevices",0,100));
  const result=document.getElementById("speedResult");
  const calculation=document.getElementById("speedCalculation");
  if(workers+gamers>household){
@@ -96,7 +96,7 @@ function updateSpeedEstimate(){
  }
  const baseline=10,workTotal=workers*10,gameTotal=gamers*15,streamTotal=streams*perStream;
  const smartHomeTotal=smartHome?0.1:0;
- const additionalDevicesTotal=additionalDevices?3:0;
+ const additionalDevicesTotal=additionalDevices*1;
  const cameraUpload=videoFeed?2:0;
  const beforeMargin=baseline+workTotal+gameTotal+streamTotal+smartHomeTotal+additionalDevicesTotal;
  const margin=beforeMargin*0.3;
@@ -109,7 +109,7 @@ function updateSpeedEstimate(){
   "<li>Gaming: "+gamers+" × 15 Mbps = "+gameTotal+" Mbps</li>",
   "<li>Streaming: "+streams+" × "+perStream+" Mbps = "+streamTotal+" Mbps</li>",
   "<li>Smart home: "+(smartHome?"4 devices, 0.1 Mbps":"not selected, 0 Mbps")+"</li>",
-  "<li>Additional devices: "+(additionalDevices?"3 active devices, 3 Mbps":"not selected, 0 Mbps")+"</li>",
+  "<li>Additional devices: "+additionalDevices+" × 1 Mbps = "+additionalDevicesTotal+" Mbps</li>",
   "<li>Subtotal: "+beforeMargin.toFixed(1)+" Mbps</li>",
   "<li>30% headroom: "+margin.toFixed(1)+" Mbps</li>",
   "<li>Total before rounding: "+(beforeMargin+margin).toFixed(1)+" Mbps</li>",
@@ -119,6 +119,7 @@ function updateSpeedEstimate(){
 }
 ["people","workers","gamers","streams","streamQuality"].forEach(id=>document.getElementById(id).addEventListener("input",updateSpeedEstimate));
 ["smartHome","videoFeed","additionalDevices"].forEach(id=>document.getElementById(id).addEventListener("change",updateSpeedEstimate));
+document.getElementById("additionalDevices").addEventListener("input",updateSpeedEstimate);
 updateSpeedEstimate();
 
 const fields = ["distance","brick","plaster","floors"];
