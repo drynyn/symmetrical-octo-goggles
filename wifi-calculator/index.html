@@ -61,7 +61,7 @@
 <div><label for="propertyType">Property type</label><select id="propertyType"><option value="flat">Flat / apartment</option><option value="terraced">Terraced house</option><option value="semi" selected>Semi-detached house</option><option value="detached">Detached house</option><option value="bungalow">Bungalow</option><option value="other">Other / not sure</option></select></div>
 <div><label for="homeSize">Approximate size</label><select id="homeSize"><option value="small">Small — up to 2 bedrooms</option><option value="medium" selected>Medium — 3 bedrooms</option><option value="large">Large — 4+ bedrooms / spread out</option><option value="unknown">Not sure</option></select></div>
 <div><label for="homeFloors">Number of floors</label><select id="homeFloors"><option value="1">One</option><option value="2" selected>Two</option><option value="3">Three or more</option></select></div>
-<div><label for="hubPosition">Where is the hub?</label><select id="hubPosition"><option value="central" selected>Near the centre of the home</option><option value="edge">At one end / against an outside wall</option><option value="corner">In a corner</option><option value="unknown">Not sure</option></select></div>
+<div><label for="hubModel">Which Sky hub does the customer have?</label><select id="hubModel"><option value="unknown" selected>Not sure</option><option value="gigafast">Sky Gigafast+ Hub</option><option value="max">Sky Max Hub</option><option value="broadband">Sky Broadband Hub</option><option value="q">Sky Q Hub</option><option value="older">Sky Hub (older model)</option></select><small><a href="https://www.sky.com/help/articles/set-up-hub-which-sky-hub-do-you-have" target="_blank" rel="noopener">Help identify the hub</a>. Hub model is recorded but does not change the risk score yet, because model-specific coverage assumptions have not been validated.</small></div>\n<div><label for="hubPosition">Where is the hub?</label><select id="hubPosition"><option value="central" selected>Near the centre of the home</option><option value="edge">At one end / against an outside wall</option><option value="corner">In a corner</option><option value="unknown">Not sure</option></select></div>
 <div><label for="wallType">Most walls between the hub and problem areas</label><select id="wallType"><option value="light">Mostly plasterboard / lightweight</option><option value="brick" selected>Mostly brick</option><option value="stone">Stone or concrete</option><option value="mixed">A mixture / not sure</option></select></div>
 <div><label for="problemArea">Where does the problem happen?</label><select id="problemArea"><option value="none">No known problem — checking proactively</option><option value="far" selected>Rooms far from the hub</option><option value="floor">Rooms on another floor</option><option value="some">Some rooms, not necessarily far away</option><option value="everywhere">Most or all of the home</option><option value="oneDevice">Only one device</option></select></div>
 <div><label for="symptom">What does the customer notice?</label><select id="symptom"><option value="weak">Weak or no Wi-Fi signal</option><option value="slow" selected>Slow speeds</option><option value="dropouts">Dropouts / unstable connection</option><option value="lag">Lag / high latency</option><option value="unknown">Not sure</option></select></div>
@@ -135,7 +135,7 @@ function escapeHtml(value){return String(value).replace(/[&<>"']/g,ch=>({"&":"&a
 function assessHome(){
  const size=document.getElementById("homeSize").value;
  const floors=Number(document.getElementById("homeFloors").value);
- const position=document.getElementById("hubPosition").value;
+ const hubModel=document.getElementById("hubModel").value;\n const position=document.getElementById("hubPosition").value;
  const walls=document.getElementById("wallType").value;
  const problem=document.getElementById("problemArea").value;
  const symptom=document.getElementById("symptom").value;
@@ -170,7 +170,7 @@ function assessHome(){
  const summary=document.getElementById("homeSummary");
  summary.textContent=level+" likelihood of Wi-Fi coverage issues";
  document.getElementById("homeResult").className="panel result risk-"+level.toLowerCase();
- let explanation="Based on the answers, this home has a "+level.toLowerCase()+" likelihood of coverage issues. Treat this as a guide for the next troubleshooting step, not a guaranteed diagnosis.";
+ let explanation="Based on the answers, this home has a "+level.toLowerCase()+" likelihood of coverage issues. Treat this as a guide for the next troubleshooting step, not a guaranteed diagnosis. Hub selected: "+({"gigafast":"Sky Gigafast+ Hub","max":"Sky Max Hub","broadband":"Sky Broadband Hub","q":"Sky Q Hub","older":"Older Sky Hub","unknown":"model not known"}[hubModel])+".";
  if(problem==="everywhere"||devices==="all")explanation+=" Because problems are widespread or occur near the hub, investigate the broadband connection and hub as well.";
  if(problem==="oneDevice"||devices==="one")explanation+=" A device-specific issue is plausible; check the device before recommending a coverage solution.";
  document.getElementById("homeExplanation").textContent=explanation;
