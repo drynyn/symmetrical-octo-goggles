@@ -31,24 +31,44 @@ label{display:block;font-size:.88rem;font-weight:650;margin-bottom:7px}input,sel
 <script>
 const form=document.getElementById('searchForm'),terms=document.getElementById('terms'),period=document.getElementById('period'),statusBox=document.getElementById('status'),results=document.getElementById('results'),count=document.getElementById('count'),title=document.getElementById('resultsTitle'),button=document.getElementById('searchButton');
 document.getElementById('sampleButton').addEventListener('click',()=>{terms.value='Boeing 737 MAX investigation';form.requestSubmit()});
-form.addEventListener('submit',async e=>{e.preventDefault();const query=terms.value.trim();if(!query)return;button.disabled=true;button.textContent='Searching…';statusBox.textContent='Fetching recent articles…';results.innerHTML='';count.textContent='';title.textContent='Timeline';
+form.addEventListener('submit',async e=>{e.preventDefault();const query=terms.value.trim();if(!query)return;button.disabled=true;button.textContent='Searching…';statusBox.textContent='Fetching recent articles…';results.replaceChildren();count.textContent='';title.textContent='Timeline';
 try{
  const rss='https://news.google.com/rss/search?q='+encodeURIComponent(query+' when:'+period.value+'d')+'&hl=en-GB&gl=GB&ceid=GB:en';
- const endpoint='https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(rss);
- const response=await fetch(endpoint);if(!response.ok)throw new Error('The news feed service returned HTTP '+response.status+'.');
- const payload=await response.json();if(payload.status!=='ok')throw new Error(payload.message||'The news feed could not be read.');
- const items=(payload.items||[]).map(item=>({...item,_date:new Date(item.pubDate)})).filter(item=>!Number.isNaN(item._date.getTime())).sort((a,b)=>a._date-b._date);
- if(!items.length){statusBox.textContent='No dated articles were returned. Try broader terms or a longer period.';results.innerHTML='<div class="empty">No articles found for this search.</div>';return}
+ let items=[],errors=[];
+ // Try retrieving the RSS XML through a CORS-enabled proxy first, then fall back to RSS-to-JSON.
+ try{
+  const response=await fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(rss));
+  if(!response.ok)throw new Error('RSS proxy HTTP '+response.status);
+  const xmlText=await response.text();
+  if(!xmlText.includes('<rss')&&!xmlText.includes('<feed'))throw new Error('Proxy did not return RSS/XML');
+  const doc=new DOMParser().parseFromString(xmlText,'application/xml');
+  if(doc.querySelector('parsererror'))throw new Error('Could not parse RSS XML');
+  items=[...doc.querySelectorAll('item')].map(node=>({
+   title:node.querySelector('title')?.textContent?.trim()||'Untitled article',
+   link:node.querySelector('link')?.textContent?.trim()||'',
+   pubDate:node.querySelector('pubDate')?.textContent?.trim()||'',
+   author:node.querySelector('source')?.textContent?.trim()||'',
+   description:node.querySelector('description')?.textContent||''
+  }));
+  if(!items.length)throw new Error('RSS feed contained no items');
+ }catch(proxyError){errors.push(proxyError.message);
+  const endpoint='https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(rss);
+  const response=await fetch(endpoint);if(!response.ok)throw new Error('Both feed routes failed. '+errors.join('; ')+'; RSS-to-JSON HTTP '+response.status);
+  const payload=await response.json();if(payload.status!=='ok')throw new Error('Both feed routes failed. '+errors.join('; ')+'; '+(payload.message||'RSS-to-JSON rejected the feed'));
+  items=(payload.items||[]).map(item=>({...item,author:item.author||item.feedTitle||''}));
+ }
+ items=items.map(item=>({...item,_date:new Date(item.pubDate)})).filter(item=>!Number.isNaN(item._date.getTime())&&item.link).sort((a,b)=>a._date-b._date);
  const cutoff=new Date(Date.now()-Number(period.value)*86400000);const filtered=items.filter(x=>x._date>=cutoff);
+ if(!filtered.length){statusBox.textContent=items.length?'The feed returned '+items.length+' articles, but none had a publication date inside the selected period. Try a longer period.':'The feed returned no usable dated articles. Try broader terms or another time range.';results.innerHTML='<div class="empty">No articles matched this search. Try simpler terms (for example, a company or person name) or choose a longer period.</div>';return}
  const groups=new Map();filtered.forEach(item=>{const key=item._date.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'long',year:'numeric'});if(!groups.has(key))groups.set(key,[]);groups.get(key).push(item)});
  const timeline=document.createElement('div');timeline.className='timeline';
  for(const [day,articles] of groups){const heading=document.createElement('div');heading.className='day';heading.textContent=day;timeline.appendChild(heading);
- for(const item of articles){const card=document.createElement('article');card.className='article';const meta=document.createElement('div');meta.className='meta';meta.textContent=(item.author||item.feedTitle||'News source')+' · '+item._date.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});const h=document.createElement('h3');const link=document.createElement('a');link.href=item.link;link.target='_blank';link.rel='noopener noreferrer';link.textContent=item.title||'Untitled article';h.appendChild(link);card.append(meta,h);
+ for(const item of articles){const card=document.createElement('article');card.className='article';const meta=document.createElement('div');meta.className='meta';meta.textContent=(item.author||'News source')+' · '+item._date.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});const h=document.createElement('h3');const link=document.createElement('a');link.href=item.link;link.target='_blank';link.rel='noopener noreferrer';link.textContent=item.title;h.appendChild(link);card.append(meta,h);
  const description=document.createElement('p');description.textContent=cleanText(item.description||item.content||'');if(description.textContent.length>380)description.textContent=description.textContent.slice(0,377)+'…';if(description.textContent)card.appendChild(description);
  const source=document.createElement('a');source.href=item.link;source.target='_blank';source.rel='noopener noreferrer';source.textContent='Read original article ↗';card.appendChild(source);timeline.appendChild(card)}
  }
  results.replaceChildren(timeline);count.textContent=filtered.length+' articles · '+groups.size+' publication dates';title.textContent='Timeline: '+query;statusBox.textContent='Results are sorted from oldest to newest. Publication dates may differ from the dates of the events.';
- }catch(err){statusBox.textContent='Could not load articles: '+err.message+' Try again later or use shorter search terms.';results.innerHTML='<div class="empty">The feed could not be loaded. This may be a temporary service or browser connection issue.</div>'}
+ }catch(err){statusBox.textContent='Could not load articles: '+err.message+' Check your connection and try again.';results.innerHTML='<div class="empty">The news feed could not be loaded. The free feed proxies can be temporarily unavailable; try again later.</div>'}
  finally{button.disabled=false;button.textContent='Build timeline'}
 });
 function cleanText(html){const doc=new DOMParser().parseFromString(String(html),'text/html');return (doc.body.textContent||'').replace(/\s+/g,' ').trim()}
