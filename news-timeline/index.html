@@ -64,7 +64,7 @@ try{
   items=(payload.items||[]).map(item=>({...item,author:item.author||item.feedTitle||''}));
  }
  items=items.map(item=>({...item,_date:new Date(item.pubDate)})).filter(item=>!Number.isNaN(item._date.getTime())&&item.link).sort((a,b)=>a._date-b._date);
- const days=Number(period.value);const cutoff=days>0?new Date(Date.now()-days*86400000):null;const filtered=items.filter(x=>!cutoff||x._date>=cutoff);
+ const cutoff=days>0?new Date(Date.now()-days*86400000):null;const filtered=items.filter(x=>!cutoff||x._date>=cutoff);
  if(!filtered.length){statusBox.textContent=items.length?'The feed returned '+items.length+' articles, but none had a publication date inside the selected period. Try a longer period.':'The feed returned no usable dated articles. Try broader terms or a longer time range.';results.innerHTML='<div class="empty">No articles matched this search. Try simpler terms (for example, a company or person name) or choose a longer period.</div>';return}
  const groups=new Map();filtered.forEach(item=>{const key=item._date.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'long',year:'numeric'});if(!groups.has(key))groups.set(key,[]);groups.get(key).push(item)});
  const timeline=document.createElement('div');timeline.className='timeline';
