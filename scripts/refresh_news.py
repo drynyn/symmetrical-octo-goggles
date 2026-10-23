@@ -70,6 +70,15 @@ def main() -> None:
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     by_link: dict[str, dict] = {}
     failures: list[str] = []
+    # Preserve previously collected items so the archive grows across scheduled runs.
+    if OUTPUT.exists():
+        try:
+            previous = json.loads(OUTPUT.read_text(encoding="utf-8"))
+            for item in previous.get("articles", []):
+                if isinstance(item, dict) and item.get("link"):
+                    by_link[item["link"]] = item
+        except (OSError, ValueError, TypeError) as exc:
+            print(f"Could not read previous dataset; starting a fresh collection: {exc}")
     for query in QUERIES:
         try:
             for item in fetch_feed(query):
