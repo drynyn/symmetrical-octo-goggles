@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>News Timeline</title>
+<style>
+:root{color-scheme:light;--ink:#18212b;--muted:#637181;--line:#dce3e9;--paper:#f5f7f9;--accent:#2458a6}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:#142234;color:white;padding:32px 20px 28px}header,.wrap{padding-left:max(20px,calc((100% - 900px)/2));padding-right:max(20px,calc((100% - 900px)/2))}
+.kicker{text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;color:#b8c9dd;font-weight:700}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.1;margin:8px 0}header p{color:#d5deea;max-width:650px;margin:12px 0 0}
+main{max-width:940px;margin:24px auto;padding:0 20px}.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 4px 16px #15273a08}
+label{display:block;font-size:.88rem;font-weight:650;margin-bottom:7px}input,select,button{font:inherit}input,select{width:100%;padding:12px;border:1px solid #bdc8d3;border-radius:8px;background:white;color:var(--ink)}.controls{display:grid;grid-template-columns:minmax(0,1fr) 160px;gap:12px;align-items:end}.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:8px;padding:11px 16px;background:var(--accent);color:white;font-weight:700;cursor:pointer}button:disabled{opacity:.6;cursor:wait}.secondary{background:#e9eef5;color:#223449}.hint,.status{font-size:.88rem;color:var(--muted)}.status{margin:14px 0 0;min-height:1.4em}.results-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:28px 0 12px}.results-head h2{margin:0;font-size:1.35rem}.count{color:var(--muted);font-size:.9rem}.timeline{position:relative;margin-left:10px;padding-left:25px;border-left:2px solid var(--line)}.day{font-size:.85rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#46596d;margin:22px 0 12px;position:relative}.day:before{content:"";position:absolute;left:-33px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:3px solid var(--paper)}.article{background:white;border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:12px}.meta{font-size:.8rem;color:var(--muted);margin-bottom:5px}.article h3{font-size:1.05rem;line-height:1.35;margin:0 0 8px}.article p{margin:0 0 10px;color:#435160;font-size:.93rem}.article a{color:var(--accent);font-weight:700;text-decoration:none}.article a:hover{text-decoration:underline}.empty{background:white;border:1px dashed #bdc8d3;border-radius:10px;padding:24px;color:var(--muted);text-align:center}.foot{margin:24px 0 40px;color:var(--muted);font-size:.82rem}.back{display:inline-block;color:#d5deea;margin-top:14px;font-size:.9rem}@media(max-width:560px){.controls{grid-template-columns:1fr}.panel{padding:16px}.results-head{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="kicker">Octogoggles · Research tools</div><h1>News Timeline</h1><p>Search a subject and turn reporting from Google News into a chronological sequence of articles. Open the original sources to verify each event.</p><a class="back" href="../">← Back to Octogoggles projects</a></header>
+<main>
+<section class="panel">
+<form id="searchForm">
+<div class="controls"><div><label for="terms">Subject or search terms</label><input id="terms" name="terms" placeholder="e.g. Boeing 737 MAX investigation" required maxlength="180"></div><div><label for="period">Look back</label><select id="period"><option value="7">Past week</option><option value="30" selected>Past month</option><option value="90">Past 3 months</option><option value="365">Past year</option></select></div></div>
+<div class="row"><button id="searchButton" type="submit">Build timeline</button><button class="secondary" id="sampleButton" type="button">Try an example</button></div>
+<p class="hint">Search uses Google News RSS via a public RSS conversion service. Availability and article coverage depend on that service and the publisher feeds.</p>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+</form>
+</section>
+<div class="results-head"><h2 id="resultsTitle">Timeline</h2><span id="count" class="count"></span></div>
+<section id="results" aria-live="polite"><div class="empty">Enter a subject above to collect articles and arrange them by publication date.</div></section>
+<p class="foot">This is an article timeline, not independently verified event analysis. Dates are publication dates, not necessarily the dates the events occurred. Headlines and descriptions are supplied by publishers; check the linked articles before drawing conclusions.</p>
+</main>
+<script>
+const form=document.getElementById('searchForm'),terms=document.getElementById('terms'),period=document.getElementById('period'),statusBox=document.getElementById('status'),results=document.getElementById('results'),count=document.getElementById('count'),title=document.getElementById('resultsTitle'),button=document.getElementById('searchButton');
+document.getElementById('sampleButton').addEventListener('click',()=>{terms.value='Boeing 737 MAX investigation';form.requestSubmit()});
+form.addEventListener('submit',async e=>{e.preventDefault();const query=terms.value.trim();if(!query)return;button.disabled=true;button.textContent='Searching…';statusBox.textContent='Fetching recent articles…';results.innerHTML='';count.textContent='';title.textContent='Timeline';
+try{
+ const rss='https://news.google.com/rss/search?q='+encodeURIComponent(query+' when:'+period.value+'d')+'&hl=en-GB&gl=GB&ceid=GB:en';
+ const endpoint='https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(rss);
+ const response=await fetch(endpoint);if(!response.ok)throw new Error('The news feed service returned HTTP '+response.status+'.');
+ const payload=await response.json();if(payload.status!=='ok')throw new Error(payload.message||'The news feed could not be read.');
+ const items=(payload.items||[]).map(item=>({...item,_date:new Date(item.pubDate)})).filter(item=>!Number.isNaN(item._date.getTime())).sort((a,b)=>a._date-b._date);
+ if(!items.length){statusBox.textContent='No dated articles were returned. Try broader terms or a longer period.';results.innerHTML='<div class="empty">No articles found for this search.</div>';return}
+ const cutoff=new Date(Date.now()-Number(period.value)*86400000);const filtered=items.filter(x=>x._date>=cutoff);
+ const groups=new Map();filtered.forEach(item=>{const key=item._date.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'long',year:'numeric'});if(!groups.has(key))groups.set(key,[]);groups.get(key).push(item)});
+ const timeline=document.createElement('div');timeline.className='timeline';
+ for(const [day,articles] of groups){const heading=document.createElement('div');heading.className='day';heading.textContent=day;timeline.appendChild(heading);
+ for(const item of articles){const card=document.createElement('article');card.className='article';const meta=document.createElement('div');meta.className='meta';meta.textContent=(item.author||item.feedTitle||'News source')+' · '+item._date.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});const h=document.createElement('h3');const link=document.createElement('a');link.href=item.link;link.target='_blank';link.rel='noopener noreferrer';link.textContent=item.title||'Untitled article';h.appendChild(link);card.append(meta,h);
+ const description=document.createElement('p');description.textContent=cleanText(item.description||item.content||'');if(description.textContent.length>380)description.textContent=description.textContent.slice(0,377)+'…';if(description.textContent)card.appendChild(description);
+ const source=document.createElement('a');source.href=item.link;source.target='_blank';source.rel='noopener noreferrer';source.textContent='Read original article ↗';card.appendChild(source);timeline.appendChild(card)}
+ }
+ results.replaceChildren(timeline);count.textContent=filtered.length+' articles · '+groups.size+' publication dates';title.textContent='Timeline: '+query;statusBox.textContent='Results are sorted from oldest to newest. Publication dates may differ from the dates of the events.';
+ }catch(err){statusBox.textContent='Could not load articles: '+err.message+' Try again later or use shorter search terms.';results.innerHTML='<div class="empty">The feed could not be loaded. This may be a temporary service or browser connection issue.</div>'}
+ finally{button.disabled=false;button.textContent='Build timeline'}
+});
+function cleanText(html){const doc=new DOMParser().parseFromString(String(html),'text/html');return (doc.body.textContent||'').replace(/\s+/g,' ').trim()}
+</script>
+</body>
+</html>
