@@ -27,7 +27,7 @@ jobs:
         run: python scripts/refresh_news.py
       - name: Commit updated dataset
         run: |
-          if git diff --quiet -- news-timeline/news.json; then
+          if [ -z "$(git status --porcelain -- news-timeline/news.json)" ]; then
             echo "Dataset unchanged."
             exit 0
           fi
