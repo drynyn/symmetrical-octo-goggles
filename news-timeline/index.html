@@ -74,9 +74,9 @@ async function fetchNewsFeed(rss){
  }catch(err){failures.push('RSS-to-JSON: '+err.message)}
  throw new Error('All news-feed routes failed ('+failures.join('; ')+'). This may be a proxy outage or browser/network restriction.');
 }
-document.getElementById('sampleButton').addEventListener('click',()=>{terms.value='Boeing 737 MAX investigation';form.requestSubmit()});
+
 form.addEventListener('submit',async e=>{
- e.preventDefault();const query=terms.value.trim();if(!query)return;
+ e.preventDefault();if(button.disabled)return;const query=terms.value.trim();if(!query)return;
  button.disabled=true;button.textContent='Searching…';statusBox.textContent='Fetching articles…';results.replaceChildren();count.textContent='';title.textContent='Timeline';
  try{
   const days=Number(period.value);
