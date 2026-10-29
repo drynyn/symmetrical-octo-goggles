@@ -179,14 +179,13 @@ function calculatePackages(){
  // Baseline 15 Mbps; work 15 Mbps/person; gaming 15 Mbps/person;
  // HD streaming 5 Mbps/stream; large download/update 50 Mbps; extra active devices 3 Mbps/device.
  const baseline=15;
- const workDemand=state.tags.has('remote-work')||state.tags.has('video-calls')?state.people*15:0;
+ const workDemand=(state.tags.has('remote-work')||state.tags.has('video-calls'))?state.people*15:0;
  const gamingDemand=state.tags.has('gaming')?state.people*15:0;
  const streamingDemand=state.tags.has('streaming')?5:0; // one simultaneous HD stream
  const downloadDemand=state.tags.has('downloads')?50:0; // one simultaneous large download/update
  const extraDeviceDemand=state.tags.has('smart-home')?0.1:0;
- const additionalDevicesDemand=state.tags.has('additional-devices')?9:0; // three active devices at 3 Mbps each
- const connectedDeviceDemand=Math.max(0,state.devices-3)*3;
- const activityDemand=workDemand+gamingDemand+streamingDemand+downloadDemand+extraDeviceDemand+additionalDevicesDemand;
+ const connectedDeviceDemand=Math.max(0,state.devices-3)*3; // approximate active-device allowance beyond three baseline devices
+ const activityDemand=workDemand+gamingDemand+streamingDemand+downloadDemand+extraDeviceDemand;
  const subtotal=baseline+activityDemand+connectedDeviceDemand;
  const demand=Math.ceil(subtotal*1.3);
  const tiers=packageTiers;
