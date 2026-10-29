@@ -224,27 +224,9 @@ function renderCoverage(){
  const hub=document.getElementById('coverageHub').value;
  const walls=document.getElementById('coverageWalls').value;
  const position=document.getElementById('coveragePosition').value;
- const cols=Math.min(4,Math.ceil(Math.sqrt(roomCount))),rows=Math.ceil(roomCount/cols);
- const w=600,h=Math.max(190,rows*72+65),roomW=112,roomH=54,gap=8;
- const planW=cols*roomW+(cols-1)*gap,x0=(w-planW)/2,y0=35;
- const labels=['Living room','Bedroom','Kitchen','Bathroom','Office','Bedroom 2','Dining room','Hallway','Bedroom 3','Utility','Study','Spare room'];
  const wallPenalty=walls==='brick'?1.8:walls==='mixed'?0.9:0;
  const hubPenalty=hub==='q'||hub==='unknown'?0.8:hub==='max'||hub==='gigafast'?-0.5:0;
  const edgePenalty=position==='edge'?1.2:position==='unknown'?0.5:0;
- const layoutPenalty=(floorCount>1?0.8:0)+(area>1800?0.6:area>1000?0.3:0);
- const routerCol=position==='edge'?0:Math.floor((cols-1)/2);
- const routerRow=position==='edge'?0:Math.floor((rows-1)/2);
- const roomData=[];
- for(let i=0;i<roomCount;i++){
-  const c=i%cols,r=Math.floor(i/cols);
-  const distance=Math.hypot(c-routerCol,r-routerRow);
-  roomData.push({i,c,r,distance,risk:distance+wallPenalty+hubPenalty+edgePenalty+layoutPenalty});
- }
- const minRisk=Math.min(...roomData.map(room=>room.risk));
- const maxRisk=Math.max(...roomData.map(room=>room.risk));
-
- // Draw room colours after the overall recommendation is known.
- // Overall verdict uses whole-home risk factors; it is a heuristic, not an RF simulation.
  const furthest=Math.max(2,Math.sqrt(area)*0.55);
  let score=(furthest>12?2:furthest>8?1:0)+(area>1800?2:area>1000?1:0)+(roomCount>=9?2:roomCount>=5?1:0)+(floorCount>=3?2:floorCount===2?1:0);
  score+=walls==='brick'?2:walls==='mixed'?1:0;
@@ -253,20 +235,6 @@ function renderCoverage(){
  score=Math.max(0,score);
  const verdict=score>=7?'likely':score>=4?'maybe':'low';
  state.coverageVerdict=verdict;
- let rooms='';
- for(const room of roomData){
-  const {i,c,r,risk}=room;
-  const x=x0+c*(roomW+gap),y=y0+r*(roomH+gap),label=labels[i]||('Room '+(i+1));
-  const relativeRisk=maxRisk===minRisk?0:(risk-minRisk)/(maxRisk-minRisk);
-  let level;
-  if(verdict==='likely') level=relativeRisk>=0.62?'weak':relativeRisk>=0.28?'mixed':'good';
-  else if(verdict==='maybe') level=relativeRisk>=0.72?'weak':relativeRisk>=0.38?'mixed':'good';
-  else level=relativeRisk>=0.78?'mixed':'good';
-  const fills={good:'#c9f0f1',mixed:'#ffe2a8',weak:'#f8b4a8'};
-  const strokes={good:'#087ca3',mixed:'#b7791f',weak:'#b83227'};
-  rooms+=`<rect class="coverage-room" x="${x}" y="${y}" width="${roomW}" height="${roomH}" rx="7" fill="${fills[level]}" stroke="${strokes[level]}" stroke-width="2"/><text class="coverage-room-label" x="${x+roomW/2}" y="${y+21}" text-anchor="middle">${escapeHtml(label.length>15?label.slice(0,14)+'…':label)}</text>`;
-  room.x=x;room.y=y;room.level=level;
- }
  const box=document.getElementById('coverageVerdict');
  box.className='coverage-verdict'+(verdict==='likely'?' likely':verdict==='maybe'?' maybe':'');
  document.getElementById('coverageVerdictText').textContent=verdict==='likely'
@@ -274,17 +242,28 @@ function renderCoverage(){
   :verdict==='maybe'
    ?'Some rooms may have less reliable Wi-Fi than others. A booster may help, but placement and a real-world test matter.'
    :'These details do not strongly suggest a booster is needed. Actual dead spots can still occur because of walls, interference and router placement.';
- const routerRoom=roomData.reduce((best,room)=>room.distance<best.distance?room:best,roomData[0]);
- const targetRoom=roomData.reduce((best,room)=>room.distance>best.distance?room:best,roomData[0]);
- const routerX=routerRoom.x+roomW/2,routerY=routerRoom.y+roomH/2;
- const targetX=targetRoom.x+roomW/2,targetY=targetRoom.y+roomH/2;
- const needBooster=verdict!=='low'&&roomCount>1&&targetRoom.i!==routerRoom.i;
- const line=needBooster?`<line x1="${routerX}" y1="${routerY}" x2="${targetX}" y2="${targetY}" stroke="#d97786" stroke-width="2" stroke-dasharray="5 5"/>`:'';
- const booster=needBooster?`<rect x="${targetRoom.x+22}" y="${targetRoom.y+29}" width="68" height="19" rx="9" fill="#fff" stroke="#b83227" stroke-width="1.5"/><text x="${targetX}" y="${targetRoom.y+42}" text-anchor="middle" font-size="10" font-weight="700" fill="#922b21">Booster idea</text>`:'';
- const router=`<circle cx="${routerX}" cy="${routerY}" r="8" fill="#fff" stroke="#ff405b" stroke-width="2.5"/><circle cx="${routerX}" cy="${routerY}" r="3" fill="#ff405b"/><rect x="${routerRoom.x+7}" y="${routerRoom.y+3}" width="48" height="16" rx="8" fill="#fff" stroke="#ff405b"/><text x="${routerRoom.x+31}" y="${routerRoom.y+14}" text-anchor="middle" font-size="9" font-weight="700" fill="#9f1239">Router</text>`;
- document.getElementById('coverageDiagram').innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${roomCount} room schematic. Room colours show relative potential coverage; the router and possible booster are marked inside rooms.">${rooms}${line}${router}${booster}</svg><div class="coverage-legend"><span><i class="legend-dot" style="background:#c9f0f1;border:1px solid #087ca3"></i>Relatively better</span><span><i class="legend-dot" style="background:#ffe2a8;border:1px solid #b7791f"></i>May be less reliable</span><span><i class="legend-dot" style="background:#f8b4a8;border:1px solid #b83227"></i>Relatively weaker</span><span><i class="legend-dot" style="background:#fff;border:2px solid #ff405b"></i>Router</span>${needBooster?'<span><i class="legend-dot" style="background:#fff;border:1px solid #b83227"></i>Possible booster position</span>':''}</div>`;
- document.getElementById('coverageSummary').textContent='Example floor plan for '+roomCount+' rooms, '+floorCount+' floor'+(floorCount===1?'':'s')+' and approximately '+Math.round(area).toLocaleString('en-GB')+' sq ft.';
- document.getElementById('coverageNote').textContent='Room colours show relative potential coverage within this schematic, not measured signal strength. The booster marker is placed inside a room farthest from the assumed router; real placement should be tested between the router and the weak area. The drawing is not a floor plan.';
+ const floorsShown=floorCount>1?2:1;
+ const bodyX=55,bodyY=66,bodyW=250,bodyH=floorsShown===2?118:76;
+ const roofTop=24,roofPeak=10;
+ const floorLine=floorsShown===2?bodyY+bodyH/2:null;
+ const zones=verdict==='low'
+  ?[{x:bodyX,w:bodyW*0.58,fill:'#c9f0f1'},{x:bodyX+bodyW*0.58,w:bodyW*0.27,fill:'#ffe2a8'},{x:bodyX+bodyW*0.85,w:bodyW*0.15,fill:'#ffe2a8'}]
+  :verdict==='maybe'
+   ?[{x:bodyX,w:bodyW*0.38,fill:'#c9f0f1'},{x:bodyX+bodyW*0.38,w:bodyW*0.34,fill:'#ffe2a8'},{x:bodyX+bodyW*0.72,w:bodyW*0.28,fill:'#f8b4a8'}]
+   :[{x:bodyX,w:bodyW*0.25,fill:'#c9f0f1'},{x:bodyX+bodyW*0.25,w:bodyW*0.35,fill:'#ffe2a8'},{x:bodyX+bodyW*0.60,w:bodyW*0.40,fill:'#f8b4a8'}];
+ const zoneRects=zones.map(z=>`<rect x="${z.x}" y="${bodyY}" width="${z.w}" height="${bodyH}" fill="${z.fill}"/>`).join('');
+ const routerX=position==='edge'?bodyX+28:position==='unknown'?bodyX+bodyW/2:bodyX+bodyW/2;
+ const routerY=floorsShown===2?bodyY+bodyH-25:bodyY+bodyH/2;
+ const needBooster=verdict!=='low'&&roomCount>1;
+ const boosterX=bodyX+bodyW-28,boosterY=floorsShown===2?bodyY+25:bodyY+bodyH/2;
+ const floorDivider=floorsShown===2?`<line x1="${bodyX}" y1="${floorLine}" x2="${bodyX+bodyW}" y2="${floorLine}" stroke="#526a83" stroke-width="5"/><text x="8" y="${floorLine-9}" font-size="10" fill="#526a83">Upper</text><text x="8" y="${bodyY+bodyH-8}" font-size="10" fill="#526a83">Lower</text>`:'';
+ const routerIcon=`<g transform="translate(${routerX-13} ${routerY-10})"><rect width="26" height="20" rx="5" fill="#173b63"/><path d="M6 8 Q13 1 20 8 M9 11 Q13 7 17 11" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="15" r="1.5" fill="#fff"/></g>`;
+ const boosterIcon=needBooster?`<g transform="translate(${boosterX-10} ${boosterY-10})"><rect width="20" height="20" rx="5" fill="#fff" stroke="#526a83" stroke-width="2"/><path d="M4 8 Q10 2 16 8 M7 11 Q10 8 13 11" fill="none" stroke="#526a83" stroke-width="1.8" stroke-linecap="round"/></g>`:'';
+ const connector=needBooster?`<line x1="${routerX}" y1="${routerY}" x2="${boosterX}" y2="${boosterY}" stroke="#526a83" stroke-width="2" stroke-dasharray="4 4"/>`:'';
+ const svgHeight=bodyY+bodyH+12;
+ document.getElementById('coverageDiagram').innerHTML=`<svg viewBox="0 0 360 ${svgHeight}" role="img" aria-label="Simple example house showing estimated relative Wi-Fi coverage, router position and a possible booster position."><defs><clipPath id="houseClip"><rect x="${bodyX}" y="${bodyY}" width="${bodyW}" height="${bodyH}" rx="2"/></clipPath></defs><g clip-path="url(#houseClip)">${zoneRects}</g><path d="M${bodyX-10} ${bodyY+2} L180 ${roofTop} L${bodyX+bodyW+10} ${bodyY+2}" fill="none" stroke="#526a83" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><rect x="${bodyX}" y="${bodyY}" width="${bodyW}" height="${bodyH}" fill="none" stroke="#526a83" stroke-width="5" rx="2"/>${floorDivider}${connector}${routerIcon}${boosterIcon}<text x="${routerX}" y="${routerY+23}" font-size="10" font-weight="700" fill="#173b63" text-anchor="middle">Router</text>${needBooster?`<text x="${boosterX}" y="${boosterY+22}" font-size="9" font-weight="700" fill="#526a83" text-anchor="middle">Possible booster</text>`:''}<text x="180" y="${svgHeight-1}" font-size="10" fill="#53678e" text-anchor="middle">Schematic only</text></svg><div class="coverage-legend"><span><i class="legend-dot" style="background:#c9f0f1;border:1px solid #087ca3"></i>Likely better</span><span><i class="legend-dot" style="background:#ffe2a8;border:1px solid #b7791f"></i>Potentially weaker</span><span><i class="legend-dot" style="background:#f8b4a8;border:1px solid #b83227"></i>Higher risk</span></div>`;
+ document.getElementById('coverageSummary').textContent='Example home illustration for '+roomCount+' rooms, '+floorCount+' floor'+(floorCount===1?'':'s')+' and approximately '+Math.round(area).toLocaleString('en-GB')+' sq ft.';
+ document.getElementById('coverageNote').textContent='Colours show broad estimated risk, not measured signal strength. The house is symbolic rather than your actual floor plan; a booster may help if testing confirms a weak area.';
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
 ['coverageHub','coverageWalls','coveragePosition'].forEach(id=>document.getElementById(id).addEventListener('change',renderCoverage));
