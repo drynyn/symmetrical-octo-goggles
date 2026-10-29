@@ -140,8 +140,13 @@ main{max-width:1120px;padding-top:1.2rem}
 </div>
 <section class="panel coverage-panel" aria-labelledby="coverageTitle">
 <div class="coverage-copy"><div class="step">WHOLE-HOME WI-FI</div><h2 class="section-title" id="coverageTitle">Whole home Wi-Fi coverage</h2><p id="coverageSummary">A layout illustration based on your room count, floor area and number of floors.</p></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.7rem;margin:.8rem 0">
+<label class="field"><span>Sky hub</span><select id="coverageHub" class="advisor-select"><option value="q">Sky Q Hub (Wi-Fi 5)</option><option value="broadband" selected>Sky Broadband Hub (Wi-Fi 5)</option><option value="max">Sky Max Hub (Wi-Fi 6)</option><option value="gigafast">Sky Gigafast+ Hub (Wi-Fi 7)</option><option value="unknown">Not sure</option></select></label>
+<label class="field"><span>Wall type</span><select id="coverageWalls" class="advisor-select"><option value="light">Mostly plasterboard / thin walls</option><option value="mixed" selected>Mixed walls</option><option value="brick">Mostly brick / thick walls</option></select></label>
+<label class="field"><span>Router position</span><select id="coveragePosition" class="advisor-select"><option value="central" selected>Near the centre of the home</option><option value="edge">At one end / edge of the home</option><option value="unknown">Not sure</option></select></label>
+</div>
 <div id="coverageDiagram" class="coverage-diagram" role="img" aria-label="Illustrative home layout showing router and possible booster positions"></div>
-<div id="coverageVerdict" class="coverage-verdict"><span class="verdict-mark"></span><div><strong>Booster verdict</strong><span id="coverageVerdictText">Assessing your layout…</span></div></div><p class="coverage-note" id="coverageNote">This is an illustrative layout, not a measured signal map.</p><p class="coverage-method">Estimate uses floor area, room count, floors and an approximate room-to-room path. Wall materials, router model and exact router position are not known, so treat this as guidance rather than a prediction of measured signal.</p>
+<div id="coverageVerdict" class="coverage-verdict"><span class="verdict-mark"></span><div><strong>Booster verdict</strong><span id="coverageVerdictText">Assessing your layout…</span></div></div><p class="coverage-note" id="coverageNote">This is an illustrative layout, not a measured signal map.</p><p class="coverage-method">Estimate uses property size, floors, hub generation, wall type and approximate router placement. It remains a heuristic, not a measured signal map.</p>
 </section>
 <div class="notice"><strong>Mock-up:</strong> package selection and Wi-Fi guidance are illustrative. Check Sky for address-specific availability, current prices and WiFi Max eligibility.</div>
 <footer><p>Package details and availability: <a href="https://www.sky.com/broadband" target="_blank" rel="noopener">Sky Broadband official website</a>.</p></footer>
@@ -153,6 +158,7 @@ document.querySelectorAll('.choice[data-group]').forEach(button=>button.addEvent
  const group=button.dataset.group;
  state[group]=Number(button.dataset.value);
  document.querySelectorAll('.choice[data-group="'+group+'"]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+ ['coverageHub','coverageWalls','coveragePosition'].forEach(id=>document.getElementById(id).addEventListener('change',renderCoverage));
  calculatePackages();
 }));
 document.querySelectorAll('.choice[data-tag]').forEach(button=>button.addEventListener('click',()=>{
@@ -216,45 +222,42 @@ function renderCoverage(){
  const roomCount=Math.max(1,Math.min(20,Number(state.rooms)||5));
  const floorCount=Math.max(1,Math.min(10,Number(state.floors)||1));
  const area=Math.max(10,Number(state.area)||100);
- const cols=Math.min(4,Math.ceil(Math.sqrt(roomCount)));
- const rows=Math.ceil(roomCount/cols);
+ const hub=document.getElementById('coverageHub').value;
+ const walls=document.getElementById('coverageWalls').value;
+ const position=document.getElementById('coveragePosition').value;
+ const cols=Math.min(4,Math.ceil(Math.sqrt(roomCount))),rows=Math.ceil(roomCount/cols);
  const w=600,h=Math.max(190,rows*72+65),roomW=112,roomH=54,gap=8;
- const planW=cols*roomW+(cols-1)*gap,planH=rows*roomH+(rows-1)*gap;
- const x0=(w-planW)/2,y0=35;
+ const planW=cols*roomW+(cols-1)*gap,x0=(w-planW)/2,y0=35;
  const labels=['Living room','Bedroom','Kitchen','Bathroom','Office','Bedroom 2','Dining room','Hallway','Bedroom 3','Utility','Study','Spare room'];
  let rooms='';
  for(let i=0;i<roomCount;i++){
-  const c=i%cols,r=Math.floor(i/cols),x=x0+c*(roomW+gap),y=y0+r*(roomH+gap);
-  const label=labels[i]||('Room '+(i+1));
+  const c=i%cols,r=Math.floor(i/cols),x=x0+c*(roomW+gap),y=y0+r*(roomH+gap),label=labels[i]||('Room '+(i+1));
   rooms+=`<rect class="coverage-room" x="${x}" y="${y}" width="${roomW}" height="${roomH}" rx="7"/><text class="coverage-room-label" x="${x+roomW/2}" y="${y+roomH/2+3}">${escapeHtml(label.length>15?label.slice(0,14)+'…':label)}</text>`;
  }
- // A simple coverage-risk score: estimated furthest-room distance, intervening rooms/walls,
- // and floor crossings are proxies; this is not a radio propagation simulation.
- const effectiveSide=Math.sqrt(area/roomCount);
- const estimatedFurthestM=Math.max(2,Math.sqrt(area)*0.55);
- const estimatedWalls=Math.max(0,Math.ceil(Math.max(cols,rows)/2)-1);
- const score=(estimatedFurthestM>10?2:estimatedFurthestM>7?1:0)
-  +(area>1500?2:area>900?1:0)
-  +(roomCount>=8?2:roomCount>=5?1:0)
-  +(floorCount>=3?2:floorCount===2?1:0)
-  +(estimatedWalls>=3?1:0);
- const verdict=score>=5?'likely':score>=3?'maybe':'low';
-  state.coverageVerdict=verdict;
- const verdictBox=document.getElementById('coverageVerdict');
- verdictBox.className='coverage-verdict'+(verdict==='likely'?' likely':verdict==='maybe'?' maybe':'');
+ // Heuristic only: this score ranks likely risk factors; it is not calibrated to measured signal.
+ const furthest=Math.max(2,Math.sqrt(area)*0.55);
+ let score=(furthest>12?2:furthest>8?1:0)+(area>1800?2:area>1000?1:0)+(roomCount>=9?2:roomCount>=5?1:0)+(floorCount>=3?2:floorCount===2?1:0);
+ score+=walls==='brick'?2:walls==='mixed'?1:0;
+ score+=position==='edge'?2:position==='unknown'?1:0;
+ score+=hub==='q'||hub==='unknown'?1:hub==='max'||hub==='gigafast'?-1:0;
+ score=Math.max(0,score);
+ const verdict=score>=7?'likely':score>=4?'maybe':'low';
+ state.coverageVerdict=verdict;
+ const box=document.getElementById('coverageVerdict');
+ box.className='coverage-verdict'+(verdict==='likely'?' likely':verdict==='maybe'?' maybe':'');
  document.getElementById('coverageVerdictText').textContent=verdict==='likely'
-  ?'A booster or mesh-style extension may well be needed to improve coverage across this layout.'
+  ?'A booster or mesh-style extension is likely to help, especially at the far end of the home or across floors.'
   :verdict==='maybe'
-   ?'You may need a booster, particularly in rooms far from the router or on another floor.'
-   :'A booster is not strongly indicated by the details provided, though thick walls or poor router placement can still cause dead spots.';
- const routerX=x0+roomW/2,routerY=y0+roomH/2;
- const needBooster=verdict!=='low';
- const targetX=x0+(cols-1)*(roomW+gap)+roomW/2,targetY=y0+(rows-1)*(roomH+gap)+roomH/2;
+   ?'Coverage could be inconsistent in the hardest-to-reach rooms. A booster may help, but placement and a real-world test matter.'
+   :'A booster is not strongly indicated by these details. Dead spots are still possible, particularly around thick walls or interference.';
+ const routerX=position==='edge'?x0+roomW/2:x0+(cols>1?Math.floor((cols-1)/2)*(roomW+gap)+roomW/2:roomW/2);
+ const routerY=position==='edge'?y0+roomH/2:y0+(rows>1?Math.floor((rows-1)/2)*(roomH+gap)+roomH/2:roomH/2);
+ const needBooster=verdict!=='low',targetX=x0+(cols-1)*(roomW+gap)+roomW/2,targetY=y0+(rows-1)*(roomH+gap)+roomH/2;
  const booster=needBooster?`<line x1="${routerX}" y1="${routerY}" x2="${targetX}" y2="${targetY}" stroke="#ff8a9a" stroke-width="2" stroke-dasharray="5 5"/><circle class="coverage-marker" cx="${targetX}" cy="${targetY}" r="7"/><text class="coverage-marker-text" x="${targetX}" y="${targetY+3}">+</text><rect class="coverage-callout" x="${Math.max(5,Math.min(w-92,targetX-39))}" y="${Math.min(h-23,targetY+13)}" width="78" height="20" rx="10"/><text class="coverage-marker-text" x="${Math.max(44,Math.min(w-53,targetX))}" y="${Math.min(h-10,targetY+26)}">Booster idea</text>`:'';
  const router=`<circle class="coverage-marker" cx="${routerX}" cy="${routerY}" r="8"/><circle cx="${routerX}" cy="${routerY}" r="3" fill="#ff405b"/><rect class="coverage-callout" x="${Math.max(5,routerX-30)}" y="${Math.max(5,routerY-29)}" width="60" height="19" rx="10"/><text class="coverage-marker-text" x="${routerX}" y="${Math.max(18,routerY-16)}">Router</text>`;
  document.getElementById('coverageDiagram').innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${roomCount} room home across ${floorCount} floor(s), ${verdict==='likely'?'booster likely useful':verdict==='maybe'?'booster may be useful':'booster not strongly indicated'}">${rooms}${router}${booster}</svg><div class="coverage-legend"><span><i class="legend-dot" style="background:#c9f0f1;border:1px solid #087ca3"></i>Rooms</span><span><i class="legend-dot" style="background:#ff405b"></i>Router</span>${needBooster?'<span><i class="legend-dot" style="background:#fff;border:2px solid #ff405b"></i>Possible booster position</span>':''}</div>`;
  document.getElementById('coverageSummary').textContent='Illustration for '+roomCount+' rooms, '+floorCount+' floor'+(floorCount===1?'':'s')+' and approximately '+Math.round(area).toLocaleString('en-GB')+' sq ft.';
- document.getElementById('coverageNote').textContent='The estimate puts the router in one room and checks how challenging the furthest rooms may be. Actual coverage depends on hub capability, wall/floor materials and placement.';
+ document.getElementById('coverageNote').textContent='The estimate combines home size, room count, floors, selected wall type, hub generation and router placement. The room drawing is schematic, not a floor plan.';
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
 calculatePackages();
