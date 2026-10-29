@@ -253,7 +253,13 @@ function renderCoverage(){
   const fy=y+h-(i+1)*floorH;
   return '<line x1="'+x+'" y1="'+fy+'" x2="'+(x+w)+'" y2="'+fy+'" stroke="#405d78" stroke-width="4"/>';
  }).join('');
- const floorLabels=Array.from({length:floorCount},(_,i)=>{
+ const houseDetails=Array.from({length:floorCount},(_,i)=>{
+   const fy=y+h-(i+1)*floorH;
+   const wy=fy+17;
+   const window=(wx)=>'<g><rect x="'+wx+'" y="'+wy+'" width="22" height="17" rx="1.5" fill="#ffffff" fill-opacity=".52" stroke="#405d78" stroke-width="1.5"/><path d="M'+(wx+11)+' '+wy+' V'+(wy+17)+' M'+wx+' '+(wy+8.5)+' H'+(wx+22)+'" stroke="#405d78" stroke-width="1"/></g>';
+   return window(x+52)+window(x+w-74);
+  }).join('')+'<g><rect x="'+(x+w/2-10)+'" y="'+(y+h-28)+'" width="20" height="28" rx="2" fill="#ffffff" fill-opacity=".58" stroke="#405d78" stroke-width="1.5"/><circle cx="'+(x+w/2+5)+'" cy="'+(y+h-14)+'" r="1.4" fill="#405d78"/></g>';
+  const floorLabels=Array.from({length:floorCount},(_,i)=>{
   const label=floorCount===1?'Ground floor':i===0?'Ground floor':i===1?'First floor':'Second floor';
   const cy=y+h-(i+0.5)*floorH+4;
   return '';
