@@ -50,29 +50,46 @@ header .wrap,main{max-width:1120px}
 footer{margin-top:1.3rem}
 @media(max-width:760px){.results-layout{grid-template-columns:1fr}.side-panel{grid-row:1}.packages-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:500px){.packages-grid{grid-template-columns:1fr}.header-caption{font-size:.78rem;text-align:right}.sky-wordmark{font-size:2rem}.progress{font-size:.7rem}}
+
+/* streamlined results and Wi-Fi add-on presentation */
+main{max-width:1120px;padding-top:1.2rem}
+.page-intro{margin-bottom:1rem}
+.results-layout{margin-top:.6rem;gap:1.1rem}
+.results-layout>section{min-width:0}
+.packages-grid{gap:.65rem}
+.package-card{padding:1rem;gap:.5rem}
+.package-card h3{font-size:1.05rem}
+.package-speed{font-size:1.85rem}
+.wifi-addon{background:#f5f2ff;border:1px solid #e6dcff;border-radius:9px;padding:.65rem .7rem;margin:.2rem 0 .5rem;display:flex;flex-direction:column;gap:.12rem}
+.wifi-addon strong{font-size:.85rem;color:#6625b8}
+.wifi-addon span{font-size:.82rem;color:#52627a}
+.side-panel .group{margin:.85rem 0}
+.side-panel h3{font-size:.92rem}
+#areaInput{width:100%;border:1px solid #cfdbef;border-radius:8px;padding:.65rem;font:inherit}
+.side-panel .choices{gap:.4rem}
+.side-panel .choice{min-height:38px;padding:.5rem .35rem}
+#demandSummary,#wifiAdvice{font-size:.88rem;line-height:1.45}
+.breakdown{padding:.75rem}
+.breakdown p{margin:.15rem 0}
+@media(max-width:760px){.results-layout{grid-template-columns:1fr}.side-panel{grid-row:auto}.packages-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.packages-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header><div class="wrap brand-header"><a class="sky-wordmark" href="./" aria-label="Sky Broadband Finder home">sky</a><div class="header-caption">Find the right broadband for you</div></div></header>
-<main><nav class="progress" aria-label="Your progress"><span class="done">✓&nbsp; Property details</span><span class="done">✓&nbsp; Your household</span><span class="current">3&nbsp; Results</span></nav><h1 class="page-title">Your results</h1><p class="page-intro">Based on your property details, here are four Sky broadband options to consider.</p>
-<section class="panel">
-<div class="step"><span class="mini-icon">⌂</span> YOUR PROPERTY</div>
-<h2 id="addressHeading">Property details</h2>
-<div class="property-summary" id="propertySummary"></div>
-<p class="hint">Property details are entered manually and are shown for context. They do not independently establish broadband availability or Wi-Fi performance.</p>
-</section>
+<main><nav class="progress" aria-label="Your progress"><span class="done">✓&nbsp; Property details</span><span class="done">✓&nbsp; Your household</span><span class="current">3&nbsp; Results</span></nav><h1 class="page-title">Your results</h1><p class="page-intro">Compare four broadband options, then tailor the Wi-Fi setup to your home.</p>
 <div class="results-layout">
 <section>
 <div class="step">RECOMMENDED PACKAGES</div>
-<h2 class="section-title">Packages picked for you</h2>
-<p class="recommendation-copy" id="recommendationCopy">Adjust the household details to refresh these recommendations.</p>
+<h2 class="section-title">Broadband packages</h2>
+<p class="recommendation-copy" id="recommendationCopy">Four options matched to your household and home layout.</p>
 <div class="packages-grid" id="packagesGrid" aria-live="polite"></div>
-<p class="package-disclaimer">Package speeds and availability vary by address. Prices and current offers can change, so check the details on Sky’s website before choosing. These recommendations are a demo, not an availability check.</p>
+<p class="package-disclaimer">Speeds and availability depend on your address. WiFi Max is an optional add-on for eligible fibre packages and is included at no extra cost with Full Fibre 2.5 and 5 Gigafast+. Sky may provide up to three Max Pods if WiFi Max guarantee speeds are not met. Current terms and eligibility apply.</p>
 </section>
 <aside class="panel side-panel">
 <div class="step">YOUR HOUSEHOLD</div>
-<h2 class="section-title">Fine-tune your options</h2>
-<p class="hint">Change these details to update your shortlist.</p>
+<h2 class="section-title">Your home setup</h2>
+<p class="hint">Adjust these to refine broadband and Wi-Fi recommendations.</p>
 <div class="group">
 <h3>People in the home</h3>
 <div class="choices" aria-label="People in household">
@@ -92,13 +109,52 @@ footer{margin-top:1.3rem}
 <button type="button" class="choice" data-group="devices" data-value="22" aria-pressed="false">16+</button>
 </div>
 </div>
+<div class="group">
+<h3>Floor area (sq ft)</h3>
+<input id="areaInput" type="number" min="10" max="21500" value="'+Math.round(Number(get('area',9.3))*10.7639)+'" aria-label="Floor area in square feet">
+</div>
+<div class="group">
+<h3>Rooms</h3>
+<div class="choices" aria-label="Number of rooms">
+<button type="button" class="choice" data-group="rooms" data-value="1" aria-pressed="false">1–2</button>
+<button type="button" class="choice" data-group="rooms" data-value="5" aria-pressed="true">3–5</button>
+<button type="button" class="choice" data-group="rooms" data-value="8" aria-pressed="false">6–8</button>
+<button type="button" class="choice" data-group="rooms" data-value="10" aria-pressed="false">9+</button>
+</div>
+</div>
+<div class="group">
+<h3>Floors</h3>
+<div class="choices" aria-label="Number of floors">
+<button type="button" class="choice" data-group="floors" data-value="1" aria-pressed="true">1</button>
+<button type="button" class="choice" data-group="floors" data-value="2" aria-pressed="false">2</button>
+<button type="button" class="choice" data-group="floors" data-value="3" aria-pressed="false">3+</button>
+</div>
+</div>
+<div class="group">
+<h3>Wi-Fi signal in every room?</h3>
+<div class="choices" aria-label="Current Wi-Fi coverage">
+<button type="button" class="choice" data-group="weakWifi" data-value="0" aria-pressed="true">Yes</button>
+<button type="button" class="choice" data-group="weakWifi" data-value="1" aria-pressed="false">No / unsure</button>
+</div>
+</div>
+<div class="group">
+<h3>Already have a Sky booster?</h3>
+<div class="choices" aria-label="Existing booster">
+<button type="button" class="choice" data-group="booster" data-value="0" aria-pressed="true">No</button>
+<button type="button" class="choice" data-group="booster" data-value="1" aria-pressed="false">Yes</button>
+</div>
+</div>
+<div class="breakdown">
+<p><strong>Wi-Fi recommendation</strong></p>
+<p id="wifiAdvice">We’ll use your home layout and current coverage to suggest whether WiFi Max is worth considering.</p>
+</div>
 <div class="breakdown">
 <p><strong>How this affects the shortlist</strong></p>
 <p id="demandSummary">We estimate a broad speed tier from household size and device count, then show four nearby options.</p>
 </div>
 </aside>
 </div>
-<div class="notice"><strong>Important:</strong> these are suggested package tiers, not confirmation that Sky can supply them at this address. Use Sky’s checker for actual availability and current pricing.</div>
+<div class="notice"><strong>Mock-up:</strong> package selection and Wi-Fi guidance are illustrative. Check Sky for address-specific availability, current prices and WiFi Max eligibility.</div>
 <footer><p>Package details and availability: <a href="https://www.sky.com/broadband" target="_blank" rel="noopener">Sky Broadband official website</a>.</p></footer>
 </main>
 <script>
@@ -124,12 +180,7 @@ const packageTiers=[
  {speed:2500,name:'Full Fibre 2.5 Gigafast+',use:'Multi-gigabit service for compatible equipment and demanding use.',fit:7},
  {speed:5000,name:'Full Fibre 5 Gigafast+',use:'Ultra-high speeds for specialist multi-gigabit needs, where available.',fit:8}
 ];
-document.querySelectorAll('.choice[data-group]').forEach(button=>button.addEventListener('click',()=>{
- const group=button.dataset.group;
- state[group]=Number(button.dataset.value);
- document.querySelectorAll('.choice[data-group="'+group+'"]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
- calculatePackages();
-}));
+
 function calculatePackages(){
  const demand=20+Math.max(0,state.people-1)*12+Math.max(0,state.devices-3)*3;
  const tiers=packageTiers;
@@ -141,8 +192,17 @@ function calculatePackages(){
  else indices=[targetIndex-1,targetIndex,targetIndex+1,targetIndex+2];
  const chosen=indices.map(i=>tiers[i]);
  document.getElementById('recommendationCopy').textContent='For '+(state.people===5?'5+':state.people)+' '+(state.people===1?'person':'people')+' and around '+(state.devices===22?'16+':state.devices===14?'9–15':state.devices===7?'4–8':'1–3')+' connected devices, these four speed tiers give you a range of options.';
- document.getElementById('demandSummary').textContent='Illustrative household score: about '+demand+' Mbps before a safety margin. We use this only to position the shortlist; it is not a precise forecast of real-world demand.';
- document.getElementById('packagesGrid').innerHTML=chosen.map((p,i)=>'<article class="package-card '+(p.speed===target?'recommended':'')+'">'+(p.speed===target?'<span class="rec-tag">Closest fit</span>':'')+'<h3>'+escapeHtml(p.name)+'</h3><div class="package-speed">'+p.speed.toLocaleString('en-GB')+' <small>Mbps avg. download</small></div><p>'+escapeHtml(p.use)+'</p><a class="primary" href="https://www.sky.com/broadband" target="_blank" rel="noopener">Check on Sky</a></article>').join('');
+ const coveragePressure=(state.area>1200?1:0)+(state.rooms>=6?1:0)+(state.floors>=2?1:0)+(state.weakWifi?2:0);
+ const wifiAdvice=document.getElementById('wifiAdvice');
+ if(state.weakWifi||coveragePressure>=3){
+  wifiAdvice.innerHTML='<strong>Consider Sky WiFi Max</strong> — currently advertised from £6/month, with a WiFi guarantee. If coverage still misses the guarantee, Sky may provide up to three Max Pods or arrange an engineer visit. '+(state.booster?'You already have a Sky booster; compare that setup with WiFi Max before adding equipment.':'Max Pods are not automatically included with every order; eligibility depends on Sky’s checks.');
+ }else if(state.booster){
+  wifiAdvice.textContent='You already have a Sky booster. If coverage is good, you may not need WiFi Max; if there are dead zones, check Sky’s WiFi Max options and eligibility for Max Pods.';
+ }else{
+  wifiAdvice.innerHTML='<strong>Standard broadband may be enough</strong> based on the answers so far. WiFi Max is an optional add-on from £6/month for eligible fibre packages; consider it if you have dead zones or want its extra Wi-Fi features.';
+ }
+ document.getElementById('demandSummary').textContent='Illustrative speed allowance: about '+demand+' Mbps before headroom. Home size affects our Wi-Fi guidance, not the broadband speed delivered to your address.';
+ document.getElementById('packagesGrid').innerHTML=chosen.map(p=>'<article class="package-card '+(p.speed===target?'recommended':'')+'">'+(p.speed===target?'<span class="rec-tag">Closest fit</span>':'')+'<h3>'+escapeHtml(p.name)+'</h3><div class="package-speed">'+p.speed.toLocaleString('en-GB')+' <small>Mbps avg. download</small></div><p>'+escapeHtml(p.use)+'</p><div class="wifi-addon"><strong>WiFi Max</strong><span>'+(p.speed>=2500?'Included with this Gigafast+ tier':'Optional add-on, advertised from £6/month')+'</span></div><a class="primary" href="https://www.sky.com/broadband" target="_blank" rel="noopener">Check package</a></article>').join('');
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
 calculatePackages();
