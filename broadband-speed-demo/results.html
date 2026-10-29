@@ -242,19 +242,8 @@ function renderCoverage(){
  }
  const minRisk=Math.min(...roomData.map(room=>room.risk));
  const maxRisk=Math.max(...roomData.map(room=>room.risk));
- let rooms='';
- for(const room of roomData){
-  const {i,c,r,distance,risk}=room;
-  const x=x0+c*(roomW+gap),y=y0+r*(roomH+gap),label=labels[i]||('Room '+(i+1));
-  // Show relative differences across rooms, rather than letting one fixed threshold
-  // turn every room the same colour. This is illustrative, not a measured signal map.
-  const relativeRisk=maxRisk===minRisk?0:(risk-minRisk)/(maxRisk-minRisk);
-  const level=relativeRisk<0.34?'good':relativeRisk<0.68?'mixed':'weak';
-  const fills={good:'#c9f0f1',mixed:'#ffe2a8',weak:'#f8b4a8'};
-  const strokes={good:'#087ca3',mixed:'#b7791f',weak:'#b83227'};
-  rooms+=`<rect class="coverage-room" x="${x}" y="${y}" width="${roomW}" height="${roomH}" rx="7" fill="${fills[level]}" stroke="${strokes[level]}" stroke-width="2"/><text class="coverage-room-label" x="${x+roomW/2}" y="${y+21}" text-anchor="middle">${escapeHtml(label.length>15?label.slice(0,14)+'…':label)}</text>`;
-  room.x=x;room.y=y;room.level=level;
- }
+
+ // Draw room colours after the overall recommendation is known.
  // Overall verdict uses whole-home risk factors; it is a heuristic, not an RF simulation.
  const furthest=Math.max(2,Math.sqrt(area)*0.55);
  let score=(furthest>12?2:furthest>8?1:0)+(area>1800?2:area>1000?1:0)+(roomCount>=9?2:roomCount>=5?1:0)+(floorCount>=3?2:floorCount===2?1:0);
@@ -264,6 +253,20 @@ function renderCoverage(){
  score=Math.max(0,score);
  const verdict=score>=7?'likely':score>=4?'maybe':'low';
  state.coverageVerdict=verdict;
+ let rooms='';
+ for(const room of roomData){
+  const {i,c,r,risk}=room;
+  const x=x0+c*(roomW+gap),y=y0+r*(roomH+gap),label=labels[i]||('Room '+(i+1));
+  const relativeRisk=maxRisk===minRisk?0:(risk-minRisk)/(maxRisk-minRisk);
+  let level;
+  if(verdict==='likely') level=relativeRisk>=0.62?'weak':relativeRisk>=0.28?'mixed':'good';
+  else if(verdict==='maybe') level=relativeRisk>=0.72?'weak':relativeRisk>=0.38?'mixed':'good';
+  else level=relativeRisk>=0.78?'mixed':'good';
+  const fills={good:'#c9f0f1',mixed:'#ffe2a8',weak:'#f8b4a8'};
+  const strokes={good:'#087ca3',mixed:'#b7791f',weak:'#b83227'};
+  rooms+=`<rect class="coverage-room" x="${x}" y="${y}" width="${roomW}" height="${roomH}" rx="7" fill="${fills[level]}" stroke="${strokes[level]}" stroke-width="2"/><text class="coverage-room-label" x="${x+roomW/2}" y="${y+21}" text-anchor="middle">${escapeHtml(label.length>15?label.slice(0,14)+'…':label)}</text>`;
+  room.x=x;room.y=y;room.level=level;
+ }
  const box=document.getElementById('coverageVerdict');
  box.className='coverage-verdict'+(verdict==='likely'?' likely':verdict==='maybe'?' maybe':'');
  document.getElementById('coverageVerdictText').textContent=verdict==='likely'
