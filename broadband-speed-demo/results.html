@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your Broadband Estimate — Demo</title>
+<style>
+
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18243a;background:#f3f6fa;line-height:1.5}
+*{box-sizing:border-box}body{margin:0}header{background:#142b55;color:#fff;padding:1.4rem 1rem}header .wrap,main{max-width:980px;margin:auto}header a{color:#dbe7ff}header h1{font-size:clamp(1.7rem,4vw,2.3rem);margin:.4rem 0}header p{margin:.25rem 0;color:#e0e8f7}main{padding:1.3rem 1rem 3rem}.panel{background:#fff;border:1px solid #dce3ee;border-radius:16px;padding:1.2rem;margin:0 0 1rem;box-shadow:0 3px 12px #18243a08}.intro{font-size:1.05rem;max-width:700px}.step{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;font-weight:750;color:#52627a}.postcode-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;max-width:720px}.postcode-row .field{display:flex;flex-direction:column;gap:.3rem;font-weight:650;font-size:.92rem}.postcode-row .field:first-child{grid-column:1/-1}.postcode-row input{width:100%;min-width:0}input[type=text],input[type=number]{font:inherit;padding:.8rem;border:1px solid #aebbd0;border-radius:9px}#postcode{text-transform:uppercase}#door,#street{text-transform:none}.postcode-row button{justify-self:start}.property-grid input{width:100%;font:inherit;padding:.65rem;border:1px solid #aebbd0;border-radius:8px;background:#fff}.property-grid label{display:block;font-size:.9rem;font-weight:650}.property-grid label span{display:block;margin-bottom:.25rem}button{font:inherit;cursor:pointer}.primary{border:0;background:#1753a5;color:white;font-weight:700;padding:.8rem 1rem;border-radius:9px}.primary:hover{background:#103f82}.status{margin:.7rem 0 0;color:#56647a}.property-card{background:#f5f8fc;border-radius:10px;padding:.85rem;margin-top:.8rem}.property-card p{margin:.2rem 0}.property-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem}.group{margin:1.2rem 0}.group h3{margin:0 0 .2rem}.hint{color:#5b687d;font-size:.92rem;margin:.2rem 0 .7rem}.choices{display:flex;flex-wrap:wrap;gap:.55rem}.choice{background:#fff;border:1px solid #b8c4d6;color:#263650;border-radius:10px;padding:.65rem .85rem;text-align:left;min-height:44px}.choice[aria-pressed=true]{background:#e7f0ff;border-color:#1753a5;color:#123f83;box-shadow:inset 0 0 0 1px #1753a5}.choice small{display:block;color:inherit;opacity:.78;font-size:.8rem}.activity-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.6rem}.activity{display:flex;align-items:flex-start;gap:.65rem;padding:.8rem;border:1px solid #c5cfdd;border-radius:10px;background:#fff;cursor:pointer}.activity:has(input:checked){border-color:#1753a5;background:#e7f0ff}.activity input{width:18px;height:18px;margin:.2rem 0 0;accent-color:#1753a5;flex-shrink:0}.activity strong{display:block}.activity span{font-size:.88rem;color:#59677c}.result{background:#142b55;color:white;border-radius:16px;padding:1.3rem;margin:1rem 0}.result .eyebrow{color:#d4e2ff;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.speed{font-size:clamp(2.5rem,7vw,4rem);font-weight:800;line-height:1.15;margin:.3rem 0}.result p{color:#e0e8f7}.package{display:inline-block;background:#fff;color:#142b55;border-radius:8px;padding:.45rem .7rem;font-weight:750;margin:.2rem 0}.breakdown{background:#f5f8fc;border-radius:10px;padding:.9rem;margin-top:.8rem}.breakdown p{margin:.25rem 0}.notice{font-size:.9rem;color:#5c4b20;background:#fff7df;border:1px solid #efdfa8;padding:.85rem;border-radius:10px}footer{font-size:.88rem;color:#59677c;padding:0 .2rem}a{color:#1753a5}@media(max-width:520px){.postcode-row{flex-direction:column}.postcode-row button{width:100%}.panel{padding:1rem}}
+.loading-panel{text-align:center;padding:3rem 1.2rem}.loader{width:42px;height:42px;border:4px solid #dbe5f4;border-top-color:#1753a5;border-radius:50%;margin:0 auto 1.2rem;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.property-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7rem}.property-summary div{background:#f5f8fc;border-radius:9px;padding:.75rem}.property-summary strong{display:block;font-size:.82rem;color:#59677c}.property-summary span{font-weight:700;overflow-wrap:anywhere}.result[hidden]{display:none}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="./">← Back to property details</a><h1>Your broadband estimate</h1><p>Adjust the household details to see how they affect your suggested speed.</p></div></header>
+<main>
+<section class="panel">
+<div class="step">Your property</div>
+<h2 id="addressHeading">Property details</h2>
+<div class="property-summary" id="propertySummary"></div>
+<p class="hint">These property details were entered manually. They are not independently verified and are not used as direct measurements of Wi-Fi signal strength.</p>
+</section>
+<section class="panel">
+<div class="step">Step 2 · Your household</div>
+<h2>How many people use your broadband?</h2>
+<div class="group">
+<div class="choices" aria-label="People in household">
+<button type="button" class="choice" data-group="people" data-value="1" aria-pressed="false">1 person</button>
+<button type="button" class="choice" data-group="people" data-value="2" aria-pressed="true">2 people</button>
+<button type="button" class="choice" data-group="people" data-value="3" aria-pressed="false">3 people</button>
+<button type="button" class="choice" data-group="people" data-value="4" aria-pressed="false">4 people</button>
+<button type="button" class="choice" data-group="people" data-value="5" aria-pressed="false">5+ people</button>
+</div>
+</div>
+<div class="group">
+<h3>How many devices are usually connected?</h3>
+<p class="hint">Include phones, laptops, TVs, consoles and tablets.</p>
+<div class="choices" aria-label="Connected devices">
+<button type="button" class="choice" data-group="devices" data-value="3" aria-pressed="false">1–3 devices</button>
+<button type="button" class="choice" data-group="devices" data-value="7" aria-pressed="true">4–8 devices</button>
+<button type="button" class="choice" data-group="devices" data-value="14" aria-pressed="false">9–15 devices</button>
+<button type="button" class="choice" data-group="devices" data-value="22" aria-pressed="false">16+ devices</button>
+</div>
+</div>
+</section>
+<section class="panel">
+<div class="step">Step 3 · What you do online</div>
+<h2>Choose everything that applies</h2>
+<p class="hint">Think about what might be happening at the same time, especially in the evenings.</p>
+<div class="activity-grid">
+<label class="activity"><input type="checkbox" data-activity="basic" checked><span><strong>Browsing and social media</strong>Everyday websites, shopping and messages</span></label>
+<label class="activity"><input type="checkbox" data-activity="hd" checked><span><strong>HD video streaming</strong>Netflix, YouTube or catch-up TV</span></label>
+<label class="activity"><input type="checkbox" data-activity="4k"><span><strong>4K / UHD streaming</strong>High-quality TV on a 4K screen</span></label>
+<label class="activity"><input type="checkbox" data-activity="work"><span><strong>Working or studying at home</strong>Video calls, cloud apps and file sharing</span></label>
+<label class="activity"><input type="checkbox" data-activity="gaming"><span><strong>Online gaming</strong>Playing games online; downloads considered separately</span></label>
+<label class="activity"><input type="checkbox" data-activity="downloads"><span><strong>Large downloads and updates</strong>Game updates, big files or several downloads</span></label>
+<label class="activity"><input type="checkbox" data-activity="smart"><span><strong>Smart home devices</strong>Connected speakers, plugs and other sensors</span></label>
+<label class="activity"><input type="checkbox" data-activity="camera"><span><strong>Wi-Fi cameras / video feeds</strong>Security cameras or other continuous video</span></label>
+</div>
+</section>
+<section class="result" aria-live="polite">
+<div class="eyebrow">Your suggested broadband speed</div>
+<div class="speed"><span id="recommendedSpeed">100</span> Mbps</div>
+<p id="resultSummary">A starting point for your household’s busiest periods.</p>
+<div><span class="package" id="packageLabel">Look for a package around 100 Mbps</span></div>
+<div class="breakdown">
+<p><strong>How we estimated it</strong></p>
+<p id="resultDetails">Based on the number of people, devices and activities selected above.</p>
+<p id="uploadNote">Upload needs vary with video calls, cameras and file sharing.</p>
+</div>
+</section>
+<div class="notice"><strong>Important:</strong> this is an early demonstration, not a broadband availability checker. The estimate is a planning guide, not a guarantee of performance or a confirmation that a particular speed is available at the address.</div>
+<footer><p>Postcode lookup: <a href="https://postcodes.io/" target="_blank" rel="noopener">postcodes.io</a>. EPC records can be searched separately through <a href="https://find-energy-certificate.service.gov.uk/" target="_blank" rel="noopener">England and Wales EPC search</a> or <a href="https://www.scottishepcregister.org.uk/" target="_blank" rel="noopener">Scottish EPC Register</a>.</p></footer>
+</main>
+<script>
+const params=new URLSearchParams(window.location.search);
+const get=(key,fallback='Not provided')=>params.get(key)||fallback;
+const property=[
+ ['Address',[get('door',''),get('street',''),get('postcode','')].filter(Boolean).join(', ')||'Not provided'],
+ ['Floor area',get('area')+' m² ('+(Number(get('area',0))*10.7639).toLocaleString('en-GB',{maximumFractionDigits:0})+' sq ft)'],
+ ['Rooms',get('rooms')],
+ ['Floors',get('floors')],
+ ['Town / area',get('town')],
+ ['Local authority',get('authority')],
+ ['Country',get('country')]
+];
+document.getElementById('addressHeading').textContent=[get('door',''),get('street',''),get('postcode','')].filter(Boolean).join(', ')||'Property details';
+document.getElementById('propertySummary').innerHTML=property.map(([label,value])=>'<div><strong>'+escapeHtml(label)+'</strong><span>'+escapeHtml(value)+'</span></div>').join('');
+const state={people:2,devices:7};
+document.querySelectorAll('.choice[data-group]').forEach(button=>button.addEventListener('click',()=>{
+ const group=button.dataset.group;
+ state[group]=Number(button.dataset.value);
+ document.querySelectorAll('.choice[data-group="'+group+'"]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+ calculate();
+}));
+document.querySelectorAll('[data-activity]').forEach(input=>input.addEventListener('change',calculate));
+function calculate(){
+ const selected=new Set([...document.querySelectorAll('[data-activity]:checked')].map(x=>x.dataset.activity));
+ const people=state.people,devices=state.devices;
+ let demand=10;
+ const parts=[];
+ const add=(label,value)=>{demand+=value;if(value)parts.push(label+' ('+Math.round(value)+' Mbps)')};
+ add('Everyday use',selected.has('basic')?Math.min(people*2,10):0);
+ add('HD streaming',selected.has('hd')?Math.min(people,3)*5:0);
+ add('4K streaming',selected.has('4k')?Math.min(people,3)*15:0);
+ add('Working/studying',selected.has('work')?Math.min(people,2)*15:0);
+ add('Online gaming',selected.has('gaming')?Math.min(people,2)*15:0);
+ add('Large downloads',selected.has('downloads')?50:0);
+ add('Other active devices',Math.max(0,devices-4)*2);
+ add('Smart home',selected.has('smart')?1:0);
+ const upload=selected.has('camera')?5:selected.has('work')?3:1;
+ const headroom=Math.ceil(demand*1.3);
+ const packages=[50,100,150,300,500,900];
+ const recommended=packages.find(p=>p>=headroom)||1000;
+ document.getElementById('recommendedSpeed').textContent=recommended;
+ document.getElementById('packageLabel').textContent='Look for a package around '+recommended+' Mbps';
+ document.getElementById('resultSummary').textContent=recommended<=100?'Likely a reasonable starting point for everyday use and the selected activities.':recommended<=300?'A useful target for several activities happening at once.':'A higher-speed package may suit heavy simultaneous use and large transfers.';
+ document.getElementById('resultDetails').textContent='Estimated peak demand before headroom: about '+Math.ceil(demand)+' Mbps. With 30% planning headroom: about '+headroom+' Mbps. Main allowances: '+(parts.length?parts.join(', '):'light background use')+'.';
+ document.getElementById('uploadNote').textContent='Indicative upload allowance: around '+upload+' Mbps for the selected mix. Upload requirements can be higher for multiple video calls, cloud backups or cameras.';
+}
+function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
+calculate();
+</script>
+</body>
+</html>
