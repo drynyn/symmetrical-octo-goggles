@@ -243,6 +243,10 @@ function renderCoverage(){
    ?'Some rooms may have less reliable Wi-Fi than others. A booster may help, but placement and a real-world test matter.'
    :'These details do not strongly suggest a booster is needed. Actual dead spots can still occur because of walls, interference and router placement.';
  const x=66,y=48,w=238,floorH=58,h=floorCount*floorH;
+ const roofBase=y-2,roofPeak=y-34;
+ const gradientStops=verdict==='low'
+  ?'<stop offset="0%" stop-color="#71c98a"/><stop offset="100%" stop-color="#71c98a"/>'
+  :'<stop offset="0%" stop-color="#71c98a"/><stop offset="42%" stop-color="#ffd267"/><stop offset="72%" stop-color="#ff9b50"/><stop offset="100%" stop-color="#ef6964"/>';
  const roof='<path d="M'+(x-10)+' '+(roofBase+2)+' L'+(x+w/2)+' '+roofPeak+' L'+(x+w+10)+' '+(roofBase+2)+'" fill="#e8eef8" stroke="#314b70" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>';
  const floorLines=Array.from({length:floorCount-1},(_,i)=>{
   const fy=y+h-(i+1)*floorH;
