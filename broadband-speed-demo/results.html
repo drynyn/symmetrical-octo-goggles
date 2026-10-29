@@ -242,7 +242,7 @@ function renderCoverage(){
   const routerRow=position==='edge'?0:(rows-1)/2;
   const gridDistance=Math.hypot(roomCx-routerCol,roomCy-routerRow);
   const roomRisk=gridDistance+wallPenalty+hubPenalty+edgePenalty+(floorCount>1?0.8:0)+(area>1800?0.6:area>1000?0.3:0);
-  const weak=roomRisk>=2.5 || (roomRisk>=1.8 && verdict!=='low');
+  const weak=roomRisk>=2.5 || roomRisk>=1.8;
   if(weak) weakRoomIndexes.push(i);
   rooms+=`<rect class="coverage-room${weak?' weak':''}" x="${x}" y="${y}" width="${roomW}" height="${roomH}" rx="7"/><text class="coverage-room-label" x="${x+roomW/2}" y="${y+roomH/2+3}">${escapeHtml(label.length>15?label.slice(0,14)+'…':label)}</text>`;
  }
