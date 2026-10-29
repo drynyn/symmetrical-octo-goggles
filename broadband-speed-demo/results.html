@@ -243,36 +243,7 @@ function renderCoverage(){
    ?'Some rooms may have less reliable Wi-Fi than others. A booster may help, but placement and a real-world test matter.'
    :'These details do not strongly suggest a booster is needed. Actual dead spots can still occur because of walls, interference and router placement.';
  const x=66,y=48,w=238,floorH=58,h=floorCount*floorH;
- const roofPeak=9,roofBase=50;
- const gradientStops=verdict==='low'
-  ?'<stop offset="0%" stop-color="#71c98a"/><stop offset="100%" stop-color="#71c98a"/>'
-  :verdict==='maybe'
-   ?'<stop offset="0%" stop-color="#71c98a"/><stop offset="20%" stop-color="#71c98a"/><stop offset="42%" stop-color="#b9dc83"/><stop offset="62%" stop-color="#ffd267"/><stop offset="82%" stop-color="#ff9b50"/><stop offset="100%" stop-color="#ef6964"/>'
-   :'<stop offset="0%" stop-color="#71c98a"/><stop offset="18%" stop-color="#71c98a"/><stop offset="38%" stop-color="#b9dc83"/><stop offset="60%" stop-color="#ffd267"/><stop offset="80%" stop-color="#ff9b50"/><stop offset="100%" stop-color="#ef6964"/>';
- const floorLines=Array.from({length:floorCount-1},(_,i)=>{
-  const fy=y+h-(i+1)*floorH;
-  return '<line x1="'+(x+3)+'" y1="'+fy+'" x2="'+(x+w-3)+'" y2="'+fy+'" stroke="#314b70" stroke-width="1.5" opacity=".75"/><line x1="'+(x+3)+'" y1="'+(fy-2)+'" x2="'+(x+w-3)+'" y2="'+(fy-2)+'" stroke="#fff" stroke-width="2" opacity=".9"/>';
- }).join('');
- const floorLabels=Array.from({length:floorCount},(_,i)=>{
-  const label=floorCount===1?'Ground floor':i===0?'Ground floor':i===1?'First floor':'Second floor';
-  const cy=y+h-(i+0.5)*floorH+4;
-  return '';
- }).join('');
- const routerX=position==='edge'?x+27:position==='unknown'?x+w*0.35:x+w*0.48;
- const routerY=y+h-floorH/2;
- const boosterFloor=floorCount===3?1:floorCount===2?1:0;
- const boosterX=x+w*0.70;
- const boosterY=y+h-(boosterFloor+0.5)*floorH;
- const needBooster=verdict!=='low'&&roomCount>1;
- const routerIcon='<g transform="translate('+(routerX-13)+' '+(routerY-10)+')"><rect width="26" height="20" rx="5" fill="#173b63"/><path d="M6 8 Q13 1 20 8 M9 11 Q13 7 17 11" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="15" r="1.5" fill="#fff"/></g>';
- const boosterIcon=needBooster?'<g transform="translate('+(boosterX-13)+' '+(boosterY-10)+')"><rect width="26" height="20" rx="5" fill="#fff" stroke="#405d78" stroke-width="2"/><path d="M6 8 Q13 1 20 8 M9 11 Q13 7 17 11" fill="none" stroke="#405d78" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="15" r="1.5" fill="#405d78"/></g>':'';
- const connector=needBooster?'<line x1="'+routerX+'" y1="'+routerY+'" x2="'+boosterX+'" y2="'+boosterY+'" stroke="#405d78" stroke-width="2" stroke-dasharray="4 4"/>':'';
- const roof='<path d="M'+(x-10)+' '+(roofBase+2)+' L'+(x+w/2)+' '+roofPeak+' L'+(x+w+10)+' '+(roofBase+2)+'" fill="#e8eef8" stroke="#314b70" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>';
- const outsideDetails='<g stroke="#314b70" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M'+(x+w-48)+' '+(y+8)+' V'+(y-2)+' H'+(x+w-32)+' V'+(y+15)+'" fill="#d1dced" stroke-width="3"/><path d="M'+(x-34)+' '+(y+h+9)+' H'+(x+w+35)+'" stroke="#d5dfd9" stroke-width="2"/><path d="M'+(x-18)+' '+(y+h)+' L'+(x-18)+' '+(y+h-24)+' L'+(x+13)+' '+(y+h-24)+' L'+(x+13)+' '+(y+h)+'" fill="#e8eef8"/><path d="M'+(x-22)+' '+(y+h-24)+' L'+(x-2)+' '+(y+h-40)+' L'+(x+17)+' '+(y+h-24)+' Z" fill="#d1dced"/><path d="M'+(x-22)+' '+(y+h-24)+' L'+(x-2)+' '+(y+h-40)+' L'+(x+17)+' '+(y+h-24)+'" fill="none"/><path d="M'+(x-18)+' '+(y+h)+' V'+(y+h-24)+' H'+(x+13)+' V'+(y+h)+'" fill="none"/><path d="M'+(x-13)+' '+(y+h)+' V'+(y+h-18)+' H'+(x-1)+' V'+(y+h)+'" fill="#d1dced"/><circle cx="'+(x+7)+'" cy="'+(y+h-10)+'" r="1.2" fill="#314b70" stroke="none"/><path d="M'+(x-23)+' '+(y+h)+' H'+(x+18)+'" stroke="#314b70" stroke-width="3"/></g>';
- const boosterLabel='';
- const routerLabel='';
- const svgHeight=y+h+12;
- document.getElementById('coverageDiagram').innerHTML='<svg viewBox="0 0 360 '+svgHeight+'" role="img" aria-label="Example '+floorCount+'-floor house. Estimated Wi-Fi coverage is strongest around the router and weakens with distance."><defs><radialGradient id="wifiCoverageGradient" cx="'+((routerX-x)/w*100).toFixed(1)+'%" cy="'+((routerY-y)/h*100).toFixed(1)+'%" r="100%">'+gradientStops+'</radialGradient><clipPath id="wifiHouseClip"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="2"/></clipPath></defs>'+floorLabels+'<g clip-path="url(#wifiHouseClip)"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="url(#wifiCoverageGradient)"/></g>'+roof+outsideDetails+'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="none" stroke="#405d78" stroke-width="5" rx="2"/>'+floorLines+connector+routerIcon+routerLabel+boosterIcon+boosterLabel+'<text x="180" y="'+(svgHeight-1)+'" font-size="10" fill="#53678e" text-anchor="middle">Example layout, not a measured floor plan</text></svg><div class="coverage-legend"><span><i class="legend-dot" style="background:#71c98a;border:1px solid #4aab68"></i>Likely good</span><span><i class="legend-dot" style="background:#ffd267;border:1px solid #c79b2b"></i>Potentially weaker</span><span><i class="legend-dot" style="background:#ff9b50;border:1px solid #d97732"></i>Higher risk</span><span><i class="legend-dot" style="background:#ef6964;border:1px solid #cf4c49"></i>Lowest coverage</span><span><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><rect x="0" y="0" width="26" height="20" rx="5" fill="#173b63"/><path d="M6 8 Q13 1 20 8 M9 11 Q13 7 17 11" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="15" r="1.5" fill="#fff"/></svg>Router</span><span><svg width="26" height="20" viewBox="0 0 26 20" aria-hidden="true"><rect width="26" height="20" rx="5" fill="#fff" stroke="#405d78" stroke-width="2"/><path d="M6 8 Q13 1 20 8 M9 11 Q13 7 17 11" fill="none" stroke="#405d78" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="15" r="1.5" fill="#405d78"/></svg>Possible booster</span></div>';
+ document.getElementById('coverageDiagram').innerHTML='';
  document.getElementById('coverageSummary').textContent='Example home illustration for '+roomCount+' rooms, '+floorCount+' floor'+(floorCount===1?'':'s')+' and approximately '+Math.round(area).toLocaleString('en-GB')+' sq ft.';
  document.getElementById('coverageNote').textContent='The illustration always places the router on the ground floor. Colours show a broad estimated pattern, greenest around the router and weaker with distance; they are not measured signal levels. The suggested booster sits in the orange zone, where it may help relay coverage before the weakest area.';
 }
