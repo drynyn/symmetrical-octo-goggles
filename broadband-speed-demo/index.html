@@ -53,18 +53,19 @@ document.getElementById('postcodeForm').addEventListener('submit',async event=>{
   const fullAddress=[door,street,p.postcode].filter(Boolean).join(', ');
   status.textContent='Postcode validated. Check the address shown below.';
   card.hidden=false;
-  card.innerHTML='<strong>Address you entered</strong><p>'+escapeHtml(fullAddress)+'</p><div class="property-grid"><p><strong>Town / area</strong><br>'+escapeHtml(p.parish||p.admin_district||'Not available')+'</p><p><strong>Local authority</strong><br>'+escapeHtml(p.admin_district||'Not available')+'</p><p><strong>Region</strong><br>'+escapeHtml(p.region||'Not available')+'</p><p><strong>Country</strong><br>'+escapeHtml(p.country||'Not available')+'</p></div><p class="hint">The postcode is validated, but the house number/name and street are not independently verified against an address database.</p><h3>Property details</h3><p class="hint">Enter all three details to continue. These are manual inputs; no property database is being queried.</p><div class="property-grid"><label><span>Floor area (m²)</span><input id="floorArea" type="number" min="1" max="2000" step="0.1" placeholder="e.g. 95" required></label><label><span>Number of rooms</span><input id="roomCount" type="number" min="1" max="50" step="1" placeholder="e.g. 5" required></label><label><span>Number of floors</span><input id="floorCount" type="number" min="1" max="10" step="1" placeholder="e.g. 2" required></label></div><p id="areaConversion" class="hint" aria-live="polite"></p><p id="propertyGateStatus" class="status" aria-live="polite"></p><button type="button" class="primary" id="continueButton">Continue to broadband estimate</button>';
+  card.innerHTML='<strong>Address you entered</strong><p>'+escapeHtml(fullAddress)+'</p><div class="property-grid"><p><strong>Town / area</strong><br>'+escapeHtml(p.parish||p.admin_district||'Not available')+'</p><p><strong>Local authority</strong><br>'+escapeHtml(p.admin_district||'Not available')+'</p><p><strong>Region</strong><br>'+escapeHtml(p.region||'Not available')+'</p><p><strong>Country</strong><br>'+escapeHtml(p.country||'Not available')+'</p></div><p class="hint">The postcode is validated, but the house number/name and street are not independently verified against an address database.</p><h3>Property details</h3><p class="hint">Enter all three details to continue. These are manual inputs; no property database is being queried.</p><div class="property-grid"><label><span>Floor area (sq ft)</span><input id="floorArea" type="number" min="10" max="21500" step="1" value="100" required></label><label><span>Number of rooms</span><input id="roomCount" type="number" min="1" max="50" step="1" value="5" required></label><label><span>Number of floors</span><input id="floorCount" type="number" min="1" max="10" step="1" value="1" required></label></div><p id="areaConversion" class="hint" aria-live="polite"></p><p id="propertyGateStatus" class="status" aria-live="polite"></p><button type="button" class="primary" id="continueButton">Continue to broadband estimate</button>';
   const areaInput=document.getElementById('floorArea');
   areaInput.addEventListener('input',()=>{
    const area=Number(areaInput.value);
-   document.getElementById('areaConversion').textContent=area>0?'Approximately '+Math.round(area*10.7639).toLocaleString('en-GB')+' sq ft.':'';
+   document.getElementById('areaConversion').textContent=area>0?'Approximately '+(area/10.7639).toLocaleString('en-GB',{maximumFractionDigits:1})+' m².':'';
   });
   document.getElementById('continueButton').addEventListener('click',()=>{
-   const area=Number(document.getElementById('floorArea').value);
+   const areaSqFt=Number(document.getElementById('floorArea').value);
+   const area=areaSqFt/10.7639;
    const rooms=Number(document.getElementById('roomCount').value);
    const floors=Number(document.getElementById('floorCount').value);
    const gateStatus=document.getElementById('propertyGateStatus');
-   if(!(area>0&&area<=2000&&rooms>=1&&rooms<=50&&Number.isInteger(rooms)&&floors>=1&&floors<=10&&Number.isInteger(floors))){
+   if(!(areaSqFt>=10&&areaSqFt<=21500&&rooms>=1&&rooms<=50&&Number.isInteger(rooms)&&floors>=1&&floors<=10&&Number.isInteger(floors))){
     gateStatus.textContent='Please enter a valid floor area, whole-number room count and whole-number floor count to continue.';
     return;
    }
