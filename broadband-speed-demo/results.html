@@ -165,13 +165,6 @@ main{max-width:1120px;padding-top:1.2rem}
 <script>
 const params=new URLSearchParams(window.location.search);
 const get=(key,fallback='Not provided')=>params.get(key)||fallback;
-const property=[
- ['Address',[get('door',''),get('street',''),get('postcode','')].filter(Boolean).join(', ')||'Not provided'],
- ['Floor area',get('area')+' m² ('+(Number(get('area',0))*10.7639).toLocaleString('en-GB',{maximumFractionDigits:0})+' sq ft)'],
- ['Rooms',get('rooms')],['Floors',get('floors')],['Town / area',get('town')],['Local authority',get('authority')],['Country',get('country')]
-];
-document.getElementById('addressHeading').textContent=[get('door',''),get('street',''),get('postcode','')].filter(Boolean).join(', ')||'Property details';
-document.getElementById('propertySummary').innerHTML=property.map(([label,value])=>'<div><strong>'+escapeHtml(label)+'</strong><span>'+escapeHtml(value)+'</span></div>').join('');
 const state={people:2,devices:7,rooms:Number(get('rooms','5')),floors:Number(get('floors','1')),weakWifi:0,booster:0,area:Number(get('area','9.3'))*10.7639};
 const areaInput=document.getElementById('areaInput');
 areaInput.value=Math.round(state.area);
