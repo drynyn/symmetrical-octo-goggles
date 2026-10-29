@@ -74,7 +74,7 @@ main{max-width:1120px;padding-top:1.2rem}
 @media(max-width:760px){.results-layout{grid-template-columns:1fr}.side-panel{grid-row:auto}.packages-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.packages-grid{grid-template-columns:1fr}}
 
-.coverage-panel{margin-top:1.2rem;overflow:hidden}.coverage-copy{max-width:650px}.coverage-copy p{color:#52658b;margin:.25rem 0 .8rem}.coverage-diagram{background:#f7faf7;border:1px solid #e1e9e2;border-radius:14px;padding:.7rem;min-height:190px}.coverage-diagram svg{display:block;width:100%;height:auto;max-height:390px}.coverage-note{font-size:.82rem;color:#697894;margin:.65rem 0 0}.coverage-legend{display:flex;flex-wrap:wrap;gap:.8rem;font-size:.82rem;color:#53678e;margin-top:.5rem}.coverage-legend span{display:flex;align-items:center;gap:.35rem}.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}.coverage-room{fill:#c9f0f1;stroke:#087ca3;stroke-width:1.3}.coverage-room.weak{fill:#fce2bd;stroke:#c47722}.coverage-room-label{font:10px Arial,sans-serif;fill:#17304b;text-anchor:middle}.coverage-marker{fill:#fff;stroke:#ff405b;stroke-width:3}.coverage-marker-text{font:bold 10px Arial,sans-serif;fill:#12305e;text-anchor:middle}.coverage-callout{fill:#fff;stroke:#ff405b;stroke-width:1.5}@media(max-width:520px){.coverage-diagram{padding:.3rem}.coverage-room-label{font-size:9px}}
+.coverage-panel{margin-top:1.2rem;overflow:hidden}.coverage-inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.85rem;margin:1rem 0 1.1rem;padding:1rem;background:#f7f9fe;border:1px solid #e1e8f5;border-radius:14px}.coverage-inputs .field{display:flex;flex-direction:column;gap:.4rem;min-width:0}.coverage-inputs .field span{font-size:.8rem;font-weight:700;color:#34496d}.coverage-inputs select{width:100%;min-height:44px;padding:.65rem 2rem .65rem .75rem;border:1px solid #cbd7eb;border-radius:9px;background:#fff;color:#172d55;font:inherit;font-size:.88rem;box-shadow:0 1px 2px #122d660a}.coverage-inputs select:focus{outline:2px solid #8ab4ff;outline-offset:1px}.coverage-copy{max-width:650px}.coverage-copy p{color:#52658b;margin:.25rem 0 .8rem}.coverage-diagram{background:#f7faf7;border:1px solid #e1e9e2;border-radius:14px;padding:.7rem;min-height:190px}.coverage-diagram svg{display:block;width:100%;height:auto;max-height:390px}.coverage-note{font-size:.82rem;color:#697894;margin:.65rem 0 0}.coverage-legend{display:flex;flex-wrap:wrap;gap:.8rem;font-size:.82rem;color:#53678e;margin-top:.5rem}.coverage-legend span{display:flex;align-items:center;gap:.35rem}.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}.coverage-room{fill:#c9f0f1;stroke:#087ca3;stroke-width:1.3}.coverage-room.weak{fill:#fce2bd;stroke:#c47722}.coverage-room-label{font:10px Arial,sans-serif;fill:#17304b;text-anchor:middle}.coverage-marker{fill:#fff;stroke:#ff405b;stroke-width:3}.coverage-marker-text{font:bold 10px Arial,sans-serif;fill:#12305e;text-anchor:middle}.coverage-callout{fill:#fff;stroke:#ff405b;stroke-width:1.5}@media(max-width:520px){.coverage-diagram{padding:.3rem}.coverage-room-label{font-size:9px}}
 
 .coverage-verdict{display:flex;align-items:flex-start;gap:.7rem;padding:.85rem 1rem;border:1px solid #d8e5f5;border-radius:12px;background:#f5f8ff;margin-top:.8rem}.coverage-verdict strong{display:block;margin-bottom:.15rem}.coverage-verdict .verdict-mark{width:12px;height:12px;border-radius:50%;margin-top:.35rem;flex:0 0 auto;background:#27845c}.coverage-verdict.maybe{background:#fff8e8;border-color:#f0d9a4}.coverage-verdict.maybe .verdict-mark{background:#d18a16}.coverage-verdict.likely{background:#fff0f0;border-color:#f0c5c5}.coverage-verdict.likely .verdict-mark{background:#d64545}.coverage-method{font-size:.8rem;color:#697894;margin:.5rem 0 0}
 
@@ -140,7 +140,7 @@ main{max-width:1120px;padding-top:1.2rem}
 </div>
 <section class="panel coverage-panel" aria-labelledby="coverageTitle">
 <div class="coverage-copy"><div class="step">WHOLE-HOME WI-FI</div><h2 class="section-title" id="coverageTitle">Whole home Wi-Fi coverage</h2><p id="coverageSummary">A layout illustration based on your room count, floor area and number of floors.</p></div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.7rem;margin:.8rem 0">
+<div class="coverage-inputs">
 <label class="field"><span>Sky hub</span><select id="coverageHub" class="advisor-select"><option value="q">Sky Q Hub (Wi-Fi 5)</option><option value="broadband" selected>Sky Broadband Hub (Wi-Fi 5)</option><option value="max">Sky Max Hub (Wi-Fi 6)</option><option value="gigafast">Sky Gigafast+ Hub (Wi-Fi 7)</option><option value="unknown">Not sure</option></select></label>
 <label class="field"><span>Wall type</span><select id="coverageWalls" class="advisor-select"><option value="light">Mostly plasterboard / thin walls</option><option value="mixed" selected>Mixed walls</option><option value="brick">Mostly brick / thick walls</option></select></label>
 <label class="field"><span>Router position</span><select id="coveragePosition" class="advisor-select"><option value="central" selected>Near the centre of the home</option><option value="edge">At one end / edge of the home</option><option value="unknown">Not sure</option></select></label>
@@ -158,7 +158,6 @@ document.querySelectorAll('.choice[data-group]').forEach(button=>button.addEvent
  const group=button.dataset.group;
  state[group]=Number(button.dataset.value);
  document.querySelectorAll('.choice[data-group="'+group+'"]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
- ['coverageHub','coverageWalls','coveragePosition'].forEach(id=>document.getElementById(id).addEventListener('change',renderCoverage));
  calculatePackages();
 }));
 document.querySelectorAll('.choice[data-tag]').forEach(button=>button.addEventListener('click',()=>{
@@ -260,6 +259,7 @@ function renderCoverage(){
  document.getElementById('coverageNote').textContent='The estimate combines home size, room count, floors, selected wall type, hub generation and router placement. The room drawing is schematic, not a floor plan.';
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
+['coverageHub','coverageWalls','coveragePosition'].forEach(id=>document.getElementById(id).addEventListener('change',renderCoverage));
 calculatePackages();
 </script>
 </body>
