@@ -15,7 +15,7 @@
 <section class="panel">
 <div class="step">Step 1 · Your postcode</div>
 <h2>Start with your home</h2>
-<p class="intro">Enter your postcode to look up the area, then tell us a little about your household. We’ll suggest a broadband speed for your busiest times.</p>
+<p class="intro">Enter your postcode and address, then add three basic property details. After that, we’ll show a broadband speed estimate for your household.</p>
 <form id="postcodeForm" class="postcode-row">
 <label class="field">Postcode<input id="postcode" type="text" autocomplete="postal-code" placeholder="e.g. EH1 1YZ" aria-label="UK postcode" required></label>
 <label class="field">Door number or house name<input id="door" type="text" autocomplete="address-line1" placeholder="e.g. 24 or Rose Cottage" maxlength="80" required></label>
@@ -25,7 +25,7 @@
 <p id="postcodeStatus" class="status" aria-live="polite">We’ll validate the postcode using the free public postcodes.io service. Your house number/name and street are supplied by you.</p>
 <div id="propertyResult" class="property-card" hidden aria-live="polite"></div>
 </section>
-<section class="panel">
+<section class="panel" id="householdPanel" hidden>
 <div class="step">Step 2 · Your household</div>
 <h2>How many people use your broadband?</h2>
 <div class="group">
@@ -48,7 +48,7 @@
 </div>
 </div>
 </section>
-<section class="panel">
+<section class="panel" id="activityPanel" hidden>
 <div class="step">Step 3 · What you do online</div>
 <h2>Choose everything that applies</h2>
 <p class="hint">Think about what might be happening at the same time, especially in the evenings.</p>
@@ -63,7 +63,7 @@
 <label class="activity"><input type="checkbox" data-activity="camera"><span><strong>Wi-Fi cameras / video feeds</strong>Security cameras or other continuous video</span></label>
 </div>
 </section>
-<section class="result" aria-live="polite">
+<section class="result" id="speedResult" aria-live="polite" hidden>
 <div class="eyebrow">Your suggested broadband speed</div>
 <div class="speed"><span id="recommendedSpeed">100</span> Mbps</div>
 <p id="resultSummary">A starting point for your household’s busiest periods.</p>
@@ -74,7 +74,7 @@
 <p id="uploadNote">Upload needs vary with video calls, cameras and file sharing.</p>
 </div>
 </section>
-<div class="notice"><strong>About property data:</strong> this keyless version validates the postcode and builds the address from the details you enter. It does not automatically retrieve floor area or room count. Those fields are optional and must be entered from a reliable source, such as the property’s Energy Performance Certificate (EPC). The number of habitable rooms on an EPC may differ from the total number of rooms.</div>
+<div class="notice" id="propertyNotice" hidden><strong>About property data:</strong> property details were entered manually and have not been independently verified. Floor area and room counts are used as context for this demo, not as direct measurements of Wi-Fi signal strength.</div>
 <footer><p>This is an early demonstration, not a broadband availability checker. The estimate is a planning guide, not a guarantee of performance or a confirmation that a particular speed is available at the address.</p><p>Postcode lookup: <a href="https://postcodes.io/" target="_blank" rel="noopener">postcodes.io</a>. EPC records can be searched separately through <a href="https://find-energy-certificate.service.gov.uk/" target="_blank" rel="noopener">England and Wales EPC search</a> or <a href="https://www.scottishepcregister.org.uk/" target="_blank" rel="noopener">Scottish EPC Register</a>.</p></footer>
 </main>
 <script>
@@ -128,11 +128,28 @@ document.getElementById('postcodeForm').addEventListener('submit',async event=>{
   const fullAddress=[door,street,p.postcode].filter(Boolean).join(', ');
   status.textContent='Postcode validated. Check the address shown below.';
   card.hidden=false;
-  card.innerHTML='<strong>Address you entered</strong><p>'+escapeHtml(fullAddress)+'</p><div class="property-grid"><p><strong>Town / area</strong><br>'+escapeHtml(p.parish||p.admin_district||'Not available')+'</p><p><strong>Local authority</strong><br>'+escapeHtml(p.admin_district||'Not available')+'</p><p><strong>Region</strong><br>'+escapeHtml(p.region||'Not available')+'</p><p><strong>Country</strong><br>'+escapeHtml(p.country||'Not available')+'</p></div><p class="hint">The postcode is validated, but the house number/name and street are not independently verified against an address database.</p><h3>Property details (optional)</h3><p class="hint">Enter these if you know them. They are not fetched automatically.</p><div class="property-grid"><label><span>Floor area (m²)</span><input id="floorArea" type="number" min="1" max="2000" step="0.1" placeholder="e.g. 95"></label><label><span>Habitable rooms</span><input id="roomCount" type="number" min="1" max="50" step="1" placeholder="e.g. 5"></label></div><p id="areaConversion" class="hint" aria-live="polite"></p>';
+  card.innerHTML='<strong>Address you entered</strong><p>'+escapeHtml(fullAddress)+'</p><div class="property-grid"><p><strong>Town / area</strong><br>'+escapeHtml(p.parish||p.admin_district||'Not available')+'</p><p><strong>Local authority</strong><br>'+escapeHtml(p.admin_district||'Not available')+'</p><p><strong>Region</strong><br>'+escapeHtml(p.region||'Not available')+'</p><p><strong>Country</strong><br>'+escapeHtml(p.country||'Not available')+'</p></div><p class="hint">The postcode is validated, but the house number/name and street are not independently verified against an address database.</p><h3>Property details</h3><p class="hint">Enter all three details to continue. These are manual inputs; no property database is being queried.</p><div class="property-grid"><label><span>Floor area (m²)</span><input id="floorArea" type="number" min="1" max="2000" step="0.1" placeholder="e.g. 95" required></label><label><span>Number of rooms</span><input id="roomCount" type="number" min="1" max="50" step="1" placeholder="e.g. 5" required></label><label><span>Number of floors</span><input id="floorCount" type="number" min="1" max="10" step="1" placeholder="e.g. 2" required></label></div><p id="areaConversion" class="hint" aria-live="polite"></p><p id="propertyGateStatus" class="status" aria-live="polite"></p><button type="button" class="primary" id="continueButton">Continue to broadband estimate</button>';
   const areaInput=document.getElementById('floorArea');
   areaInput.addEventListener('input',()=>{
    const area=Number(areaInput.value);
    document.getElementById('areaConversion').textContent=area>0?'Approximately '+Math.round(area*10.7639).toLocaleString('en-GB')+' sq ft.':'';
+  });
+  document.getElementById('continueButton').addEventListener('click',()=>{
+   const area=Number(document.getElementById('floorArea').value);
+   const rooms=Number(document.getElementById('roomCount').value);
+   const floors=Number(document.getElementById('floorCount').value);
+   const gateStatus=document.getElementById('propertyGateStatus');
+   if(!(area>0&&area<=2000&&rooms>=1&&rooms<=50&&Number.isInteger(rooms)&&floors>=1&&floors<=10&&Number.isInteger(floors))){
+    gateStatus.textContent='Please enter a valid floor area, whole-number room count and whole-number floor count to continue.';
+    return;
+   }
+   gateStatus.textContent='Property details entered. Your estimate is below.';
+   document.getElementById('householdPanel').hidden=false;
+   document.getElementById('activityPanel').hidden=false;
+   document.getElementById('speedResult').hidden=false;
+   document.getElementById('propertyNotice').hidden=false;
+   calculate();
+   document.getElementById('householdPanel').scrollIntoView({behavior:'smooth',block:'start'});
   });
  }catch(error){
   status.textContent='We could not validate that postcode. Check it and try again.';
