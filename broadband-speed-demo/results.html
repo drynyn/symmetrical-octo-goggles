@@ -245,7 +245,7 @@ function renderCoverage(){
  const x=66,y=48,w=238,floorH=58,h=floorCount*floorH;
  const roofPeak=9,roofBase=50;
  const gradientStops=verdict==='low'
-  ?'<stop offset="0%" stop-color="#71c98a"/><stop offset="24%" stop-color="#71c98a"/><stop offset="55%" stop-color="#b9dc83"/><stop offset="78%" stop-color="#ffd267"/><stop offset="100%" stop-color="#ff9b50"/>'
+  ?'<stop offset="0%" stop-color="#71c98a"/><stop offset="100%" stop-color="#71c98a"/>'
   :verdict==='maybe'
    ?'<stop offset="0%" stop-color="#71c98a"/><stop offset="24%" stop-color="#71c98a"/><stop offset="48%" stop-color="#b9dc83"/><stop offset="68%" stop-color="#ffd267"/><stop offset="84%" stop-color="#ff9b50"/><stop offset="100%" stop-color="#ef6964"/>'
    :'<stop offset="0%" stop-color="#71c98a"/><stop offset="24%" stop-color="#71c98a"/><stop offset="44%" stop-color="#b9dc83"/><stop offset="64%" stop-color="#ffd267"/><stop offset="82%" stop-color="#ff9b50"/><stop offset="100%" stop-color="#ef6964"/>';
