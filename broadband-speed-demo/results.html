@@ -263,7 +263,7 @@ function renderCoverage(){
  const boosterFloor=floorCount===3?1:floorCount===2?1:0;
  const boosterX=x+w*0.70;
  const boosterY=y+h-(boosterFloor+0.5)*floorH;
- const needBooster=roomCount>1;
+ const needBooster=verdict!=='low'&&roomCount>1;
  const routerIcon='<g transform="translate('+(routerX-13)+' '+(routerY-10)+')"><rect width="26" height="20" rx="5" fill="#173b63"/><path d="M6 8 Q13 1 20 8 M9 11 Q13 7 17 11" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="15" r="1.5" fill="#fff"/></g>';
  const boosterIcon=needBooster?'<g transform="translate('+(boosterX-9)+' '+(boosterY-7)+') scale(.7)"><rect width="26" height="20" rx="5" fill="#fff" stroke="#405d78" stroke-width="2"/><path d="M6 8 Q13 1 20 8 M9 11 Q13 7 17 11" fill="none" stroke="#405d78" stroke-width="1.8" stroke-linecap="round"/><circle cx="13" cy="15" r="1.5" fill="#405d78"/></g>':'';
  const connector=needBooster?'<line x1="'+routerX+'" y1="'+routerY+'" x2="'+boosterX+'" y2="'+boosterY+'" stroke="#405d78" stroke-width="2" stroke-dasharray="4 4"/>':'';
