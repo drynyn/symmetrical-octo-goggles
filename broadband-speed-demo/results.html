@@ -148,7 +148,7 @@ main{max-width:1120px;padding-top:1.2rem}
 </main>
 <script>const params=new URLSearchParams(window.location.search);
 const get=(key,fallback='Not provided')=>params.get(key)||fallback;
-const state={people:2,devices:7,tags:new Set(),rooms:Number(get('rooms','5')),floors:Number(get('floors','1')),weakWifi:0,booster:0,area:Number(get('area','9.3'))*10.7639};
+const state={people:2,devices:7,tags:new Set(),rooms:Number(get('rooms','5')),floors:Number(get('floors','1')),weakWifi:0,booster:0,coverageVerdict:'low',area:Number(get('area','9.3'))*10.7639};
 document.querySelectorAll('.choice[data-group]').forEach(button=>button.addEventListener('click',()=>{
  const group=button.dataset.group;
  state[group]=Number(button.dataset.value);
@@ -193,8 +193,8 @@ function calculatePackages(){
  document.getElementById('packagesGrid').innerHTML=chosen.map((p,index)=>{
   const base=mockPrices[p.speed]||29;
   const wifiIncluded=p.speed>=2500;
-  const selected=wifiIncluded?'with':'without';
-  return '<article class="package-card '+(p.speed===target?'recommended':'')+'">'+(p.speed===target?'<span class="rec-tag">Closest fit</span>':'')+'<h3>'+escapeHtml(p.name)+'</h3><div class="package-speed">'+p.speed.toLocaleString('en-GB')+' <small>Mbps avg. download</small></div><p>'+escapeHtml(p.use)+'</p><div class="wifi-options" role="radiogroup" aria-label="WiFi Max option for '+escapeHtml(p.name)+'"><label class="wifi-option"><input type="radio" name="wifi-'+p.speed+'" value="without" '+(!wifiIncluded?'checked':'')+' '+(wifiIncluded?'':'')+'><span>Broadband only</span><span class="option-price">£'+base+'/mo</span></label><label class="wifi-option"><input type="radio" name="wifi-'+p.speed+'" value="with" '+(wifiIncluded?'checked':'')+'><span>With WiFi Max'+(wifiIncluded?' (included)':'')+'</span><span class="option-price">£'+(base+(wifiIncluded?0:6))+'/mo</span></label></div><p class="mock-price-note">Illustrative mock price, not a live Sky quote.</p><a class="primary" href="https://www.sky.com/broadband" target="_blank" rel="noopener">Check package</a></article>';
+  const wifiSelected=wifiIncluded||state.coverageVerdict==='likely';
+  return '<article class="package-card '+(p.speed===target?'recommended':'')+'">'+(p.speed===target?'<span class="rec-tag">Closest fit</span>':'')+'<h3>'+escapeHtml(p.name)+'</h3><div class="package-speed">'+p.speed.toLocaleString('en-GB')+' <small>Mbps avg. download</small></div><p>'+escapeHtml(p.use)+'</p><div class="wifi-options" role="radiogroup" aria-label="WiFi Max option for '+escapeHtml(p.name)+'"><label class="wifi-option"><input type="radio" name="wifi-'+p.speed+'" value="without" '+(!wifiSelected?'checked':'')+'><span>Broadband only</span><span class="option-price">£'+base+'/mo</span></label><label class="wifi-option"><input type="radio" name="wifi-'+p.speed+'" value="with" '+(wifiSelected?'checked':'')+'><span>With WiFi Max'+(wifiIncluded?' (included)':'')+'</span><span class="option-price">£'+(base+(wifiIncluded?0:6))+'/mo</span></label></div><p class="mock-price-note">Illustrative mock price, not a live Sky quote.</p><a class="primary" href="https://www.sky.com/broadband" target="_blank" rel="noopener">Check package</a></article>';
  }).join('');
  document.querySelectorAll('.wifi-options input[type="radio"]').forEach(radio=>radio.addEventListener('change',()=>{
   const card=radio.closest('.package-card');
@@ -229,6 +229,7 @@ function renderCoverage(){
   +(floorCount>=3?2:floorCount===2?1:0)
   +(estimatedWalls>=3?1:0);
  const verdict=score>=5?'likely':score>=3?'maybe':'low';
+  state.coverageVerdict=verdict;
  const verdictBox=document.getElementById('coverageVerdict');
  verdictBox.className='coverage-verdict'+(verdict==='likely'?' likely':verdict==='maybe'?' maybe':'');
  document.getElementById('coverageVerdictText').textContent=verdict==='likely'
