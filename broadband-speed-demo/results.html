@@ -180,21 +180,25 @@ const packageTiers=[
 ];
 
 function calculatePackages(){
- // Simplified version of the standalone peak-use estimator, mapped to the existing controls.
- // Baseline 15 Mbps; work 15 Mbps/person; gaming 15 Mbps/person;
- // HD streaming 5 Mbps/stream; large download/update 50 Mbps; extra active devices 3 Mbps/device.
- const baseline=15;
- const workDemand=(state.tags.has('remote-work')||state.tags.has('video-calls'))?state.people*15:0;
- const gamingDemand=state.tags.has('gaming')?state.people*15:0;
- const streamingDemand=state.tags.has('streaming')?5:0; // one simultaneous HD stream
- const downloadDemand=state.tags.has('downloads')?50:0; // one simultaneous large download/update
- const extraDeviceDemand=state.tags.has('smart-home')?0.1:0;
- const connectedDeviceDemand=Math.max(0,state.devices-3)*3; // approximate active-device allowance beyond three baseline devices
+ // Approximate peak-use estimate calibrated to Sky's published speed bands:
+ // Everyday essential 67–150 Mbps; busier homes 300–500 Mbps; epic performance 900 Mbps–5 Gbps.
+ // These are planning allowances, not measured requirements or a performance guarantee.
+ const baseline=67;
+ const workDemand=(state.tags.has('remote-work')||state.tags.has('video-calls'))?state.people*25:0;
+ const gamingDemand=state.tags.has('gaming')?state.people*50:0;
+ const streamingDemand=state.tags.has('streaming')?25:0;
+ const downloadDemand=state.tags.has('downloads')?75:0;
+ const extraDeviceDemand=state.tags.has('smart-home')?5:0;
+ const connectedDeviceDemand=Math.max(0,state.devices-3)*10;
  const activityDemand=workDemand+gamingDemand+streamingDemand+downloadDemand+extraDeviceDemand;
  const subtotal=baseline+activityDemand+connectedDeviceDemand;
- const demand=Math.ceil(subtotal*1.3);
+ const demand=Math.ceil(subtotal*1.2);
  const tiers=packageTiers;
- let target=tiers.find(p=>p.speed>=demand)?.speed||5000;
+ const target=demand<=150
+  ? tiers.find(p=>p.speed>=Math.max(67,demand)&&p.speed<=150)?.speed||150
+  : demand<=500
+   ? tiers.find(p=>p.speed>=Math.max(300,demand)&&p.speed<=500)?.speed||500
+   : tiers.find(p=>p.speed>=Math.max(900,demand))?.speed||5000;
  const targetIndex=tiers.findIndex(p=>p.speed===target);
  let indices;
  if(targetIndex<=1) indices=[0,1,2,3];
@@ -203,7 +207,7 @@ function calculatePackages(){
  const chosen=indices.map(i=>tiers[i]);
  document.getElementById('recommendationCopy').textContent='For '+(state.people===5?'5+':state.people)+' '+(state.people===1?'person':'people')+' and around '+(state.devices===22?'16+':state.devices===14?'9–15':state.devices===7?'4–8':'1–3')+' connected devices, these four speed tiers give you a range of options.';
  renderCoverage();
- document.getElementById('demandSummary').textContent='Estimated download requirement: about '+demand+' Mbps, including 30% headroom. This simplified estimate assumes one HD stream and one large download when selected; work and gaming allowances scale with household size. Camera upload is not included in download demand.';
+ document.getElementById('demandSummary').textContent='Estimated download requirement: about '+demand+' Mbps, including 20% headroom. The estimate uses the published Everyday essential (67–150 Mbps), Busier homes (300–500 Mbps) and Epic performance (900 Mbps–5 Gbps) bands. Selected activities are treated as peak-time use; this is an illustrative estimate, not a measured requirement.';
  const mockPrices={67:24,75:25,100:27,150:29,300:33,500:37,900:42,1600:49,2500:59,5000:74};
  document.getElementById('packagesGrid').innerHTML=chosen.map((p,index)=>{
   const base=mockPrices[p.speed]||29;
