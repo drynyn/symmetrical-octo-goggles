@@ -167,7 +167,24 @@ const property=[
 ];
 document.getElementById('addressHeading').textContent=[get('door',''),get('street',''),get('postcode','')].filter(Boolean).join(', ')||'Property details';
 document.getElementById('propertySummary').innerHTML=property.map(([label,value])=>'<div><strong>'+escapeHtml(label)+'</strong><span>'+escapeHtml(value)+'</span></div>').join('');
-const state={people:2,devices:7};
+const state={people:2,devices:7,rooms:Number(get('rooms','5')),floors:Number(get('floors','1')),weakWifi:0,booster:0,area:Number(get('area','9.3'))*10.7639};
+const areaInput=document.getElementById('areaInput');
+areaInput.value=Math.round(state.area);
+document.querySelectorAll('.choice[data-group]').forEach(button=>button.addEventListener('click',()=>{
+ const group=button.dataset.group;
+ state[group]=Number(button.dataset.value);
+ document.querySelectorAll('.choice[data-group="'+group+'"]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+ calculatePackages();
+}));
+areaInput.addEventListener('input',()=>{state.area=Number(areaInput.value)||0;calculatePackages()});
+document.querySelectorAll('.choice[data-group="rooms"]').forEach(button=>{
+ const value=Number(button.dataset.value);
+ button.setAttribute('aria-pressed',String((value===1&&state.rooms<=2)||(value===5&&state.rooms>=3&&state.rooms<=5)||(value===8&&state.rooms>=6&&state.rooms<=8)||(value===10&&state.rooms>=9)));
+});
+document.querySelectorAll('.choice[data-group="floors"]').forEach(button=>{
+ const value=Number(button.dataset.value);
+ button.setAttribute('aria-pressed',String((value===1&&state.floors===1)||(value===2&&state.floors===2)||(value===3&&state.floors>=3)));
+});
 const packageTiers=[
  {speed:67,name:'Superfast',use:'Everyday browsing, video calls and light streaming.',fit:1},
  {speed:75,name:'Full Fibre 75',use:'Everyday use with a full-fibre connection where available.',fit:1},
