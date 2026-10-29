@@ -245,10 +245,10 @@ function renderCoverage(){
  const x=66,y=48,w=238,floorH=58,h=floorCount*floorH;
  const roofPeak=9,roofBase=50;
  const gradientStops=verdict==='low'
-  ?'<stop offset="0%" stop-color="#f5d96e"/><stop offset="48%" stop-color="#b9dc83"/><stop offset="100%" stop-color="#71c98a"/>'
+  ?'<stop offset="0%" stop-color="#71c98a"/><stop offset="24%" stop-color="#71c98a"/><stop offset="55%" stop-color="#b9dc83"/><stop offset="78%" stop-color="#ffd267"/><stop offset="100%" stop-color="#ff9b50"/>'
   :verdict==='maybe'
-   ?'<stop offset="0%" stop-color="#f16e62"/><stop offset="34%" stop-color="#ffad52"/><stop offset="66%" stop-color="#ffd66c"/><stop offset="100%" stop-color="#71c98a"/>'
-   :'<stop offset="0%" stop-color="#ef6964"/><stop offset="28%" stop-color="#ff9b50"/><stop offset="56%" stop-color="#ffd267"/><stop offset="100%" stop-color="#71c98a"/>';
+   ?'<stop offset="0%" stop-color="#71c98a"/><stop offset="24%" stop-color="#71c98a"/><stop offset="48%" stop-color="#b9dc83"/><stop offset="68%" stop-color="#ffd267"/><stop offset="84%" stop-color="#ff9b50"/><stop offset="100%" stop-color="#ef6964"/>'
+   :'<stop offset="0%" stop-color="#71c98a"/><stop offset="24%" stop-color="#71c98a"/><stop offset="44%" stop-color="#b9dc83"/><stop offset="64%" stop-color="#ffd267"/><stop offset="82%" stop-color="#ff9b50"/><stop offset="100%" stop-color="#ef6964"/>';
  const floorLines=Array.from({length:floorCount-1},(_,i)=>{
   const fy=y+h-(i+1)*floorH;
   return '<line x1="'+x+'" y1="'+fy+'" x2="'+(x+w)+'" y2="'+fy+'" stroke="#405d78" stroke-width="4"/>';
