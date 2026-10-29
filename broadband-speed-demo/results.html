@@ -73,6 +73,8 @@ main{max-width:1120px;padding-top:1.2rem}
 .breakdown p{margin:.15rem 0}
 @media(max-width:760px){.results-layout{grid-template-columns:1fr}.side-panel{grid-row:auto}.packages-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.packages-grid{grid-template-columns:1fr}}
+
+.coverage-panel{margin-top:1.2rem;overflow:hidden}.coverage-copy{max-width:650px}.coverage-copy p{color:#52658b;margin:.25rem 0 .8rem}.coverage-diagram{background:#f7faf7;border:1px solid #e1e9e2;border-radius:14px;padding:.7rem;min-height:190px}.coverage-diagram svg{display:block;width:100%;height:auto;max-height:390px}.coverage-note{font-size:.82rem;color:#697894;margin:.65rem 0 0}.coverage-legend{display:flex;flex-wrap:wrap;gap:.8rem;font-size:.82rem;color:#53678e;margin-top:.5rem}.coverage-legend span{display:flex;align-items:center;gap:.35rem}.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}.coverage-room{fill:#c9f0f1;stroke:#087ca3;stroke-width:1.3}.coverage-room.weak{fill:#fce2bd;stroke:#c47722}.coverage-room-label{font:10px Arial,sans-serif;fill:#17304b;text-anchor:middle}.coverage-marker{fill:#fff;stroke:#ff405b;stroke-width:3}.coverage-marker-text{font:bold 10px Arial,sans-serif;fill:#12305e;text-anchor:middle}.coverage-callout{fill:#fff;stroke:#ff405b;stroke-width:1.5}@media(max-width:520px){.coverage-diagram{padding:.3rem}.coverage-room-label{font-size:9px}}
 </style>
 </head>
 <body>
@@ -132,6 +134,11 @@ main{max-width:1120px;padding-top:1.2rem}
 </div>
 </aside>
 </div>
+<section class="panel coverage-panel" aria-labelledby="coverageTitle">
+<div class="coverage-copy"><div class="step">WHOLE-HOME WI-FI</div><h2 class="section-title" id="coverageTitle">Whole home Wi-Fi coverage</h2><p id="coverageSummary">A layout illustration based on your room count, floor area and number of floors.</p></div>
+<div id="coverageDiagram" class="coverage-diagram" role="img" aria-label="Illustrative home layout showing router and possible booster positions"></div>
+<p class="coverage-note" id="coverageNote">This is an illustrative layout, not a measured signal map.</p>
+</section>
 <div class="notice"><strong>Mock-up:</strong> package selection and Wi-Fi guidance are illustrative. Check Sky for address-specific availability, current prices and WiFi Max eligibility.</div>
 <footer><p>Package details and availability: <a href="https://www.sky.com/broadband" target="_blank" rel="noopener">Sky Broadband official website</a>.</p></footer>
 </main>
@@ -176,8 +183,35 @@ function calculatePackages(){
  else indices=[targetIndex-1,targetIndex,targetIndex+1,targetIndex+2];
  const chosen=indices.map(i=>tiers[i]);
  document.getElementById('recommendationCopy').textContent='For '+(state.people===5?'5+':state.people)+' '+(state.people===1?'person':'people')+' and around '+(state.devices===22?'16+':state.devices===14?'9–15':state.devices===7?'4–8':'1–3')+' connected devices, these four speed tiers give you a range of options.';
+ renderCoverage();
  document.getElementById('demandSummary').textContent='Illustrative speed allowance: about '+demand+' Mbps before headroom. Selected activities add '+activityDemand+' Mbps to the estimate. These are indicative allowances, not guaranteed minimum speeds.';
  document.getElementById('packagesGrid').innerHTML=chosen.map(p=>'<article class="package-card '+(p.speed===target?'recommended':'')+'">'+(p.speed===target?'<span class="rec-tag">Closest fit</span>':'')+'<h3>'+escapeHtml(p.name)+'</h3><div class="package-speed">'+p.speed.toLocaleString('en-GB')+' <small>Mbps avg. download</small></div><p>'+escapeHtml(p.use)+'</p><div class="wifi-addon"><strong>WiFi Max</strong><span>'+(p.speed>=2500?'Included with this Gigafast+ tier':'Optional add-on, advertised from £6/month')+'</span></div><a class="primary" href="https://www.sky.com/broadband" target="_blank" rel="noopener">Check package</a></article>').join('');
+}
+
+function renderCoverage(){
+ const roomCount=Math.max(1,Math.min(20,Number(state.rooms)||5));
+ const floorCount=Math.max(1,Math.min(10,Number(state.floors)||1));
+ const area= Math.max(10,Number(state.area)||100);
+ const cols=Math.min(4,Math.ceil(Math.sqrt(roomCount)));
+ const rows=Math.ceil(roomCount/cols);
+ const w=600,h=Math.max(190,rows*72+65),roomW=112,roomH=54,gap=8;
+ const planW=cols*roomW+(cols-1)*gap,planH=rows*roomH+(rows-1)*gap;
+ const x0=(w-planW)/2,y0=35;
+ const labels=['Living room','Bedroom','Kitchen','Bathroom','Office','Bedroom 2','Dining room','Hallway','Bedroom 3','Utility','Study','Spare room'];
+ let rooms='';
+ for(let i=0;i<roomCount;i++){
+  const c=i%cols,r=Math.floor(i/cols),x=x0+c*(roomW+gap),y=y0+r*(roomH+gap);
+  const label=labels[i]||('Room '+(i+1));
+  rooms+=`<rect class="coverage-room" x="${x}" y="${y}" width="${roomW}" height="${roomH}" rx="7"/><text class="coverage-room-label" x="${x+roomW/2}" y="${y+roomH/2+3}">${escapeHtml(label.length>15?label.slice(0,14)+'…':label)}</text>`;
+ }
+ const routerX=x0+roomW/2,routerY=y0+roomH/2;
+ const needBooster=area>1200||roomCount>=6||floorCount>=2;
+ const targetX=x0+(cols-1)*(roomW+gap)+roomW/2,targetY=y0+(rows-1)*(roomH+gap)+roomH/2;
+ const booster=needBooster?`<line x1="${routerX}" y1="${routerY}" x2="${targetX}" y2="${targetY}" stroke="#ff8a9a" stroke-width="2" stroke-dasharray="5 5"/><circle class="coverage-marker" cx="${targetX}" cy="${targetY}" r="7"/><text class="coverage-marker-text" x="${targetX}" y="${targetY+3}">+</text><rect class="coverage-callout" x="${Math.max(5,Math.min(w-92,targetX-39))}" y="${targetY+13}" width="78" height="20" rx="10"/><text class="coverage-marker-text" x="${Math.max(44,Math.min(w-53,targetX))}" y="${targetY+26}">Booster idea</text>`:'';
+ const router=`<circle class="coverage-marker" cx="${routerX}" cy="${routerY}" r="8"/><circle cx="${routerX}" cy="${routerY}" r="3" fill="#ff405b"/><rect class="coverage-callout" x="${Math.max(5,routerX-30)}" y="${Math.max(5,routerY-29)}" width="60" height="19" rx="10"/><text class="coverage-marker-text" x="${routerX}" y="${Math.max(18,routerY-16)}">Router</text>`;
+ document.getElementById('coverageDiagram').innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${roomCount} room home across ${floorCount} floor(s), with router and ${needBooster?'suggested booster':'no booster indicated'} marker">${rooms}${router}${booster}</svg><div class="coverage-legend"><span><i class="legend-dot" style="background:#c9f0f1;border:1px solid #087ca3"></i>Rooms</span><span><i class="legend-dot" style="background:#ff405b"></i>Router</span>${needBooster?'<span><i class="legend-dot" style="background:#fff;border:2px solid #ff405b"></i>Possible booster position</span>':''}</div>`;
+ document.getElementById('coverageSummary').textContent='Illustration for '+roomCount+' rooms, '+floorCount+' floor'+(floorCount===1?'':'s')+' and approximately '+Math.round(area).toLocaleString('en-GB')+' sq ft.';
+ document.getElementById('coverageNote').textContent=needBooster?'Larger layouts, more rooms or multiple floors can increase the chance of weak spots. The booster marker is a suggested position only; walls, router placement and construction materials are not measured.':'This smaller layout does not automatically suggest a booster. Real coverage still depends on router placement, walls and building materials.';
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
 calculatePackages();
