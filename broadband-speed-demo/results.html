@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sky Broadband Recommendations — Demo</title>
+<title>Sky Broadband Finder — Mock-up</title>
 <style>
 
 
@@ -13,29 +13,66 @@
 .property-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7rem}.property-summary div{background:#f5f8fc;border-radius:9px;padding:.75rem}.property-summary strong{display:block;font-size:.82rem;color:#59677c}.property-summary span{font-weight:700;overflow-wrap:anywhere}.result[hidden]{display:none}
 
 .results-layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:1rem;align-items:start}.packages-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}.package-card{background:#fff;border:1px solid #dce3ee;border-radius:14px;padding:1rem;display:flex;flex-direction:column;gap:.45rem}.package-card.recommended{border:2px solid #1753a5;box-shadow:0 3px 14px #1753a51a}.package-card h3{margin:0}.package-speed{font-size:1.9rem;font-weight:800;line-height:1.2}.package-speed small{font-size:.85rem;font-weight:600}.package-card p{margin:.2rem 0;color:#56647a;font-size:.92rem}.package-card .primary{display:block;text-align:center;text-decoration:none;margin-top:auto}.side-panel{position:sticky;top:1rem}.side-panel .group{margin:1rem 0}.side-panel .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.side-panel .choice{padding:.55rem .4rem;text-align:center;font-size:.9rem}.rec-tag{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;font-weight:800;color:#1753a5}.recommendation-copy{color:#56647a}.property-summary{grid-template-columns:repeat(auto-fit,minmax(125px,1fr))}.package-disclaimer{font-size:.85rem;color:#59677c;margin-top:1rem}@media(max-width:760px){.results-layout{grid-template-columns:1fr}.side-panel{position:static;grid-row:1}.packages-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.packages-grid{grid-template-columns:1fr}}
+
+:root{font-family:Arial,Helvetica,sans-serif;color:#102b63;background:#fff;line-height:1.5}
+body{background:linear-gradient(145deg,#fff 0%,#f7faff 75%,#f2f6ff 100%);min-height:100vh}
+header{background:#fff;color:#102b63;padding:1.1rem 1.25rem;border-bottom:1px solid #e3eaf6}
+header .wrap,main{max-width:1120px}
+.brand-header{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.sky-wordmark{font-size:2.35rem;font-weight:900;letter-spacing:-.12em;line-height:1;text-decoration:none;background:linear-gradient(115deg,#ff6c5c 5%,#9c35db 48%,#006bff 85%);color:transparent;background-clip:text;-webkit-background-clip:text}
+.header-caption{font-size:.9rem;color:#52658b;font-weight:600}
+.progress{display:flex;justify-content:space-between;gap:.6rem;border-bottom:2px solid #e1e9f8;padding:.65rem 0 1rem;margin-bottom:1.3rem;color:#8292b2;font-size:.82rem;font-weight:650}
+.progress span{flex:1;padding-bottom:.65rem;border-bottom:3px solid #e5ebf5}
+.progress .done{color:#2871d5;border-color:#8eb4ff}
+.progress .current{color:#1249c5;border-color:#8424ec}
+.page-title{font-size:clamp(1.8rem,4vw,2.45rem);line-height:1.15;letter-spacing:-.035em;margin:.5rem 0}
+.page-intro{color:#52658b;margin:.3rem 0 1.4rem}
+.panel{border:1px solid #e0e9f7;border-radius:16px;padding:1.2rem;box-shadow:0 8px 28px #123a780b}
+.step{color:#526b98;font-size:.75rem;letter-spacing:.1em}
+.section-title{font-size:1.2rem;margin:.4rem 0 .7rem}
+.property-summary div{background:#f4f8ff;border:1px solid #e8effa;border-radius:10px}
+.results-layout{grid-template-columns:minmax(0,1fr) 285px;gap:1.2rem}
+.packages-grid{gap:.75rem}
+.package-card{position:relative;border:1px solid #e0e9f7;border-radius:13px;box-shadow:0 4px 15px #123a7809;padding:1rem 1.05rem}
+.package-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:13px 0 0 13px;background:linear-gradient(180deg,#8620e8,#0872ff)}
+.package-card.recommended{border:1px solid #c4a0ff;box-shadow:0 5px 20px #6d31c91a}
+.package-card h3{font-size:1rem;color:#122d66}
+.package-speed{font-size:1.7rem;color:#074ed4}
+.package-speed small{display:block;color:#5c6d8c;font-size:.78rem;margin-top:.1rem}
+.package-card .primary{border-radius:999px;text-decoration:none;text-align:center;background:#fff;color:#064fd6;border:1px solid #2d6cff;box-shadow:none;padding:.6rem .75rem}
+.package-card .primary:hover{background:#edf4ff}
+.rec-tag{color:#7c22d7}
+.side-panel{background:#fff;border-radius:16px}
+.side-panel .choice{border-radius:8px;border-color:#cfdbef}
+.side-panel .choice[aria-pressed=true]{background:#edf3ff;border-color:#1b55d5;color:#1046bd;box-shadow:inset 0 0 0 1px #1b55d5}
+.breakdown{background:#f4f8ff;border:1px solid #e5eefb;color:#53678e}
+.notice{color:#4c5d7b;background:#f4f8ff;border:1px solid #e0e9f7}
+footer{margin-top:1.3rem}
+@media(max-width:760px){.results-layout{grid-template-columns:1fr}.side-panel{grid-row:1}.packages-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.packages-grid{grid-template-columns:1fr}.header-caption{font-size:.78rem;text-align:right}.sky-wordmark{font-size:2rem}.progress{font-size:.7rem}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><a href="./">← Back to property details</a><h1>Sky broadband packages for your home</h1><p>Four options selected to suit your household size and connected devices.</p></div></header>
-<main>
+<header><div class="wrap brand-header"><a class="sky-wordmark" href="./" aria-label="Sky Broadband Finder home">sky</a><div class="header-caption">Find the right broadband for you</div></div></header>
+<main><nav class="progress" aria-label="Your progress"><span class="done">✓&nbsp; Property details</span><span class="done">✓&nbsp; Your household</span><span class="current">3&nbsp; Results</span></nav><h1 class="page-title">Your results</h1><p class="page-intro">Based on your property details, here are four Sky broadband options to consider.</p>
 <section class="panel">
-<div class="step">Your property</div>
+<div class="step"><span class="mini-icon">⌂</span> YOUR PROPERTY</div>
 <h2 id="addressHeading">Property details</h2>
 <div class="property-summary" id="propertySummary"></div>
 <p class="hint">Property details are entered manually and are shown for context. They do not independently establish broadband availability or Wi-Fi performance.</p>
 </section>
 <div class="results-layout">
 <section>
-<div class="step">Recommended options</div>
-<h2>Four Sky packages to consider</h2>
+<div class="step">RECOMMENDED PACKAGES</div>
+<h2 class="section-title">Packages picked for you</h2>
 <p class="recommendation-copy" id="recommendationCopy">Adjust the household details to refresh these recommendations.</p>
 <div class="packages-grid" id="packagesGrid" aria-live="polite"></div>
 <p class="package-disclaimer">Package speeds and availability vary by address. Prices and current offers can change, so check the details on Sky’s website before choosing. These recommendations are a demo, not an availability check.</p>
 </section>
 <aside class="panel side-panel">
-<div class="step">Refine recommendations</div>
-<h2>Your household</h2>
-<p class="hint">These answers change which four packages we show. Broadband usage/activity questions have been removed.</p>
+<div class="step">YOUR HOUSEHOLD</div>
+<h2 class="section-title">Fine-tune your options</h2>
+<p class="hint">Change these details to update your shortlist.</p>
 <div class="group">
 <h3>People in the home</h3>
 <div class="choices" aria-label="People in household">
