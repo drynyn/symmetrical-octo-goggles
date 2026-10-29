@@ -229,9 +229,22 @@ function renderCoverage(){
  const planW=cols*roomW+(cols-1)*gap,x0=(w-planW)/2,y0=35;
  const labels=['Living room','Bedroom','Kitchen','Bathroom','Office','Bedroom 2','Dining room','Hallway','Bedroom 3','Utility','Study','Spare room'];
  let rooms='';
+ // Illustrative room-level shading: distant rooms are marked as potentially weaker,
+ // using distance from the assumed router plus wall/layout risk factors.
+ const wallPenalty=walls==='brick'?1.8:walls==='mixed'?0.9:0;
+ const hubPenalty=hub==='q'||hub==='unknown'?0.8:hub==='max'||hub==='gigafast'?-0.5:0;
+ const edgePenalty=position==='edge'?1.2:position==='unknown'?0.5:0;
+ const weakRoomIndexes=[];
  for(let i=0;i<roomCount;i++){
   const c=i%cols,r=Math.floor(i/cols),x=x0+c*(roomW+gap),y=y0+r*(roomH+gap),label=labels[i]||('Room '+(i+1));
-  rooms+=`<rect class="coverage-room" x="${x}" y="${y}" width="${roomW}" height="${roomH}" rx="7"/><text class="coverage-room-label" x="${x+roomW/2}" y="${y+roomH/2+3}">${escapeHtml(label.length>15?label.slice(0,14)+'…':label)}</text>`;
+  const roomCx=c,roomCy=r;
+  const routerCol=position==='edge'?0:(cols-1)/2;
+  const routerRow=position==='edge'?0:(rows-1)/2;
+  const gridDistance=Math.hypot(roomCx-routerCol,roomCy-routerRow);
+  const roomRisk=gridDistance+wallPenalty+hubPenalty+edgePenalty+(floorCount>1?0.8:0)+(area>1800?0.6:area>1000?0.3:0);
+  const weak=roomRisk>=2.5 || (roomRisk>=1.8 && verdict!=='low');
+  if(weak) weakRoomIndexes.push(i);
+  rooms+=`<rect class="coverage-room${weak?' weak':''}" x="${x}" y="${y}" width="${roomW}" height="${roomH}" rx="7"/><text class="coverage-room-label" x="${x+roomW/2}" y="${y+roomH/2+3}">${escapeHtml(label.length>15?label.slice(0,14)+'…':label)}</text>`;
  }
  // Heuristic only: this score ranks likely risk factors; it is not calibrated to measured signal.
  const furthest=Math.max(2,Math.sqrt(area)*0.55);
@@ -254,7 +267,7 @@ function renderCoverage(){
  const needBooster=verdict!=='low',targetX=x0+(cols-1)*(roomW+gap)+roomW/2,targetY=y0+(rows-1)*(roomH+gap)+roomH/2;
  const booster=needBooster?`<line x1="${routerX}" y1="${routerY}" x2="${targetX}" y2="${targetY}" stroke="#ff8a9a" stroke-width="2" stroke-dasharray="5 5"/><circle class="coverage-marker" cx="${targetX}" cy="${targetY}" r="7"/><text class="coverage-marker-text" x="${targetX}" y="${targetY+3}">+</text><rect class="coverage-callout" x="${Math.max(5,Math.min(w-92,targetX-39))}" y="${Math.min(h-23,targetY+13)}" width="78" height="20" rx="10"/><text class="coverage-marker-text" x="${Math.max(44,Math.min(w-53,targetX))}" y="${Math.min(h-10,targetY+26)}">Booster idea</text>`:'';
  const router=`<circle class="coverage-marker" cx="${routerX}" cy="${routerY}" r="8"/><circle cx="${routerX}" cy="${routerY}" r="3" fill="#ff405b"/><rect class="coverage-callout" x="${Math.max(5,routerX-30)}" y="${Math.max(5,routerY-29)}" width="60" height="19" rx="10"/><text class="coverage-marker-text" x="${routerX}" y="${Math.max(18,routerY-16)}">Router</text>`;
- document.getElementById('coverageDiagram').innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${roomCount} room home across ${floorCount} floor(s), ${verdict==='likely'?'booster likely useful':verdict==='maybe'?'booster may be useful':'booster not strongly indicated'}">${rooms}${router}${booster}</svg><div class="coverage-legend"><span><i class="legend-dot" style="background:#c9f0f1;border:1px solid #087ca3"></i>Rooms</span><span><i class="legend-dot" style="background:#ff405b"></i>Router</span>${needBooster?'<span><i class="legend-dot" style="background:#fff;border:2px solid #ff405b"></i>Possible booster position</span>':''}</div>`;
+ document.getElementById('coverageDiagram').innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${roomCount} room home across ${floorCount} floor(s), ${verdict==='likely'?'booster likely useful':verdict==='maybe'?'booster may be useful':'booster not strongly indicated'}">${rooms}${router}${booster}</svg><div class="coverage-legend"><span><i class="legend-dot" style="background:#c9f0f1;border:1px solid #087ca3"></i>Likely better coverage</span><span><i class="legend-dot" style="background:#fce2bd;border:1px solid #c47722"></i>Potentially weaker coverage</span><span><i class="legend-dot" style="background:#ff405b"></i>Router</span>${needBooster?'<span><i class="legend-dot" style="background:#fff;border:2px solid #ff405b"></i>Possible booster position</span>':''}</div>`;
  document.getElementById('coverageSummary').textContent='Illustration for '+roomCount+' rooms, '+floorCount+' floor'+(floorCount===1?'':'s')+' and approximately '+Math.round(area).toLocaleString('en-GB')+' sq ft.';
  document.getElementById('coverageNote').textContent='The estimate combines home size, room count, floors, selected wall type, hub generation and router placement. The room drawing is schematic, not a floor plan.';
 }
